@@ -1,0 +1,270 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Producers";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212", // Deep Charcoal
+                        "charcoal": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "architectural": ["Montserrat", "sans-serif"], // Lovelo alternative
+                        "refined": ["Roboto", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lov-heading { font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+}
+
+<!-- Top Navigation -->
+<header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+    <div class="max-w-[1440px] mx-auto flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <div class="text-primary">
+                <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"></path>
+                </svg>
+            </div>
+            <h1 class="lov-heading text-xl font-black tracking-tighter">Vitinerario</h1>
+        </div>
+        <nav class="hidden md:flex items-center gap-12 font-refined text-xs tracking-widest uppercase">
+            <a href="#" class="hover:text-primary transition-colors">On Tour</a>
+            <a href="#" class="hover:text-primary transition-colors">Live</a>
+            <a href="#" class="hover:text-primary transition-colors">Art</a>
+            <a href="#" class="hover:text-primary transition-colors">Collective</a>
+        </nav>
+        <div class="flex items-center gap-6">
+            <button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all">
+                Inquire Now
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-charcoal/40 to-charcoal z-10"></div>
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-xFzO-ibPG9zZ98yCgQSOcgybCHLe_hG7eQ_UdJv0_FEhWLJSBNl4wyF6J5VnNKALgTAFgo4nEflnbJNOVcYXG4om6BXuInm35WY_w3vclr8mEXQyBwmUp7eDhz0t01T2QAa0WewOKdwtYX1OQcFIOT3UlKZEdT9YNLVMI7aEpar4DzczTrrsdoxWMQiIp9HEfE6JvxEiFWOiybaqas8lQ9Qp9A6fIe_cB2Lkh8LGyD0A01eCUwgRTXkmSNK4bbQbo1hY-6RG-dY" class="w-full h-full object-cover" data-alt="Cinematic wide shot of a luxury event production stage">
+    </div>
+    <div class="relative z-20 text-center max-w-4xl px-6">
+        <span class="lov-heading text-primary text-sm mb-4 block animate-pulse">For Visionary Producers</span>
+        <h1 class="lov-heading text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] mb-8">
+            Elevating the <br> Experience
+        </h1>
+        <p class="font-refined text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
+            A sophisticated platform for producers to craft cinematic event journeys across the globe. Excellence met with editorial precision.
+        </p>
+        <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-6">
+            <button class="bg-primary hover:bg-white hover:text-charcoal w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300">
+                Partner With Us
+            </button>
+            <button class="border border-white/30 hover:border-white w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all">
+                View Portfolio
+            </button>
+        </div>
+    </div>
+    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce opacity-50">
+        <span class="material-symbols-outlined text-4xl">keyboard_double_arrow_down</span>
+    </div>
+</section>
+
+<!-- Main Content Sections -->
+<main class="relative z-20 bg-charcoal">
+    <!-- Vitinerario ON TOUR -->
+    <section class="py-32 lg:py-48 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div class="grid lg:grid-cols-12 gap-12 items-end mb-16">
+            <div class="lg:col-span-8">
+                <h2 class="lov-heading text-6xl md:text-8xl font-black text-white/10 leading-none mb-[-20px] select-none">ON TOUR</h2>
+                <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10">Vitinerario <span class="text-primary">ON TOUR</span></h2>
+            </div>
+            <div class="lg:col-span-4 lg:text-right">
+                <p class="font-refined text-slate-400 leading-relaxed max-w-md ml-auto">
+                    Global reach without logistical compromise. Bringing high-end production to the world's most breathtaking and challenging locations.
+                </p>
+            </div>
+        </div>
+        <!-- Image Carousel Component -->
+        <div class="relative group">
+            <div class="flex gap-6 overflow-x-auto hide-scrollbar pb-10 snap-x snap-mandatory">
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYZtOGf_VfvFu1ht6W4Dj9IHkY12zVRLuLlfqxvHDaUOZsQ5LNL_Dm5a8oTDD12TWvqiXYABdaYeYcb3DRiFe3jxedpVOmNT6VHJ9-XlZIgZ_wn4tUdC22Ghpz7Jmj1aFYhTVtUtppdB329Oh7GRQLv4KISDpxJmT40FxN7JkYmMbSilIRhO92s0YrcAmI2-W5DTPI0B5YBbB4Ak9knwAZodlj1JXLvYfVAcwyG1jnwU_YIyZEIpt1f4Q4503RMpaDhto2pgUXYQ" alt="" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Vibrant outdoor festival stage at sunset">
+                </div>
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkHMn6i5mmyhBLlt2Lt0sZEhxgL67eM7PuSF5Y6qAZp2Cz_BU2MKfI0W2KQF-B7ccheIKdJP3XDpAO2qXxaA0elQgKd5o2tNKifdMuw90pjUmO2OxnXZRmH5ys0Dl8-sC_mXM47bAUkvJx-n4i9AL0StCk5ktcrCCNqZcGkhn4_Ay9oqlexf0jGCSuBOeeLOhQ6S0X0eIQK56vqZyvYhoQA66z9Vx3Xj4iknMvR5PNZsPoS1DMn5aIWGzRlLTabnBtLb9Wj4Ym9pQ" alt="" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Concert production gear in a scenic mountain setting">
+                </div>
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPCr7XkoRNmejFAieRgRYiC_3Q8lxrn7TsJMf5sIO1RIYff01SpD6yN3Gaffot02dFFsB03fuSUNVXLvsPW9b8XA1n9gdzNRLRkGRarXKy_LqTinA64SGGYN9I4oc83A4mHU6AwjPoJ8yuRoP99RYCNoF7iIQytDiK9fI1BUGlrPx2_EiPodlXcHy6xfSrNS7IFpIXJ7vXaeoz2qxu-YYSmNGRUzOUi8LPsF-5Sq9NMs1gTR1i0HMmGDgRzxUlxhwRrgVGba7gbLY" alt="" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Large scale light installation in an urban plaza">
+                </div>
+            </div>
+            <!-- Navigation UI -->
+            <div class="flex justify-end gap-4 mt-6">
+                <button class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <button class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitinerario LIVE -->
+    <section class="bg-neutral-900/30 py-32 lg:py-48 px-6 lg:px-20">
+        <div class="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ZR31VClXTvwMdAV-J2tE0JT8M2ZJ01vxfE__rQnGkhSpuOcxw9w2ga0b5SrZWi8vrRY19tmhB2P_Y9iH9JMf8DlWIyioyr0f98361TstDGM9GL9SBPTUybKTk4osrpW2O_qPhVaRty8ZjWt8TLhmdC9cF9LkY1tFfIJa-zOQN3OhoFe3m2RJa3uIK1OXxul5F5IazUbrCERwKmmGXTdS9Z3aBlJmliew3Ew55VXDIuyuu_IKLFBwqyCJWkJj2mRsZBDOcerm150" class="w-full h-full object-cover hover:scale-110 transition-transform duration-1000" data-alt="Close up of a DJ controller with cinematic lighting">
+                    </div>
+                    <div class="aspect-[3/4] overflow-hidden mt-12">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp3RwQHwuQctieXdv40j7411sP95UMEVKGDquUo8If1SjeqlCdnQo93g1ruAJ_813kuo3tGSDHlVZY_FehBuEG0DYb75gJDmQWLCh39nJ9zp2VBBH3YFIoiH7RNzDPpopSOG34nFx3fAzfug12KC6ew5r_1dt9eIj7lmGUidPjl3JyyeSTz4TWc_ZJuNvs69ifXdnZBVkLZF2WTTulmtqSBfmXhyEksw-DJRqy_CYqHGePSrWor_Rd-lPjI_gf7cEJqr5UJruGy2g" class="w-full h-full object-cover hover:scale-110 transition-transform duration-1000" data-alt="Crowd hands up at a high energy live show">
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <h2 class="lov-heading text-6xl md:text-8xl font-black text-white/5 leading-none mb-[-20px] select-none text-right">LIVE</h2>
+                <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10 text-right mb-8">Vitinerario <span class="text-primary">LIVE</span></h2>
+                <p class="font-refined text-lg text-slate-300 leading-relaxed font-light text-right max-w-lg ml-auto mb-10">
+                    Dynamic performances met with seamless technical execution. We provide the infrastructure for high-energy engagements that resonate across digital and physical spaces.
+                </p>
+                <div class="flex justify-end">
+                    <a href="#" class="group flex items-center gap-4 lov-heading text-sm font-bold tracking-[0.2em]">
+                        Explore Live Tech
+                        <span class="size-10 bg-primary rounded-full flex items-center justify-center group-hover:translate-x-2 transition-transform">
+                            <span class="material-symbols-outlined text-white">chevron_right</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitinerario ART -->
+    <section class="py-32 lg:py-48 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div class="text-center mb-24">
+            <h2 class="lov-heading text-6xl md:text-9xl font-black text-white/10 leading-none mb-[-40px] select-none">ART</h2>
+            <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10 mb-6">Vitinerario <span class="text-primary">ART</span></h2>
+            <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            <p class="font-refined text-slate-400 max-w-2xl mx-auto italic font-light text-xl">
+                "Where curation meets architectural innovation. Transforming venues into immersive galleries of light and sound."
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuyf0R-_jrl-hwSRswURq1Z9Z3wHwq9fUkq2HWQfVLOxW-lB-gIKOmpULmNff4Y9AjwUWJ-wR-R7WgyFJFkvOweXKn3RT5HaiDGwd6Wx2zwV49z4XUThWx_QsYeB3YEjknPJlQb2Nl_Ueh-b5QbCMjyTibXzUJU83Nk9-uQmhlg-obdXusLHGYXWIEh3dPbRGm5IO92kHWNai64e5yj8shy_CtBnzWYDpuL4JU3IoRn0P6PDH6gtZ7YbOavqx2rTwbc_FRryUdzww" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract red and black light installation">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Installations</span>
+                </div>
+            </div>
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSKsAX5RLaEQw28S7Q9pxzwWrXx2HZMQn4IYwwATx1N3qwoXZS6XYvNXbhsvN5oSsVIMQyC-EZqFaWdfwoqqn83P2tj7trrSMlJq_ueVllGyzop73o0lueNRjPVfO71gQDnea7gUyQp6eWKZ3Li7ypSl4C__9L-lHYfsETD4jCSWZGzUC2mjeDJ6tA--xctJDzlWSSvb01zSv52hj4n2RPo5TbSk-WYu16DeWHst4A4udfpYipXupP3tDKZk_hX_vm1uw_8DMOZXk" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern sculpture in a minimal gallery setting">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Sculptural</span>
+                </div>
+            </div>
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH4Rlym1q3IcAhFK-IBnUVboiZCAEAGPBM54-qb0NF58D2MjcQg72BsdrZ-0xmG01_-Q86SP_5r8dOjPsGCPZWsPLUCy-4W8Jxgkvf0eUpAWMweOgdq9sAaOSUTIL7Ha96Lt3yU1KpJ-m14iYMj0kDvqh6O7VCmOm00krOVXRMOv9s9yfOH1a0VoIzik6jogngLj-VG8ZdmX1kNHLozjy_IgSDr7JtIil9wxTWxNqkwaB1hHn-A1yImnq8FEytWfUGJMGmVXxugRg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Cinematic projection on a large architectural facade">
+                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Immersive</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="relative py-32 lg:py-48 px-6 text-center border-t border-white/5 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10">
+            <h2 class="lov-heading text-4xl md:text-6xl font-black mb-8">Join the Collective</h2>
+            <p class="font-refined text-slate-400 max-w-xl mx-auto mb-12 text-lg">
+                We are currently selecting exclusive production partners for the upcoming season. Shape the future of event experiences with us.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+                <button class="bg-primary hover:bg-white hover:text-charcoal px-12 py-5 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300 text-sm">
+                    Apply to Partner
+                </button>
+                <button class="flex items-center gap-3 font-refined text-sm tracking-widest uppercase font-bold hover:text-primary transition-colors">
+                    Download Deck <span class="material-symbols-outlined">download</span>
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-charcoal border-t border-white/10 pt-20 pb-10 px-6 lg:px-20">
+    <div class="max-w-[1440px] mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-12 mb-20">
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="text-primary">
+                        <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"></path>
+                        </svg>
+                    </div>
+                    <h1 class="lov-heading text-xl font-black tracking-tighter text-white">Vitinerario</h1>
+                </div>
+                <p class="font-refined text-slate-500 text-sm max-w-xs">
+                    A cinematic event journey platform. Designed for the visionaries, the creators, and the producers of tomorrow.
+                </p>
+            </div>
+            <div>
+                <h4 class="lov-heading text-xs font-black mb-6 text-white">Experience</h4>
+                <ul class="font-refined text-slate-500 text-xs space-y-4 tracking-widest uppercase">
+                    <li><a href="#" class="hover:text-primary">On Tour</a></li>
+                    <li><a href="#" class="hover:text-primary">Live</a></li>
+                    <li><a href="#" class="hover:text-primary">Art</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="lov-heading text-xs font-black mb-6 text-white">Company</h4>
+                <ul class="font-refined text-slate-500 text-xs space-y-4 tracking-widest uppercase">
+                    <li><a href="#" class="hover:text-primary">About Us</a></li>
+                    <li><a href="#" class="hover:text-primary">Journal</a></li>
+                    <li><a href="#" class="hover:text-primary">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-span-2">
+                <h4 class="lov-heading text-xs font-black mb-6 text-white">Newsletter</h4>
+                <div class="flex border-b border-white/20 pb-2">
+                    <input type="email" placeholder="YOUR EMAIL" class="bg-transparent border-none focus:ring-0 text-xs font-refined w-full">
+                    <button class="text-primary hover:text-white transition-colors">
+                        <span class="material-symbols-outlined">arrow_right_alt</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-white/5">
+            <p class="font-refined text-[10px] text-slate-600 tracking-[0.3em] uppercase">© 2024 Vitinerario. All Rights Reserved.</p>
+            <div class="flex gap-8">
+                <a href="#" class="text-slate-600 hover:text-white transition-colors"><i class="material-symbols-outlined text-xl">share</i></a>
+                <a href="#" class="text-slate-600 hover:text-white transition-colors"><i class="material-symbols-outlined text-xl">language</i></a>
+            </div>
+        </div>
+    </div>
+</footer>

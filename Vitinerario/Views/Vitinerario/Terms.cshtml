@@ -1,0 +1,295 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Terms and Conditions";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "lovelo": ["Montserrat", "sans-serif"], // Using Montserrat as a proxy for architectural Lovelo feel
+                        "body": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lovelo-heading {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 900;
+        }
+        .progress-bar {
+            height: 2px;
+            background: #d11a51;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30%; /* Mock progress */
+            z-index: 100;
+        }
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(to right, #d11a51, transparent);
+        }
+    </style>
+}
+
+<!-- Progress Bar -->
+<div class="progress-bar"></div>
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-body antialiased">
+    <!-- Minimalist Top Navigation -->
+    <header class="flex items-center justify-between whitespace-nowrap border-b border-white/10 px-6 py-6 md:px-16 sticky top-0 bg-background-dark/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-4 text-white">
+            <div class="size-6 text-primary">
+                <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                    <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"/>
+                </svg>
+            </div>
+            <h2 class="lovelo-heading text-xl tracking-widest">Vitinerario</h2>
+        </div>
+        <nav class="hidden md:flex flex-1 justify-center gap-12">
+            <a href="#" class="text-slate-400 hover:text-primary text-xs uppercase tracking-widest transition-colors">Collection</a>
+            <a href="#" class="text-slate-400 hover:text-primary text-xs uppercase tracking-widest transition-colors">Journal</a>
+            <a href="#" class="text-slate-400 hover:text-primary text-xs uppercase tracking-widest transition-colors">Concierge</a>
+        </nav>
+        <div class="flex items-center gap-6">
+            <button class="text-slate-100 hover:text-primary transition-colors">
+                <span class="material-symbols-outlined">search</span>
+            </button>
+            <button class="bg-primary text-white text-[10px] lovelo-heading px-6 py-2 rounded-sm hover:bg-primary/80 transition-all">
+                Member Access
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 md:px-16 pt-24 pb-32">
+        <!-- Hero Title -->
+        <div class="mb-32">
+            <p class="text-primary lovelo-heading text-sm mb-4">Legal Framework</p>
+            <h1 class="lovelo-heading text-6xl md:text-8xl lg:text-[10rem] leading-none text-white opacity-90 -ml-1 md:-ml-2">
+                Terms & <br>Conditions
+            </h1>
+            <div class="mt-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="max-w-md">
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        A refined guide to our mutual commitments. These terms ensure the integrity of the Vitinerario experience for every global traveler.
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-slate-500 uppercase tracking-tighter text-xs">Last updated</p>
+                    <p class="text-primary font-bold text-xl">OCTOBER 24, 2023</p>
+                </div>
+            </div>
+            <div class="editorial-line mt-12 w-full opacity-30"></div>
+        </div>
+
+        <!-- Main Layout Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="lg:col-span-3 hidden lg:block">
+                <div class="sticky top-40 flex flex-col gap-8">
+                    <h4 class="lovelo-heading text-xs text-slate-500">Directory</h4>
+                    <nav class="flex flex-col gap-4">
+                        <a href="#intro" class="text-primary text-sm flex items-center gap-3 font-medium">
+                            <span class="text-[10px] lovelo-heading">01</span> Introduction
+                        </a>
+                        <a href="#accounts" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">02</span> User Accounts
+                        </a>
+                        <a href="#property" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">03</span> Intellectual Property
+                        </a>
+                        <a href="#liability" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">04</span> Liability
+                        </a>
+                        <a href="#law" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">05</span> Governing Law
+                        </a>
+                        <a href="#changes" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">06</span> Changes
+                        </a>
+                    </nav>
+                    <div class="mt-12 p-6 border border-white/5 bg-white/[0.02] rounded-lg">
+                        <p class="text-xs text-slate-500 leading-relaxed italic">
+                            Need a copy for your records? Our legal documentation is available in high-resolution PDF format.
+                        </p>
+                        <button class="mt-4 flex items-center gap-2 text-primary lovelo-heading text-[10px] hover:underline">
+                            <span class="material-symbols-outlined text-sm">download</span> Download PDF
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Content Sections -->
+            <div class="lg:col-span-8 lg:col-start-5 space-y-32">
+                <!-- Section 1 -->
+                <section id="intro" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">01</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Introduction</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            Welcome to Vitinerario. These Terms and Conditions govern your use of our platform and services. By accessing or using Vitinerario, you agree to be bound by these terms in their entirety.
+                        </p>
+                        <p>
+                            Our platform is designed for the discerning traveler seeking architectural inspiration and curated itineraries. We maintain these standards to protect both our community of users and the creative partners who make Vitinerario possible. If you do not agree with any part of these terms, we respectfully ask that you refrain from using our services.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section id="accounts" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">02</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">User Accounts</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            To access certain exclusive features of our concierge service, you may be required to create a member account. You are responsible for maintaining the confidentiality of your credentials.
+                        </p>
+                        <ul class="list-none space-y-4 pl-0">
+                            <li class="flex gap-4">
+                                <span class="text-primary mt-1 opacity-70">/</span>
+                                <span>Registration requires accurate, current, and complete information.</span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-primary mt-1 opacity-70">/</span>
+                                <span>Account access is personal and non-transferable unless expressly authorized.</span>
+                            </li>
+                            <li class="flex gap-4">
+                                <span class="text-primary mt-1 opacity-70">/</span>
+                                <span>You must notify us immediately of any unauthorized use of your account.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section id="property" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">03</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Intellectual Property</h2>
+                    </div>
+                    <div class="bg-primary/5 border-l-2 border-primary p-8 mb-8">
+                        <p class="text-white font-medium mb-4 italic">The Vitinerario Aesthetic</p>
+                        <p class="text-slate-400 text-sm leading-relaxed">
+                            All content including but not limited to photography, architectural descriptions, custom itinerary logic, and interface design is the exclusive property of Vitinerario.
+                        </p>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            We grant you a limited, non-exclusive, non-transferable license to access the content for personal, non-commercial use. Any reproduction, distribution, or modification of Vitinerario assets without explicit written consent is strictly prohibited and protected by international copyright laws.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 4 -->
+                <section id="liability" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">04</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Limitation of Liability</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            Vitinerario provides curated travel information for inspirational purposes. While we strive for absolute precision, we do not guarantee the current status of architectural sites, local regulations, or third-party service availability.
+                        </p>
+                        <p class="text-slate-500 text-base border-t border-white/5 pt-6">
+                            Vitinerario shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of, or inability to access or use, the services.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 5 -->
+                <section id="law" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">05</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Governing Law</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            These Terms shall be governed and construed in accordance with the laws of the jurisdiction in which Vitinerario operates, without regard to its conflict of law provisions. Any dispute arising under these terms shall be subject to the exclusive jurisdiction of the state and federal courts located within our primary operating territory.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 6 -->
+                <section id="changes" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">06</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Changes to Terms</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            We reserve the right to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.
+                        </p>
+                        <div class="mt-12 flex items-center gap-6 p-8 rounded-xl bg-white/[0.03] border border-white/10">
+                            <span class="material-symbols-outlined text-4xl text-primary">mail</span>
+                            <div>
+                                <p class="text-white font-medium">Have questions?</p>
+                                <p class="text-slate-400 text-sm">Reach out to our legal team at <a href="mailto:legal@vitinerario.com" class="text-primary hover:underline transition-all">legal@vitinerario.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Magazine-Style Footer -->
+    <footer class="bg-black border-t border-white/5 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
+                <div class="col-span-1 md:col-span-2">
+                    <h2 class="lovelo-heading text-3xl text-white mb-8 tracking-tighter">Vitinerario</h2>
+                    <p class="text-slate-500 max-w-sm leading-relaxed text-sm">
+                        The definitive platform for architectural travel. We curate the world's most significant structures into seamless, immersive journeys.
+                    </p>
+                    <div class="flex gap-6 mt-8">
+                        <a href="#" class="text-slate-500 hover:text-primary transition-colors"><span class="material-symbols-outlined">public</span></a>
+                        <a href="#" class="text-slate-500 hover:text-primary transition-colors"><span class="material-symbols-outlined">camera</span></a>
+                        <a href="#" class="text-slate-500 hover:text-primary transition-colors"><span class="material-symbols-outlined">share</span></a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="lovelo-heading text-xs text-white mb-6">Explore</h4>
+                    <ul class="space-y-4 text-xs uppercase tracking-widest text-slate-500">
+                        <li><a href="#" class="hover:text-primary">Destinations</a></li>
+                        <li><a href="#" class="hover:text-primary">Architects</a></li>
+                        <li><a href="#" class="hover:text-primary">Design Bureau</a></li>
+                        <li><a href="#" class="hover:text-primary">Memberships</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="lovelo-heading text-xs text-white mb-6">Company</h4>
+                    <ul class="space-y-4 text-xs uppercase tracking-widest text-slate-500">
+                        <li><a href="#" class="hover:text-primary">Our Story</a></li>
+                        <li><a href="#" class="hover:text-primary">Privacy Policy</a></li>
+                        <li><a href="#" class="text-primary">Terms of Use</a></li>
+                        <li><a href="#" class="hover:text-primary">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[10px] lovelo-heading text-slate-600">
+                <p>© 2023 Vitinerario International. All Rights Reserved.</p>
+                <p class="mt-4 md:mt-0">Architecture as Experience.</p>
+            </div>
+        </div>
+    </footer>
+</div>

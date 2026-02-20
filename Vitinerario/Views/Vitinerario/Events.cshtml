@@ -1,0 +1,249 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Events";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#0a0506",
+                        "charcoal": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "sans": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lovelo-style {
+            font-family: 'Noto Sans', sans-serif;
+            letter-spacing: 0.1em;
+            font-weight: 800;
+        }
+    </style>
+}
+
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-sans selection:bg-primary selection:text-white">
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 md:px-16 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-10">
+                <div class="flex items-center gap-3">
+                    <div class="text-primary size-8">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h1 class="font-display text-2xl font-bold tracking-tight">Vitinerario</h1>
+                </div>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="@Url.Action("Index")" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Experiences</a>
+                    <a href="@Url.Action("Events")" class="text-primary text-sm font-medium">Events</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Vineyards</a>
+                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden sm:flex items-center bg-white/5 rounded-lg px-3 py-1.5 border border-white/10">
+                    <span class="material-symbols-outlined text-white/40 text-sm">search</span>
+                    <input type="text" placeholder="Search events..." class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-32 md:w-48">
+                </div>
+                <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all uppercase tracking-wider">
+                    Inquire
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 py-12 md:px-16">
+        <!-- Hero Section -->
+        <section class="mb-20">
+            <div class="relative h-[400px] w-full rounded-xl overflow-hidden group">
+                <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/20 to-transparent z-10"></div>
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC706C-bHRrX6lWXKlv9iAruIHDJRRMOJByHazE0n5Ow9bYW0Bvg3XL7zP6KxRH_mScbxW_exKvnVK7fN7OyEmIX7J-H_2AOvhH-qcKKSBC7lwag0pS2RwsYmQYlO7faHw0jBvJWBKJagQmh4zBDRu9bZgLk2uWEpLOc3Ju4YrSdJJEtv8FOnrpX12QHrtnIvIrf-k_gP_LvW9qoFpvk1V2sGdCJz67nBBczHVBxtC65hmr-S2gbWoxlPfsyTyfohnhH3wKCYjuhzk" alt="Exclusive Events" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Luxury wine cellar with candlelit table">
+                <div class="absolute bottom-10 left-10 z-20 max-w-2xl">
+                    <span class="text-primary font-bold tracking-[0.2em] text-sm uppercase mb-4 block">Our Calendar</span>
+                    <h2 class="font-display text-4xl md:text-6xl font-bold leading-tight">Exclusive Experiences & Cultural Journeys</h2>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2024 Events Section -->
+        <section class="mb-24">
+            <div class="flex items-center gap-6 mb-12">
+                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2024</h3>
+                <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Card 1 -->
+                <div class="flex flex-col group cursor-pointer">
+                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWAas9dsAp5c6JWFFx452TI7sx4Wa_AEBEUK7a3PNC9nbmbsqeSVM1FFJcjwaOGnJ1SkVj-yKHwvehtohxOkaH8f53KM7MOOClG19rUhRHvz-SZnkQSJ5bQCEsAZySkns6PCHSI9YUWDtJTEWzMrQHAiSUq5Qgo1T82hoz4o9_Aq4bZCO3CQz0wUA26Vl6ZjbJPzST2RjGR9EDLJNfFeyxzYSdK1eMDW55Aho-IDGaiJEt0jvHZPqfB5cMSgSVmUF_RYojRxG8jew" alt="Grand Cru Gala" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Black tie gala dinner setup">
+                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                            <p class="text-primary text-xl font-bold leading-none uppercase">14</p>
+                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">JUN</p>
+                        </div>
+                    </div>
+                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">GRAND CRU GALA</h4>
+                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <p class="font-display italic">Florence, Italy</p>
+                    </div>
+                    <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        Details
+                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                    </a>
+                </div>
+                <!-- Card 2 -->
+                <div class="flex flex-col group cursor-pointer">
+                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-4oxrO9D5nZoXPFROCEKfMgWvcWW94rGGuxP_X9s8xE374xV23HpI9_DWVApkoo6RP-J0WfhWhodV5Hiv-wmSwGQC8MwJrBcvpJJU2mXpoH5l232gt8kb1W9ZPC3MqHo2v3UgCxVt8qvi1lv9beXTmxZ57lOTc2Aaps6ZdpjLUsXrb4sQRtslXa5n1WnrnxzPJ-uZaX1669XHpAyIQcjcCqNBY7knZToOCbUdgvZxeCwTvIWKMdPc6pswaKJ0yvDG3i_CJSCOddU" alt="Tuscan Harvest Tour" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Golden hour vineyard in Tuscany">
+                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                            <p class="text-primary text-xl font-bold leading-none uppercase">22</p>
+                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">SEP</p>
+                        </div>
+                    </div>
+                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">TUSCAN HARVEST TOUR</h4>
+                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <p class="font-display italic">Siena, Italy</p>
+                    </div>
+                    <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        Details
+                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                    </a>
+                </div>
+                <!-- Card 3 -->
+                <div class="flex flex-col group cursor-pointer">
+                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVlOCCz8B463gC020Ayk_0XIk3gbHv8pmVIknjdY5680-WH4BVxkkqQNaOq6TnUx_LqIj9b35uFmX9bqP2-WVmHdpLMiOie7aFUjhRF9mRNsKXDELExcLV0ECE9-cncweNr4esDlsXAcPnkVeNiXVDY77WxR9vpWNuRx2iJJ22Mmza9tsFySxuLZ_U1h7CMNlkniqUmFfbIJprR4_awRCoqYXK3K6sUwgdZTs5rCAhMBnk9Yfn0BpELeTLCcgG4fwGS6jIzTTxTe8" alt="Private Cellar Tasting" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Sommelier pouring vintage wine">
+                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                            <p class="text-primary text-xl font-bold leading-none uppercase">05</p>
+                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">NOV</p>
+                        </div>
+                    </div>
+                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">PRIVATE CELLAR TASTING</h4>
+                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <p class="font-display italic">Bordeaux, France</p>
+                    </div>
+                    <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        Details
+                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2025 Events Section -->
+        <section class="mb-24">
+            <div class="flex items-center gap-6 mb-12">
+                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2025</h3>
+                <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Card 4 -->
+                <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoFhUii2l824Spy8X9uADjtWzYWm8PBCflfOsBm4SI-g8SDWhi2Tw6dlauWSss0AYowc41f-UINbnfuSnyWZq7wtmA0Uh8b1IaXoFDW9jL0CCCqq_Uq1aug1_7OErzMAFffI6pRMUNA3bt4c2nFLLwDaIp9en1CXblbFmhLsSA38C1blVsIahlPax7a6R4353y78OSqx-hbBZwlwgFqBxnxKFZoYx80b3CxRk6HLxsxspFvggX7nhBil2AD0lHuzzX8qSDBUn-Hy0" alt="Bordeaux Spring Release" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Spring vineyard in bloom">
+                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                            <p class="text-primary text-xl font-bold leading-none uppercase">12</p>
+                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">APR</p>
+                        </div>
+                    </div>
+                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">BORDEAUX SPRING RELEASE</h4>
+                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <p class="font-display italic">Saint-Émilion, France</p>
+                    </div>
+                    <a href="#" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        Details
+                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                    </a>
+                </div>
+                <!-- Card 5 -->
+                <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLXf7AFUYYdmCX0wjxSPRQtw82j1euUFSzGhQSYalz9pzySrDejrY9ab7S9RihX9C4nsUZn1SQDNedXH4VgLfTeqb0Cio4gKxnZzhY1fAHBwDI0d6q96-GwuPvqDPtHhnImgwPFg04c9D3tdGS1h9W3V_kuJirteHZO_t9m2B3mj8cHhHLhfWhZT86_ij-kocRsXBXAkWjyq265EWwDHX3U8nhiyDL_Q2FR77ePVPqxlIdpbBhKXiESlVy4djEqfVavKqmoEmHSTk" alt="Artisanal Workshop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Hands working with grapevines">
+                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                            <p class="text-primary text-xl font-bold leading-none uppercase">30</p>
+                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">MAY</p>
+                        </div>
+                    </div>
+                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">ARTISANAL WORKSHOPS</h4>
+                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                        <p class="font-display italic">Napa Valley, USA</p>
+                    </div>
+                    <a href="#" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        Details
+                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal border-t border-white/5 pt-20 pb-10 px-6 md:px-16">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="text-primary size-6">
+                            <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <h2 class="font-display text-xl font-bold tracking-tight">Vitinerario</h2>
+                    </div>
+                    <p class="text-white/40 max-w-sm font-display italic leading-relaxed">
+                        Crafting unforgettable journeys through the world's most prestigious vineyards and cultural landmarks.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-6">Quick Links</h5>
+                    <ul class="space-y-4 text-white/50 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors">Curated Tours</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Membership</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Our Story</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-bold text-sm uppercase tracking-widest mb-6">Connect</h5>
+                    <ul class="space-y-4 text-white/50 text-sm">
+                        <li><a href="#" class="hover:text-primary transition-colors">Instagram</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">LinkedIn</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Concierge</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-white/5 pt-8 gap-4">
+                <p class="text-white/30 text-xs">© 2024 Vitinerario Luxury Travel Group. All rights reserved.</p>
+                <div class="flex gap-8">
+                    <span class="text-white/30 text-xs uppercase tracking-widest">Designed for Excellence</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
