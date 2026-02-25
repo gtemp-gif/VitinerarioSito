@@ -1,0 +1,327 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Vitinerario | The Podcast Archive";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D31A53",
+                        "background-dark": "#121212",
+                        "surface-dark": "#1E1E1E",
+                        "burgundy-glow": "rgba(211, 26, 83, 0.2)",
+                        "stone-grey": "#A8A29E"
+                    },
+                    fontFamily: {
+                        "display": ["Lovelo", "sans-serif"],
+                        "body": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        @@font-face {
+            font-family: 'Lovelo';
+            src: url('https://fonts.cdnfonts.com/css/lovelo');
+        }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212 !important;
+            color: #A8A29E;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Lovelo', sans-serif !important;
+            text-transform: uppercase !important;
+            letter-spacing: 0.05em;
+            color: #FFFFFF;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .burgundy-button {
+            background-color: #D31A53;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .burgundy-button:hover {
+            background-color: #b01544;
+            box-shadow: 0 0 15px rgba(211, 26, 83, 0.4);
+        }
+    </style>
+}
+
+<main class="max-w-[1400px] mx-auto px-6 lg:px-20 py-12">
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-md border-b border-white/5 px-6 lg:px-20 py-6">
+        <div class="max-w-[1400px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-12">
+                <div class="flex items-center gap-3">
+                    <div class="text-primary size-8">
+                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <h2 class="text-2xl font-bold tracking-tight font-display">Vitinerario</h2>
+                </div>
+                <nav class="hidden md:flex items-center gap-8">
+                    <a href="#" class="text-[10px] font-bold tracking-[0.2em] uppercase hover:text-primary transition-colors text-white">Archive</a>
+                    <a href="#" class="text-[10px] font-bold tracking-[0.2em] uppercase hover:text-primary transition-colors text-white">Seasons</a>
+                    <a href="#" class="text-[10px] font-bold tracking-[0.2em] uppercase hover:text-primary transition-colors text-white">Guests</a>
+                    <a href="#" class="text-[10px] font-bold tracking-[0.2em] uppercase hover:text-primary transition-colors text-white">About</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="relative hidden sm:block">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#964f65] text-xl">search</span>
+                    <input type="text" class="pl-10 pr-4 py-2 bg-[#1E1E1E] border border-white/10 text-white text-xs w-64 focus:ring-1 focus:ring-primary outline-none" placeholder="Search archive...">
+                </div>
+                <button class="burgundy-button px-6 py-2 text-[10px] font-black uppercase tracking-widest transition-all">
+                    Subscribe
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="mb-20 text-center max-w-3xl mx-auto">
+        <p class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4">A Sensory Journey</p>
+        <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">The Archive</h1>
+        <p class="text-lg text-stone-grey leading-relaxed max-w-2xl mx-auto">
+            An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
+            <button class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3">
+                <span class="material-symbols-outlined text-sm">play_circle</span>
+                Watch on YouTube
+            </button>
+            <button class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-colors">
+                <span class="material-symbols-outlined text-sm">headset</span>
+                Listen on Spotify
+            </button>
+        </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <div class="flex items-center justify-between border-b border-[#e6d0d7] dark:border-[#3d242b] mb-12">
+        <div class="flex gap-10">
+            <button class="border-b-2 border-primary pb-4 text-[10px] font-black uppercase tracking-widest text-white">All Episodes</button>
+            <button class="text-[#964f65] hover:text-primary pb-4 text-sm font-bold transition-colors">Season 01</button>
+            <button class="text-[#964f65] hover:text-primary pb-4 text-sm font-bold transition-colors">Season 02</button>
+            <button class="text-[#964f65] hover:text-primary pb-4 text-sm font-bold transition-colors">Special Features</button>
+        </div>
+        <div class="pb-4 text-xs text-[#964f65] uppercase font-bold tracking-widest">
+            Showing 12 Episodes
+        </div>
+    </div>
+
+    <!-- Episode Row 01 -->
+    <section class="mb-24 group">
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex items-center gap-3">
+                <span class="text-primary font-bold text-sm tracking-widest">EPISODE 08</span>
+                <span class="h-px flex-1 bg-[#e6d0d7] dark:bg-[#3d242b]"></span>
+                <span class="text-[#964f65] text-xs font-medium uppercase">Oct 24, 2023</span>
+            </div>
+            <h3 class="text-4xl font-black group-hover:text-primary transition-colors text-white mb-2">Architectural Rhythms: The Sound of Space</h3>
+        </div>
+        <div class="grid grid-cols-12 gap-6 items-stretch">
+            <!-- Main Feature (16:9) -->
+            <div class="col-span-12 lg:col-span-7 xl:col-span-8">
+                <div class="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-black group/video">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/video:scale-105 opacity-80" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-pAWw3ICWvEbqyITKZusMgyt5ftgvvd7HCoSj_h45pLs_yGM70SpCR_4QoIQG-KuEWgjFIR-9y05JCTew-t1aK-2Y_k-Ab2QzfZ3iJK-HA9vuXR0ajl0Q2umiH6RLAvaTEWAfUxUj4L9Zhzaizmhb2A9V_CHozOCW85LupntB9FSQhUgleo-0-3VGSDfHmHHpmYD6WMOhW3btyvDuyWJt4_K6FXmP1XCwQ71Z4ecKgved-oUWElIactjAcgWdCprt8ZOGPtowxMs');" data-alt="Modern geometric skyscraper facade under clear blue sky"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="size-20 bg-primary text-white flex items-center justify-center transform transition-transform hover:scale-110 hover:shadow-[0_0_30px_rgba(211,26,83,0.5)]">
+                            <span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+                        </button>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div class="text-white">
+                            <p class="text-sm font-medium opacity-80 mb-1">Featuring</p>
+                            <p class="text-xl font-bold font-display">Elena Moretti</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold">
+                            48:22
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 max-w-2xl">
+                    <p class="text-stone-grey leading-relaxed text-sm">
+                        A deep dive into how modern brutalism influences sensory perception. We sit down with Elena Moretti to discuss the sonic landscape of concrete structures and the emotional resonance of empty spaces.
+                    </p>
+                </div>
+            </div>
+            <!-- Shorts Series (9:16) -->
+            <div class="col-span-12 lg:col-span-5 xl:col-span-4">
+                <div class="h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#964f65]">Associated Shorts</h4>
+                        <div class="flex gap-2">
+                            <button class="material-symbols-outlined text-sm p-1 rounded-full hover:bg-[#f3e8eb] dark:hover:bg-[#2d1a21]">chevron_left</button>
+                            <button class="material-symbols-outlined text-sm p-1 rounded-full hover:bg-[#f3e8eb] dark:hover:bg-[#2d1a21]">chevron_right</button>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-x-auto hide-scrollbar flex gap-4 lg:grid lg:grid-cols-2 lg:overflow-hidden">
+                        <!-- Short 1 -->
+                        <div class="min-w-[160px] lg:min-w-0 aspect-[9/16] relative rounded-lg overflow-hidden group/short shadow-lg">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover/short:scale-110 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKgA5vDjruKKhTLuS9Yz3Chh3iuHsqo-6bGULzNsIH_adERelkzrWEH0OqZaopNvD-_MCa2-Z_-sPfArZ8kncxpWZEQkNV7QgN3aPTOloUV5vsqTjOZBF7hamIqT4oANzoxBtzsogUcj91jWw4sl4XNkixhiZDt7Muls3tQcHKO2zaWgoHB-ANCESxJr1MVoKS5HOZg3FJJm43eu6w8DsZewFtnxm74cZMi0m70P0FhKwNuhxby5T-xjyrBve8eN0wkT6Dgzaj36A');" data-alt="Close up of architectural concrete texture and shadows"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3">
+                                <p class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase">The Texture of Silence</p>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-white text-[10px]">timer</span>
+                                    <span class="text-white text-[10px] font-medium">0:45</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 2 -->
+                        <div class="min-w-[160px] lg:min-w-0 aspect-[9/16] relative rounded-lg overflow-hidden group/short shadow-lg">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover/short:scale-110 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCACRgKxotuC41C-FtBlkO9jEFmrXPT6j8XiYT4zcH0O2QUx2wk8sxQCcr-J1qJ87aetXk0kVDTQkLJY_1_7Ri9b4hLWfcVl5ZsWggMgGojiHGW7b75NXMetPE6ILQOqlg-JWCgvXaXdv4sZDXwB6XU3G1nWxUBI3UvFyEh8mh8M-ltUWwfpp_s6PaWeiJTVEzCeKLi92IiXURAJpq8mMvjv64oikrZADGEgciotNmc0XiZpOxMkqNa4qkFQa6_3LgR4bKcnT1qBLY');" data-alt="Interior view of a minimalist white gallery space"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3">
+                                <p class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase">Light as Material</p>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-white text-[10px]">timer</span>
+                                    <span class="text-white text-[10px] font-medium">0:58</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Episode Row 02 -->
+    <section class="mb-24 group">
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex items-center gap-3">
+                <span class="text-primary font-bold text-sm tracking-widest">EPISODE 07</span>
+                <span class="h-px flex-1 bg-[#e6d0d7] dark:bg-[#3d242b]"></span>
+                <span class="text-[#964f65] text-xs font-medium uppercase">Oct 10, 2023</span>
+            </div>
+            <h3 class="text-4xl font-black group-hover:text-primary transition-colors text-white mb-2">The Weaver's Logic: Traditional Craft meets Tech</h3>
+        </div>
+        <div class="grid grid-cols-12 gap-6 items-stretch">
+            <!-- Main Feature (16:9) -->
+            <div class="col-span-12 lg:col-span-7 xl:col-span-8">
+                <div class="relative aspect-video rounded-xl overflow-hidden shadow-2xl bg-black group/video">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/video:scale-105 opacity-80" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMr5LdP9JNJp046-KF5jUg1xjbwC1oXIXkb2ZRMf8VMt0BEbX9Jm9tZ05NqhVSPMvKGdGPQG3PjnoC426JPp5Uei_gf-U_8OuC2QZfmjDGjXxSDoIogU-vWaW5dfmMkXbJE31EFH8i4YWhKc4Wcfz8bLpQ_s67dnwVMW3Ew0VUMW1BER48im9iRCLSMTLL70fbNEgBcQcH4dhgpQvlTOpN9OllBtUq84pB_zVTbjlODunErOGKJUIhrfKI-hbUH2B8enss_8dAI34');" data-alt="Close up of textile fibers and intricate weaving patterns"></div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <button class="size-20 bg-primary text-white flex items-center justify-center transform transition-transform hover:scale-110 hover:shadow-[0_0_30px_rgba(211,26,83,0.5)]">
+                            <span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+                        </button>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div class="text-white">
+                            <p class="text-sm font-medium opacity-80 mb-1">Featuring</p>
+                            <p class="text-xl font-bold font-display">Julian Velez</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-white text-xs font-bold">
+                            52:10
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 max-w-2xl">
+                    <p class="text-stone-grey leading-relaxed text-sm">
+                        How ancient weaving patterns are being decoded through computational design. Julian Velez explores the intersection of heritage textiles and architectural skin systems.
+                    </p>
+                </div>
+            </div>
+            <!-- Shorts Series (9:16) -->
+            <div class="col-span-12 lg:col-span-5 xl:col-span-4">
+                <div class="h-full flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-xs font-bold uppercase tracking-widest text-[#964f65]">Associated Shorts</h4>
+                        <div class="flex gap-2">
+                            <button class="material-symbols-outlined text-sm p-1 rounded-full hover:bg-[#f3e8eb] dark:hover:bg-[#2d1a21]">chevron_left</button>
+                            <button class="material-symbols-outlined text-sm p-1 rounded-full hover:bg-[#f3e8eb] dark:hover:bg-[#2d1a21]">chevron_right</button>
+                        </div>
+                    </div>
+                    <div class="flex-1 overflow-x-auto hide-scrollbar flex gap-4 lg:grid lg:grid-cols-2 lg:overflow-hidden">
+                        <!-- Short 1 -->
+                        <div class="min-w-[160px] lg:min-w-0 aspect-[9/16] relative rounded-lg overflow-hidden group/short shadow-lg">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover/short:scale-110 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAQNFWje7TYXaTGJvLL6mSJiKaO5Ic00qw9vJMTJVDfAvEVXEbiLWcXxWvu0_NvnziKAyOdJE1lGQG3dVktGxeXqZL_0tEV_ui9_R_1tCaZkzRVyyCYsabV68axBBkqf6d5nb864F_A44k1EbHzZu1NojfhByML2ILNTSODJwU7r7iefG-kieoCrxUa_QXDGKKbbZoGMsF1RuE-c1N_lBRUbIN_6_3dt6_HzLGtBJ2hLla1y6qDXJcr73JQKaE49MtsTnNNR74KkVA');" data-alt="Macro photo of colorful silk threads"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3">
+                                <p class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase">Color Theory in Craft</p>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-white text-[10px]">timer</span>
+                                    <span class="text-white text-[10px] font-medium">1:12</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Short 2 -->
+                        <div class="min-w-[160px] lg:min-w-0 aspect-[9/16] relative rounded-lg overflow-hidden group/short shadow-lg">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover/short:scale-110 transition-transform duration-500" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAJ8mex5QX6CZn7_omkOuLrFPM1Q7zSaSoMta-LyP9XU8GeSj005jAW0LfyvVnq1vaT8b5pG8BDQUKd_gSvzAtvcNRC-8Yb8pFSYh7ttte5qs5IUvnJ0wm2bh6eoK5ikbziun5VceriCquyKulzFwqwion1ap5hBwO66OMnzukAAqFMblIiMuOG5OvIXR-wjA--RVwS2t8nuQwb8BbowfJzFZLx4jeEPD84M65zTBDjJr7wHzhOgyYlrnIda8iSPpEXqshnZsUqks');" data-alt="Digital wireframe of a complex 3D woven structure"></div>
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                            <div class="absolute bottom-3 left-3 right-3">
+                                <p class="text-white text-[10px] font-bold leading-tight line-clamp-2 uppercase">Coding the Loom</p>
+                                <div class="flex items-center gap-1 mt-1">
+                                    <span class="material-symbols-outlined text-white text-[10px]">timer</span>
+                                    <span class="text-white text-[10px] font-medium">0:32</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Footer Component -->
+    <footer class="mt-32 pt-20 border-t border-[#e6d0d7] dark:border-[#3d242b]">
+        <div class="grid md:grid-cols-2 gap-16 items-center bg-[#1E1E1E] p-12 lg:p-20">
+            <div>
+                <h2 class="text-4xl font-bold mb-6 text-white">Stay within the narrative.</h2>
+                <p class="text-[#964f65] text-lg max-w-md italic font-display">
+                    Join our inner circle for exclusive architectural insights, sensory essays, and early access to archival releases.
+                </p>
+            </div>
+            <div>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" class="flex-1 px-6 py-4 bg-[#121212] border border-white/10 text-white text-sm focus:ring-1 focus:ring-primary outline-none" placeholder="Your email address">
+                    <button class="burgundy-button px-10 py-4 font-black uppercase tracking-widest text-xs">
+                        Join Archive
+                    </button>
+                </form>
+                <p class="mt-4 text-[10px] text-[#964f65] uppercase tracking-[0.2em] font-bold">Privacy ensured. Quarterly releases.</p>
+            </div>
+        </div>
+        <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
+            <div class="flex items-center gap-3">
+                <div class="text-primary size-6">
+                    <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
+                    </svg>
+                </div>
+                <span class="text-lg font-bold font-display text-white">Vitinerario</span>
+            </div>
+            <div class="flex gap-10 text-xs font-bold text-[#964f65] uppercase tracking-widest">
+                <a href="#" class="hover:text-primary transition-colors">Instagram</a>
+                <a href="#" class="hover:text-primary transition-colors">Vimeo</a>
+                <a href="#" class="hover:text-primary transition-colors">Spotify</a>
+            </div>
+            <p class="text-xs text-[#964f65]">© 2024 Vitinerario Studio. All rights reserved.</p>
+        </div>
+    </footer>
+</main>

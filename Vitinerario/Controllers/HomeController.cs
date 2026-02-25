@@ -1,24 +1,50 @@
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Vitinerario.Models;
 
 namespace Vitinerario.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult Archive()
+        {
+            return View();
+        }
+
+        public IActionResult EventDetails()
+        {
+            return View();
+        }
+
+        public IActionResult Events()
+        {
+            return View();
+        }
+
+        public IActionResult StyleGuide()
+        {
+            return View();
+        }
+
+        public IActionResult Producers()
+        {
+            return View();
+        }
+
+        public IActionResult Article()
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
+        {
+            return View();
+        }
+
+        public IActionResult Podcast()
         {
             return View();
         }
@@ -26,7 +52,7 @@ namespace Vitinerario.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }

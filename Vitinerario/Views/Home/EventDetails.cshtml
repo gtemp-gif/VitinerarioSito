@@ -1,6 +1,6 @@
 @{
     Layout = "_LayoutVitinerario";
-    ViewData["Title"] = "The Harvest Gala";
+    ViewData["Title"] = "The Harvest Gala | Vitinerario Event Details";
 }
 
 @section TailwindConfig {
@@ -55,12 +55,12 @@
         <a href="#" class="hover:text-primary transition-colors">Wine Guides</a>
         <a href="#" class="hover:text-primary transition-colors">Travel</a>
         <a href="#" class="hover:text-primary transition-colors">Culture</a>
-        <a href="@Url.Action("Events")" class="hover:text-primary transition-colors">Events</a>
+        <a href="#" class="hover:text-primary transition-colors">Events</a>
     </div>
     <div>
-        <a href="@Url.Action("Index")" class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full text-sm uppercase tracking-wider hover:bg-white/20 transition-all inline-block">
+        <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full text-sm uppercase tracking-wider hover:bg-white/20 transition-all">
             Magazine
-        </a>
+        </button>
     </div>
 </nav>
 
@@ -228,7 +228,7 @@
             <div class="h-80 rounded-xl overflow-hidden group relative border border-stone-800">
                 <div class="w-full h-full bg-stone-900 flex items-center justify-center overflow-hidden">
                     <div class="absolute inset-0 grayscale opacity-40 hover:opacity-100 transition-opacity">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEcsJQMavyHfW8C4MLzjVGAX_Tfp7aVA7hqDUcizP_HgSkncwG0sqnGpgqjdtYO459lqGFj4wX0GexsTtiBM6VEa3sBhuw5h8_RMNqItP_GrxdBECCZmuROmei113D4Cv7Xhv4-COtJGd2lgHyIvWBbUrtIf2eQhb4KQgATLpRJ_-IzROzC4oYX95hrxNj49xFoOfOqqoAWIeO2q8L28-EnZK4NjiWXcU3C0bFDk5SY9OGs00y9pUWY1fFfGZmcs-rTSCnDNP4iHM" class="w-full h-full object-cover">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEcsJQMavyHfW8C4MLzjVGAX_Tfp7aVA7hqDUcizP_HgSkncwG0sqnGpgqjdtYO459lqGFj4wX0GexsTtiBM6VEa3sBhuw5h8_RMNqItP_GrxdBECCZmuROmei113D4Cv7Xhv4-COtJGd2lgHyIvWBbUrtIf2eQhb4KQgATLpRJ_-IzROzC4oYX95hrxNj49xFoOfOqqoAWIeO2q8L28-EnZK4NjiWXcU3C0bFDk5SY9OGs00y9pUWY1fFfGZmcs-rTSCnDNP4iHM">
                     </div>
                     <div class="relative z-10 text-center px-6">
                         <span class="material-icons text-primary text-4xl mb-2">location_on</span>

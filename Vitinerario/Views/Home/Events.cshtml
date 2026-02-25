@@ -42,6 +42,7 @@
 }
 
 <div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-sans selection:bg-primary selection:text-white">
+
     <!-- Navigation Bar -->
     <header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 md:px-16 py-4">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
@@ -49,23 +50,23 @@
                 <div class="flex items-center gap-3">
                     <div class="text-primary size-8">
                         <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"/>
+                            <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
                         </svg>
                     </div>
                     <h1 class="font-display text-2xl font-bold tracking-tight">Vitinerario</h1>
                 </div>
                 <nav class="hidden lg:flex items-center gap-8">
-                    <a href="@Url.Action("Index")" class="text-sm font-medium hover:text-primary transition-colors">Home</a>
-                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Experiences</a>
-                    <a href="@Url.Action("Events")" class="text-primary text-sm font-medium">Events</a>
-                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Vineyards</a>
-                    <a href="#" class="text-sm font-medium hover:text-primary transition-colors">Contact</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Experiences</a>
+                    <a class="text-primary text-sm font-medium" href="#">Events</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Vineyards</a>
+                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
                 </nav>
             </div>
             <div class="flex items-center gap-6">
                 <div class="hidden sm:flex items-center bg-white/5 rounded-lg px-3 py-1.5 border border-white/10">
                     <span class="material-symbols-outlined text-white/40 text-sm">search</span>
-                    <input type="text" placeholder="Search events..." class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-32 md:w-48">
+                    <input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-32 md:w-48" placeholder="Search events..." type="text"/>
                 </div>
                 <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all uppercase tracking-wider">
                     Inquire
