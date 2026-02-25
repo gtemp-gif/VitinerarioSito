@@ -9,6 +9,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans:wght@400;500;700&family=Montserrat:wght@700;800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- Tailwind Library (Loaded last to respect config) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
     <!-- Material Icons/Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
@@ -18,42 +20,10 @@
     <!-- Custom Fonts -->
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
 
-    <!-- Page Specific Config or Default Layout Config -->
-    @if (IsSectionDefined("TailwindConfig"))
-    {
-        @await RenderSectionAsync("TailwindConfig", required: false)
-    }
-    else
-    {
-        <script>
-            tailwind.config = {
-                darkMode: "class",
-                theme: {
-                    extend: {
-                        colors: {
-                            "primary": "#d31a53",
-                            "dark-charcoal": "#121212",
-                            "charcoal-light": "#1e1e1e",
-                            "accent-burgundy": "#d31a53"
-                        },
-                        fontFamily: {
-                            "body": ["Roboto", "sans-serif"],
-                            "display": ["Montserrat", "sans-serif"],
-                            "lovelo": ["Montserrat", "sans-serif"]
-                        },
-                        letterSpacing: {
-                            "widest-plus": "0.3em",
-                            "architectural": "0.05em"
-                        }
-                    },
-                },
-            }
-        </script>
-    }
+    <!-- Page Specific Config -->
+    @await RenderSectionAsync("TailwindConfig", required: false)
 
-    <!-- Tailwind Library (Loaded last to respect config) -->
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
+   
     @await RenderSectionAsync("Styles", required: false)
 
     <style>
@@ -100,6 +70,32 @@
     </style>
 </head>
 <body class="bg-[#121212] text-white antialiased">
+    <header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+        <div class="max-w-[1440px] mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+               @*  <div class="text-primary">
+                    <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"></path>
+                    </svg>
+                </div> *@
+                @* <h1 class="lov-heading text-xl font-black tracking-tighter text-white">Vitinerario</h1> *@
+                <a href="@Url.Action("Index", "Home")">
+                    <img src="/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-8 w-auto">
+                </a>
+            </div>
+            <nav class="hidden md:flex items-center gap-12 font-refined text-xs tracking-widest uppercase text-slate-100">
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">Archive</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">Events</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">Podcast</a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all">
+                    Inquire Now
+                </button>
+            </div>
+        </div>
+    </header>
     @RenderBody()
 
     <!-- Floating Navigation -->
@@ -113,6 +109,57 @@
     </div>
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <footer class="bg-dark-charcoal border-t border-white/5 py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
+            <div class="col-span-1">
+                @* <a class="nav-brand text-2xl font-black tracking-tighter text-primary block mb-8" href="/">VITINERARIO</a> *@
+                    <a class="nav-brand block mb-8" href="/">
+                        <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-10 w-auto">
+                    </a>
+                <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">
+                    The definitive guide for the modern connoisseur of fine wine, culture, and slow travel.
+                </p>
+            </div>
+            <div>
+                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Discover</h6>
+                <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
+                    <li><a href="#" class="hover:text-primary transition-colors">Wine Region Guides</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Culture & Arts</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Luxury Lodging</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Interviews</a></li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Magazine</h6>
+                <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
+                    <li><a href="#" class="hover:text-primary transition-colors">The Latest Issue</a></li>
+                    <li><a href="@Url.Action("Archive")" class="hover:text-primary transition-colors">Archive</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Contributors</a></li>
+                    <li><a href="#" class="hover:text-primary transition-colors">Subscriptions</a></li>
+                </ul>
+            </div>
+            <div>
+                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Follow</h6>
+                <div class="flex space-x-8">
+                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">camera_alt</span></a>
+                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">facebook</span></a>
+                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">alternate_email</span></a>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 text-[9px] uppercase tracking-widest-plus font-black text-white/20">
+                <p>© 2026 Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
+            <div class="flex space-x-10 mt-6 md:mt-0">
+                <a href="#" class="hover:text-primary">Privacy Policy</a>
+                <a href="@Url.Action("Terms")" class="hover:text-primary">Terms of Service</a>
+                <a href="#" class="hover:text-primary">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

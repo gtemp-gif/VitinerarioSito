@@ -1,6 +1,143 @@
 @{
+    Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Premium Wine, Culture & Travel Magazine";
 }
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d31a53",
+                        "dark-charcoal": "#121212",
+                        "charcoal-light": "#1e1e1e",
+                        "accent-burgundy": "#d31a53"
+                    },
+                    fontFamily: {
+                        "body": ["Roboto", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "lovelo": ["Montserrat", "sans-serif"]
+                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
+                    }
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        body {
+            @@apply font-body bg-dark-charcoal text-white/90 antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-brand {
+            @@apply font-display tracking-architectural uppercase;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.8) 100%);
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        @@keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 40s linear infinite;
+        }
+
+        .partner-logo {
+            @@apply transition-all duration-500 grayscale opacity-40 hover:grayscale-0 hover:opacity-100;
+        }
+
+        .app-mockup-shadow {
+            box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5), 0 30px 60px -30px rgba(211, 26, 83, 0.1);
+        }
+
+        .event-card {
+            @@apply bg-charcoal-light border border-white/5 p-8 rounded-xl hover:border-primary/30 transition-all duration-300;
+        }
+
+        .podcast-gradient {
+            background: linear-gradient(90deg, rgba(18,18,18,1) 0%, rgba(18,18,18,0.7) 50%, rgba(18,18,18,0) 100%);
+        }
+
+        .split-pane {
+            @@apply relative overflow-hidden transition-all duration-700 ease-in-out cursor-pointer flex flex-col justify-center items-center text-center p-12;
+        }
+
+        .split-pane-content {
+            @@apply relative z-20 transition-transform duration-700;
+        }
+
+        .split-container:hover .split-pane:not(:hover) {
+            flex-grow: 0.5;
+            filter: grayscale(0.5) contrast(0.8);
+        }
+
+        .split-container .split-pane:hover {
+            flex-grow: 1.5;
+        }
+
+        .split-pane:hover .split-pane-content {
+            transform: scale(1.05);
+        }
+
+        .text-amber-gold {
+            color: #FFBF00;
+        }
+
+        .border-amber-gold {
+            border-color: #FFBF00;
+        }
+
+        .hover\:bg-amber-gold:hover {
+            background-color: #FFBF00;
+        }
+    </style>
+}
+
+@* <nav class="sticky top-0 z-50 w-full bg-dark-charcoal/90 backdrop-blur-md border-b border-white/5">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center space-x-10">
+            <button class="text-white hover:text-primary transition-colors">
+                <span class="material-icons">menu</span>
+            </button>
+            <div class="hidden md:flex space-x-8 text-[11px] uppercase tracking-widest-plus font-bold">
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">Archive</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">Events</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">Podcast</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("StyleGuide")">Style Guide</a>
+            </div>
+        </div>
+        <a class="nav-brand text-2xl font-black tracking-tighter text-primary" href="/">VITINERARIO</a>
+        <div class="flex items-center space-x-6">
+            <button class="hover:text-primary transition-colors">
+                <span class="material-icons">search</span>
+            </button>
+            <button class="hidden md:block bg-primary text-white px-6 py-2.5 text-[10px] uppercase tracking-widest font-bold hover:bg-opacity-90 transition-all">
+                Subscribe
+            </button>
+        </div>
+    </div>
+</nav> *@
 
 <section class="relative h-[92vh] w-full overflow-hidden">
     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBIK3r1moCGug_I9omdSxO7bwEX3KznEah68A8ijr-C1oEQFmRKiMeCuoEQOauwLw0gAkZe8o9qDw09Tsy2QAIX-p-HVWOmAU1Pd00Ai8UpiUmm4zxQUh4ZdsrZ-G3sMYFu35KIM_xabj6TTSAKa_JkZIpo4rC60ejah3RDxz10Ov1S7xGB5muX3IcVTuIlsuYY_35BtfmMEe0qj656rA-Yw6oJQK48pbj8HPKfmEYiThWQrzw25j-ZfeBFoNrp92cGTUnNWV5tMQ" alt="Vineyard at Sunset" class="absolute inset-0 w-full h-full object-cover">
@@ -10,7 +147,7 @@
                 <span class="inline-block px-4 py-1.5 bg-primary text-[10px] uppercase tracking-widest-plus font-black mb-8">Featured Story</span>
                 <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">The Art of the <br>Harvest.</h1>
                 <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">An intimate journey through the golden hours of the Chianti Classico region.</p>
-                <a href="@Url.Action("Article", "Home")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
+                <a href="@Url.Action("Article")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
                     Read Feature
                     <span class="material-icons ml-3 group-hover:translate-x-2 transition-transform">arrow_forward</span>
                 </a>
@@ -45,7 +182,7 @@
     <div class="flex items-end justify-between mb-16">
         <div>
             <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Real Time</span>
-            <h2 class="text-5xl font-black">Latest News</h2>
+            <h2 class="text-5xl font-black">News</h2>
         </div>
         <a href="#" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
             Global Feed <span class="material-icons text-sm ml-2">rss_feed</span>
@@ -59,7 +196,9 @@
                     <span class="bg-primary text-white text-[9px] px-3 py-1 font-black uppercase tracking-widest">Just In</span>
                 </div>
             </div>
-            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Record-Breaking Vintage Predicted for Ribera del Duero</h4>
+            <a href="@Url.Action("Article")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                 <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Record-Breaking Vintage Predicted for Ribera del Duero</h4>
+            </a>
             <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Experts suggest 2024 could be the most balanced harvest in a decade due to unique climatic patterns across Spain.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">2 Hours Ago</span>
@@ -73,8 +212,10 @@
                     <span class="bg-primary text-white text-[9px] px-3 py-1 font-black uppercase tracking-widest">Market</span>
                 </div>
             </div>
-            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Investment Alert: The Surge of Rare Japanese Whiskeys</h4>
-            <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Auction prices for Karuizawa and Yamazaki continue to climb, reaching new historical peaks this quarter.</p>
+            <a href="@Url.Action("Article")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Investment Alert: The Surge of Rare Japanese Whiskeys</h4>
+            </a>
+                <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Auction prices for Karuizawa and Yamazaki continue to climb, reaching new historical peaks this quarter.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">5 Hours Ago</span>
                 <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
@@ -87,8 +228,10 @@
                     <span class="bg-primary text-white text-[9px] px-3 py-1 font-black uppercase tracking-widest">Events</span>
                 </div>
             </div>
-            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Bordeaux Primeurs 2024: Exclusive Member Access</h4>
-            <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Vitinerario Circle members gain early registration for the most anticipated tasting event of the year.</p>
+            <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Bordeaux Primeurs 2024: Exclusive Member Access</h4>
+           </a>
+                <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Vitinerario Circle members gain early registration for the most anticipated tasting event of the year.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">12 Hours Ago</span>
                 <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
@@ -101,8 +244,10 @@
                     <span class="bg-primary text-white text-[9px] px-3 py-1 font-black uppercase tracking-widest">Travel</span>
                 </div>
             </div>
-            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Sustainable Tourism Initiative in Provence</h4>
-            <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">A new alliance of boutique wineries announces a zero-carbon trail through the heart of the region.</p>
+            <a href="@Url.Action("Podcast")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">Sustainable Tourism Initiative in Provence</h4>
+            </a>
+             <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">A new alliance of boutique wineries announces a zero-carbon trail through the heart of the region.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">1 Day Ago</span>
                 <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
@@ -111,7 +256,7 @@
     </div>
 </section>
 
-<section id="producers" class="bg-black h-[80vh] overflow-hidden flex flex-col">
+<section class="bg-black h-[80vh] overflow-hidden flex flex-col">
     <div class="flex flex-col md:flex-row h-full split-container w-full">
         <!-- Producers Side -->
         <div class="split-pane flex-1 bg-black group/pro">
@@ -122,7 +267,7 @@
                 <span class="text-amber-gold text-xs uppercase tracking-[0.3em] font-bold mb-6 block">Partnerships</span>
                 <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">FOR THE <br>PRODUCERS</h2>
                 <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">Showcase your heritage to a global audience of dedicated connoisseurs.</p>
-                <a href="@Url.Action("Producers", "Home")" class="border-2 border-amber-gold text-amber-gold hover:bg-amber-gold hover:text-black px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">Collaborate</a>
+                <a href="@Url.Action("Producers")" class="border-2 border-amber-gold text-amber-gold hover:bg-amber-gold hover:text-black px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">Collaborate</a>
             </div>
         </div>
         <!-- Wine Lovers Side -->
@@ -134,20 +279,20 @@
                 <span class="text-primary text-xs uppercase tracking-[0.3em] font-bold mb-6 block">Community</span>
                 <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">FOR THE <br>WINE LOVERS</h2>
                 <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">Access exclusive vintages, travel journals, and private member events.</p>
-                <a asp-controller="Eventi" asp-action="Partecipa" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all inline-block">Join Circle</a>
+                <button class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">Join Circle</button>
             </div>
         </div>
     </div>
 </section>
 
-<main id="archive" class="max-w-7xl mx-auto px-6 py-32">
+<main class="max-w-7xl mx-auto px-6 py-32">
     <div class="flex items-end justify-between mb-20 border-b border-white/10 pb-8">
         <div>
             <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Curated</span>
-            <h2 class="text-5xl font-black">The Cellar</h2>
+            <h2 class="text-5xl font-black">Articoli</h2>
         </div>
-        <a href="@Url.Action("Archive", "Home")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
-            View All Stories <span class="material-icons text-sm ml-2">add</span>
+        <a href="@Url.Action("Archive")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
+            Leggi tutti gli articoli <span class="material-icons text-sm ml-2">add</span>
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
@@ -157,14 +302,20 @@
                 <div class="absolute inset-0 ring-1 ring-inset ring-white/10"></div>
             </div>
             <div class="space-y-6">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">Oenology</span>
-                <h3 class="text-4xl md:text-5xl font-black group-hover:text-primary transition-colors leading-tight">Oenology Trends 2024: The Return to Amphora Aging</h3>
+                <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">Enology</span>
+                @* <h3 class="text-4xl md:text-5xl font-black group-hover:text-primary transition-colors leading-tight">Enology Trends 2024: The Return to Amphora Aging</h3> *@
+                <a href="@Url.Action("Article")" class="block">
+                    <h3 class="text-4xl md:text-5xl font-black group-hover:text-primary transition-colors leading-tight">
+                        Enology Trends 2024: The Return to Amphora Aging
+                    </h3>
+                </a>
                 <p class="text-white/60 leading-relaxed text-lg max-w-2xl">Ancient techniques meet modern precision as winemakers worldwide rediscover the purity of clay vessel fermentation.</p>
                 <div class="pt-4 flex items-center text-[10px] font-bold uppercase tracking-widest-plus text-white/40">
                     <span class="text-white/70">Isabella Conti</span>
                     <span class="mx-4 text-primary opacity-50">/</span>
                     <span>8 Min Read</span>
                 </div>
+                
             </div>
         </div>
         <div class="md:col-span-4 flex flex-col gap-16">
@@ -174,7 +325,10 @@
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10"></div>
                 </div>
                 <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">Architecture</span>
-                <h4 class="text-xl font-bold mt-4 group-hover:text-primary transition-colors leading-snug">The Architecture of Modern Wineries</h4>
+                <a href="@Url.Action("Article")" class="block">
+                    <h4 class="text-xl font-bold mt-4 group-hover:text-primary transition-colors leading-snug">The Architecture of Modern Wineries</h4>
+                </a>
+               
             </div>
             <div class="group cursor-pointer">
                 <div class="relative overflow-hidden mb-6 aspect-[4/3]">
@@ -182,7 +336,9 @@
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10"></div>
                 </div>
                 <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">Gastronomy</span>
-                <h4 class="text-xl font-bold mt-4 group-hover:text-primary transition-colors leading-snug">Hidden Gastronomy in Lyon: A Local's Guide</h4>
+                <a href="@Url.Action("Article")" class="block">
+                    <h4 class="text-xl font-bold mt-4 group-hover:text-primary transition-colors leading-snug">Hidden Gastronomy in Lyon: A Local's Guide</h4>
+                </a>
             </div>
         </div>
     </div>
@@ -208,7 +364,7 @@
             <div class="order-1 md:order-2 space-y-10">
                 <div>
                     <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">Digital Companion</span>
-                    <h2 class="text-5xl md:text-6xl font-black uppercase leading-[1.1]">The World of Wine <br>in Your Pocket</h2>
+                    <h2 class="text-5xl md:text-6xl font-black uppercase leading-[1.1]">Vitineraio <br>APP</h2>
                     <p class="text-white/50 text-xl font-light leading-relaxed mt-6 max-w-lg">
                         Elevate your connoisseurship with the Vitinerario App. Exclusive tools designed for the modern collector and the global traveler.
                     </p>
@@ -261,8 +417,11 @@
     <div class="flex items-end justify-between mb-20">
         <div>
             <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Destinations</span>
-            <h2 class="text-5xl font-black uppercase">Global Journeys</h2>
+            <h2 class="text-5xl font-black uppercase">Eventi</h2>
         </div>
+        <a href="@Url.Action("Events")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
+            Guarda tutti gli eventi <span class="material-icons text-sm ml-2">add</span>
+        </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
         <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
@@ -270,7 +429,11 @@
             <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
                 <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">Greece</span>
                 <h5 class="text-white text-3xl font-black mb-6 leading-none">Assyrtiko by the Aegean</h5>
-                <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button>
+                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
+                <a href="@Url.Action("EventDetails")"
+                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
+                    Explore Journal
+                </a>
             </div>
         </div>
         <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
@@ -278,7 +441,11 @@
             <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
                 <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">California</span>
                 <h5 class="text-white text-3xl font-black mb-6 leading-none">The New Guard of Napa</h5>
-                <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button>
+                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
+                <a href="@Url.Action("EventDetails")"
+                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
+                    Explore Journal
+                </a>
             </div>
         </div>
         <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
@@ -286,37 +453,56 @@
             <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
                 <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">France</span>
                 <h5 class="text-white text-3xl font-black mb-6 leading-none">Château Chronicles: Bordeaux</h5>
-                <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button>
+                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
+                <a href="@Url.Action("EventDetails")"
+                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
+                    Explore Journal
+                </a>
             </div>
         </div>
     </div>
 </section>
 
-<section id="podcast" class="relative w-full h-[600px] overflow-hidden group">
+<section class="relative w-full h-[600px] overflow-hidden group">
+    
     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB5Q3Ptc1BtwQFrM0-EWSbVRWDi0_VtmRwdkWtRaQJJeF3D7dbwUVl12XZmHuJX4_uqu1od5RCAs_hCCSlJ7hCdJzgp3O92BVEmsDst4b8JO80MMZmNXD9YOBvY2GBzxAS9OJ-lwSEGbWlp9eRjPRQEmBlt1W8xN2ggRXxHmw_lfSpmd_J3P5A11vOpm3tjMdS8qWp2tKbZPovITr-uCDU_If-KeK13SsM9Z6Pf1l50YbgElhfSLvqkx2qYKV6BFWNSv-9SPCO3gA" alt="Recording Studio environment" class="absolute inset-0 w-full h-full object-cover scale-105">
     <div class="absolute inset-0 podcast-gradient"></div>
     <div class="relative z-10 max-w-7xl mx-auto px-6 h-full flex flex-col justify-center items-start">
+        <div class="flex items-center justify-between mb-6 w-full">
+
+            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold">
+                The Audio Experience
+            </span>
+
+            <a href="@Url.Action("Podcast")"
+               class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
+                Ascolta tutte le puntate
+                <span class="material-icons text-sm ml-2">add</span>
+            </a>
+
+        </div>
         <div class="max-w-2xl">
-            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">The Audio Experience</span>
-            <h2 class="text-5xl md:text-7xl font-black font-lovelo text-white leading-none mb-6">STORIES IN EVERY BOTTLE</h2>
+                      
+            <h2 class="text-5xl md:text-7xl font-black font-lovelo text-white leading-none mb-6">Podcast</h2>
             <p class="font-body text-xl text-white/70 leading-relaxed mb-10 max-w-lg">
                 Join our editors as they uncover the narratives hidden within the world's finest vineyards, speaking with cellar masters and visionary growers from across the globe.
             </p>
             <div class="flex flex-wrap gap-6">
-                <a href="@Url.Action("Podcast", "Home")" class="inline-flex items-center gap-3 bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
+                <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX" class="inline-flex items-center gap-3 bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
                     <span class="material-icons text-xl">podcasts</span>
                     Listen on Spotify
                 </a>
-                <a href="@Url.Action("Podcast", "Home")" class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
+                <a href="https://www.youtube.com/%40vitinerario" class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
                     <span class="material-icons text-xl">play_circle_filled</span>
                     Watch on YouTube
                 </a>
             </div>
+            
         </div>
     </div>
 </section>
 
-<section id="events" class="max-w-7xl mx-auto px-6 py-32 bg-dark-charcoal">
+<section class="max-w-7xl mx-auto px-6 py-32 bg-dark-charcoal">
     <div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
         <div class="md:col-span-4 space-y-8">
             <div>
@@ -325,9 +511,9 @@
                     Exclusive access to the most anticipated cultural events of the season.
                 </p>
             </div>
-            <a href="@Url.Action("Events", "Home")" class="inline-block border-2 border-primary text-white px-10 py-5 text-sm uppercase tracking-widest font-bold hover:bg-primary transition-all">
+            <button class="inline-block border-2 border-primary text-white px-10 py-5 text-sm uppercase tracking-widest font-bold hover:bg-primary transition-all">
                 Request Invite
-            </a>
+            </button>
         </div>
         <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div class="event-card">
@@ -342,7 +528,7 @@
                             <span class="material-symbols-outlined text-sm mr-1">location_on</span>
                             Hotel Ritz, Paris
                         </div>
-                        <a href="@Url.Action("EventDetails", "Home")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
+                        <a href="@Url.Action("EventDetails")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
                     </div>
                 </div>
             </div>
@@ -358,7 +544,7 @@
                             <span class="material-symbols-outlined text-sm mr-1">location_on</span>
                             Tate Modern, London
                         </div>
-                        <a href="@Url.Action("EventDetails", "Home")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
+                        <a href="@Url.Action("EventDetails")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
                     </div>
                 </div>
             </div>
@@ -374,7 +560,7 @@
                             <span class="material-symbols-outlined text-sm mr-1">location_on</span>
                             Vieux Port, Cannes
                         </div>
-                        <a href="@Url.Action("EventDetails", "Home")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
+                        <a href="@Url.Action("EventDetails")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
                     </div>
                 </div>
             </div>
@@ -390,7 +576,7 @@
                             <span class="material-symbols-outlined text-sm mr-1">location_on</span>
                             Edition Hotel, NYC
                         </div>
-                        <a href="@Url.Action("EventDetails", "Home")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
+                        <a href="@Url.Action("EventDetails")" class="text-[10px] uppercase tracking-widest-plus font-bold text-primary hover:text-white transition-colors">Details</a>
                     </div>
                 </div>
             </div>
@@ -398,7 +584,7 @@
     </div>
 </section>
 
-<section id="concierge" class="max-w-7xl mx-auto px-6 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
+<section class="max-w-7xl mx-auto px-6 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
     <div class="flex flex-col justify-center">
         <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">Concierge</span>
         <h2 class="text-5xl font-black uppercase mb-8 leading-[1.1]">Reach Out to <br>Our Editors</h2>
@@ -446,7 +632,7 @@
     </div>
 </section>
 
-<section id="about" class="bg-charcoal-light py-32 border-t border-white/5">
+<section class="bg-charcoal-light py-32 border-t border-white/5">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <h2 class="text-4xl font-black mb-6 uppercase tracking-tight">Join the Vitinerario Circle</h2>
         <p class="text-white/50 mb-12 text-lg font-light max-w-2xl mx-auto">Receive our weekly curated digest of wine culture, travel itineraries, and exclusive vintage releases.</p>
@@ -458,7 +644,7 @@
     </div>
 </section>
 
-<footer class="bg-dark-charcoal border-t border-white/5 py-24">
+@* <footer class="bg-dark-charcoal border-t border-white/5 py-24">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
             <div class="col-span-1">
@@ -480,7 +666,7 @@
                 <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Magazine</h6>
                 <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
                     <li><a href="#" class="hover:text-primary transition-colors">The Latest Issue</a></li>
-                    <li><a href="@Url.Action("Archive", "Home")" class="hover:text-primary transition-colors">Archive</a></li>
+                    <li><a href="@Url.Action("Archive")" class="hover:text-primary transition-colors">Archive</a></li>
                     <li><a href="#" class="hover:text-primary transition-colors">Contributors</a></li>
                     <li><a href="#" class="hover:text-primary transition-colors">Subscriptions</a></li>
                 </ul>
@@ -498,9 +684,9 @@
             <p>© 2024 Vitinerario Editorial Group. All Rights Reserved.</p>
             <div class="flex space-x-10 mt-6 md:mt-0">
                 <a href="#" class="hover:text-primary">Privacy Policy</a>
-                <a href="@Url.Action("Terms", "Home")" class="hover:text-primary">Terms of Service</a>
+                <a href="@Url.Action("Terms")" class="hover:text-primary">Terms of Service</a>
                 <a href="#" class="hover:text-primary">Cookies</a>
             </div>
         </div>
     </div>
-</footer>
+</footer> *@

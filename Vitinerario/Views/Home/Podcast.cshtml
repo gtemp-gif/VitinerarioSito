@@ -70,7 +70,7 @@
 
 <main class="max-w-[1400px] mx-auto px-6 lg:px-20 py-12">
     <!-- Top Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-md border-b border-white/5 px-6 lg:px-20 py-6">
+    @* <header class="sticky top-0 z-50 bg-[#121212]/95 backdrop-blur-md border-b border-white/5 px-6 lg:px-20 py-6">
         <div class="max-w-[1400px] mx-auto flex items-center justify-between">
             <div class="flex items-center gap-12">
                 <div class="flex items-center gap-3">
@@ -98,7 +98,7 @@
                 </button>
             </div>
         </div>
-    </header>
+    </header> *@
 
     <!-- Hero Section -->
     <section class="mb-20 text-center max-w-3xl mx-auto">
@@ -108,14 +108,26 @@
             An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
-            <button class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3">
+            <!-- YouTube -->
+            <button type="button"
+                    onclick="window.open('https://www.youtube.com/%40vitinerario', '_blank')"
+                    class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3">
+
                 <span class="material-symbols-outlined text-sm">play_circle</span>
                 Watch on YouTube
+
             </button>
-            <button class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-colors">
+
+            <!-- Spotify -->
+            <button type="button"
+                    onclick="window.open('https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX', '_blank')"
+                    class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-colors">
+
                 <span class="material-symbols-outlined text-sm">headset</span>
                 Listen on Spotify
+
             </button>
+
         </div>
     </section>
 
@@ -149,8 +161,14 @@
                     <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover/video:scale-105 opacity-80" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD-pAWw3ICWvEbqyITKZusMgyt5ftgvvd7HCoSj_h45pLs_yGM70SpCR_4QoIQG-KuEWgjFIR-9y05JCTew-t1aK-2Y_k-Ab2QzfZ3iJK-HA9vuXR0ajl0Q2umiH6RLAvaTEWAfUxUj4L9Zhzaizmhb2A9V_CHozOCW85LupntB9FSQhUgleo-0-3VGSDfHmHHpmYD6WMOhW3btyvDuyWJt4_K6FXmP1XCwQ71Z4ecKgved-oUWElIactjAcgWdCprt8ZOGPtowxMs');" data-alt="Modern geometric skyscraper facade under clear blue sky"></div>
                     <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
                     <div class="absolute inset-0 flex items-center justify-center">
-                        <button class="size-20 bg-primary text-white flex items-center justify-center transform transition-transform hover:scale-110 hover:shadow-[0_0_30px_rgba(211,26,83,0.5)]">
-                            <span class="material-symbols-outlined text-4xl fill-1">play_arrow</span>
+                        <button type="button"
+                                onclick="window.open('https://www.youtube.com/watch?v=UJJDq93lsVg', '_blank')"
+                                class="size-20 bg-primary text-white flex items-center justify-center transform transition-transform hover:scale-110 hover:shadow-[0_0_30px_rgba(211,26,83,0.5)]">
+
+                            <span class="material-symbols-outlined text-4xl fill-1">
+                                play_arrow
+                            </span>
+
                         </button>
                     </div>
                     <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
@@ -307,7 +325,7 @@
                 <p class="mt-4 text-[10px] text-[#964f65] uppercase tracking-[0.2em] font-bold">Privacy ensured. Quarterly releases.</p>
             </div>
         </div>
-        <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
+    @*     <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
             <div class="flex items-center gap-3">
                 <div class="text-primary size-6">
                     <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -322,6 +340,6 @@
                 <a href="#" class="hover:text-primary transition-colors">Spotify</a>
             </div>
             <p class="text-xs text-[#964f65]">© 2024 Vitinerario Studio. All rights reserved.</p>
-        </div>
+        </div> *@
     </footer>
 </main>

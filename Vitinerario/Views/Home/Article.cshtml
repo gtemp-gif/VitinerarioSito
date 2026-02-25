@@ -1,4 +1,6 @@
+
 @{
+
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario | The Soul of Tuscany's Hidden Vineyards";
 }
@@ -23,7 +25,7 @@
             },
         }
     </script>
-}
+} 
 
 @section Styles {
     <style type="text/tailwindcss">
@@ -59,13 +61,13 @@
             color: white;
         }
     </style>
-}
+    }
 
 <div class="fixed top-0 left-0 w-full h-1 z-50 bg-white/5">
     <div class="h-full bg-accent-burgundy reading-progress-bar"></div>
 </div>
 
-<nav class="sticky top-0 z-40 bg-charcoal/95 backdrop-blur-md border-b border-white/5 px-8 py-5 flex justify-between items-center">
+@* <nav class="sticky top-0 z-40 bg-charcoal/95 backdrop-blur-md border-b border-white/5 px-8 py-5 flex justify-between items-center">
     <div class="text-2xl font-black tracking-tighter text-accent-burgundy font-display">VITINERARIO</div>
     <div class="hidden md:flex gap-10 text-[11px] uppercase tracking-[0.25em] font-bold">
         <a href="#" class="hover:text-accent-burgundy transition-colors text-white">Wine</a>
@@ -81,7 +83,7 @@
             Subscribe
         </button>
     </div>
-</nav>
+</nav> *@
 
 <main>
     <header class="relative w-full h-[90vh] overflow-hidden flex items-end">
@@ -262,40 +264,3 @@
     </section>
 </main>
 
-<footer class="bg-charcoal text-zinc-500 py-24 px-8">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-16">
-        <div class="col-span-2">
-            <div class="text-4xl font-black text-accent-burgundy tracking-tighter mb-8 font-display">VITINERARIO</div>
-            <p class="max-w-md text-zinc-500 leading-relaxed mb-10 text-sm font-light">
-                An independent journal dedicated to the sensory experience of wine, the narrative of travel, and the preservation of cultural terroir. Published quarterly in print and daily online.
-            </p>
-            <div class="flex gap-6">
-                <a href="#" class="text-zinc-600 hover:text-accent-burgundy transition-colors"><span class="material-symbols-outlined">brand_awareness</span></a>
-                <a href="#" class="text-zinc-600 hover:text-accent-burgundy transition-colors"><span class="material-symbols-outlined">alternate_email</span></a>
-                <a href="#" class="text-zinc-600 hover:text-accent-burgundy transition-colors"><span class="material-symbols-outlined">photo_camera</span></a>
-            </div>
-        </div>
-        <div>
-            <h4 class="text-white font-black uppercase tracking-[0.3em] text-[10px] mb-8">Channels</h4>
-            <ul class="space-y-5 text-[11px] font-bold uppercase tracking-widest">
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Destinations</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Wine Reviews</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Interviews</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Culinary Guides</a></li>
-            </ul>
-        </div>
-        <div>
-            <h4 class="text-white font-black uppercase tracking-[0.3em] text-[10px] mb-8">Magazine</h4>
-            <ul class="space-y-5 text-[11px] font-bold uppercase tracking-widest">
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Our Story</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Membership</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Advertising</a></li>
-                <li><a href="#" class="hover:text-accent-burgundy transition-colors">Privacy</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="max-w-7xl mx-auto mt-24 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6 text-[10px] font-black uppercase tracking-[0.4em] text-zinc-700">
-        <p>© 2023 Vitinerario Media Group. MMXXIII.</p>
-        <p>Aesthetic Excellence in Every Sip.</p>
-    </div>
-</footer>
