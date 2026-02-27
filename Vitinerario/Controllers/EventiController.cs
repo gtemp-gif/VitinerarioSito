@@ -1,11 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Vitinerario.Models;
+using Vitinerario.Services;
 
 namespace Vitinerario.Controllers
 {
     public class EventiController : Controller
     {
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
+
+        public EventiController(IEmailService emailService, IConfiguration configuration)
+        {
+            _emailService = emailService;
+            _configuration = configuration;
+        }
+
         [HttpGet]
         public IActionResult Partecipa()
         {
@@ -15,11 +25,22 @@ namespace Vitinerario.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Partecipa(PartecipaViewModel model)
+        public async Task<IActionResult> Partecipa(PartecipaViewModel model)
         {
             if (ModelState.IsValid)
             {
-                // Logic to save participation would go here
+                // Logic to save participation
+                string adminEmail = _configuration["AdminEmail"];
+                string subject = $"Nuova partecipazione: {model.Evento}";
+                string body = $@"
+                    <h2>Nuova Partecipazione Evento</h2>
+                    <p><strong>Nome:</strong> {model.Nome}</p>
+                    <p><strong>Cognome:</strong> {model.Cognome}</p>
+                    <p><strong>Email:</strong> {model.Email}</p>
+                    <p><strong>Evento:</strong> {model.Evento}</p>
+                ";
+
+                await _emailService.SendEmailAsync(adminEmail, subject, body);
 
                 TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
                 return RedirectToAction("Partecipa");

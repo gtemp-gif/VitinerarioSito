@@ -2,6 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<Vitinerario.Services.IEmailService, Vitinerario.Services.EmailService>();
 
 var app = builder.Build();
 
