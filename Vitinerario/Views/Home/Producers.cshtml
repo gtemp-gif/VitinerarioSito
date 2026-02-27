@@ -1,0 +1,303 @@
+@model Vitinerario.Models.ProducerViewModel
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Producers | Vitinerario";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212", // Deep Charcoal
+                        "charcoal": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "architectural": ["Montserrat", "sans-serif"], // Lovelo alternative
+                        "refined": ["Roboto", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lov-heading { font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        html { scroll-behavior: smooth; }
+    </style>
+}
+
+<!-- Hero Section -->
+<section class="relative h-screen w-full flex items-center justify-center overflow-hidden text-slate-100">
+    <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-charcoal/40 to-charcoal z-10"></div>
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-xFzO-ibPG9zZ98yCgQSOcgybCHLe_hG7eQ_UdJv0_FEhWLJSBNl4wyF6J5VnNKALgTAFgo4nEflnbJNOVcYXG4om6BXuInm35WY_w3vclr8mEXQyBwmUp7eDhz0t01T2QAa0WewOKdwtYX1OQcFIOT3UlKZEdT9YNLVMI7aEpar4DzczTrrsdoxWMQiIp9HEfE6JvxEiFWOiybaqas8lQ9Qp9A6fIe_cB2Lkh8LGyD0A01eCUwgRTXkmSNK4bbQbo1hY-6RG-dY" class="w-full h-full object-cover" data-alt="Cinematic wide shot of a luxury event production stage">
+    </div>
+    <div class="relative z-20 text-center max-w-4xl px-6">
+        <span class="lov-heading text-primary text-sm mb-4 block animate-pulse">For Visionary Producers</span>
+        <h1 class="lov-heading text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] mb-8">
+            Elevating the <br> Experience
+        </h1>
+        <p class="font-refined text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed font-light">
+            A sophisticated platform for producers to craft cinematic event journeys across the globe. Excellence met with editorial precision.
+        </p>
+        <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-6">
+            <a href="#join-collective" class="bg-primary hover:bg-white hover:text-charcoal w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300">
+                Partner With Us
+            </a>
+            @* <button class="border border-white/30 hover:border-white w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all">
+                View Portfolio
+            </button> *@
+        </div>
+    </div>
+   @*  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce opacity-50">
+        <span class="material-symbols-outlined text-4xl text-white">keyboard_double_arrow_down</span>
+    </div> *@
+</section>
+
+<!-- Main Content Sections -->
+<main class="relative z-20 bg-charcoal text-slate-100">
+    <!-- Vitinerario ON TOUR -->
+    <section class="py-32 lg:py-48 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div class="grid lg:grid-cols-12 gap-12 items-end mb-16">
+            <div class="lg:col-span-8">
+                <h2 class="lov-heading text-6xl md:text-8xl font-black text-white/10 leading-none mb-[-20px] select-none">ON TOUR</h2>
+                <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10">Vitinerario <span class="text-primary">ON TOUR</span></h2>
+            </div>
+            <div class="lg:col-span-4 lg:text-right">
+                <p class="font-refined text-slate-400 leading-relaxed max-w-md ml-auto">
+                    Il format On Tour è l’occasione perfetta per valorizzare il territorio e le sue eccellenze, per un’esperienza turistica completa che attrae amanti del vino, dell' olio, della natura e della cultura gastronomica. Offri ai tuoi ospiti un’esperienza completa, organizzando percorsi tra vigneti, uliveti e borghi che si concludono in una degustazione presso la tua location. Il percorso diventa un’occasione per conoscere la storia e la cultura del territorio, mentre la degustazione, diventa il momento clou per assaporare i tuoi prodotti. Ogni piatto racconta una storia, ogni calice invita a esplorare nuovi orizzonti di gusto, rendendo ogni passo di questo percorso un'esperienza unica e irripetibile.
+
+                </p>
+            </div>
+        </div>
+        <!-- Image Carousel Component -->
+        <div class="relative group" id="carousel-container">
+            <div class="flex gap-6 overflow-x-auto hide-scrollbar pb-10 snap-x snap-mandatory" id="carousel-track" style="scroll-behavior: smooth;">
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYZtOGf_VfvFu1ht6W4Dj9IHkY12zVRLuLlfqxvHDaUOZsQ5LNL_Dm5a8oTDD12TWvqiXYABdaYeYcb3DRiFe3jxedpVOmNT6VHJ9-XlZIgZ_wn4tUdC22Ghpz7Jmj1aFYhTVtUtppdB329Oh7GRQLv4KISDpxJmT40FxN7JkYmMbSilIRhO92s0YrcAmI2-W5DTPI0B5YBbB4Ak9knwAZodlj1JXLvYfVAcwyG1jnwU_YIyZEIpt1f4Q4503RMpaDhto2pgUXYQ" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Vibrant outdoor festival stage at sunset">
+                </div>
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkHMn6i5mmyhBLlt2Lt0sZEhxgL67eM7PuSF5Y6qAZp2Cz_BU2MKfI0W2KQF-B7ccheIKdJP3XDpAO2qXxaA0elQgKd5o2tNKifdMuw90pjUmO2OxnXZRmH5ys0Dl8-sC_mXM47bAUkvJx-n4i9AL0StCk5ktcrCCNqZcGkhn4_Ay9oqlexf0jGCSuBOeeLOhQ6S0X0eIQK56vqZyvYhoQA66z9Vx3Xj4iknMvR5PNZsPoS1DMn5aIWGzRlLTabnBtLb9Wj4Ym9pQ" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Concert production gear in a scenic mountain setting">
+                </div>
+                <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPCr7XkoRNmejFAieRgRYiC_3Q8lxrn7TsJMf5sIO1RIYff01SpD6yN3Gaffot02dFFsB03fuSUNVXLvsPW9b8XA1n9gdzNRLRkGRarXKy_LqTinA64SGGYN9I4oc83A4mHU6AwjPoJ8yuRoP99RYCNoF7iIQytDiK9fI1BUGlrPx2_EiPodlXcHy6xfSrNS7IFpIXJ7vXaeoz2qxu-YYSmNGRUzOUi8LPsF-5Sq9NMs1gTR1i0HMmGDgRzxUlxhwRrgVGba7gbLY" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Large scale light installation in an urban plaza">
+                </div>
+            </div>
+            <!-- Navigation UI -->
+            <div class="flex justify-end gap-4 mt-6">
+                <button id="prevBtn" class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white cursor-pointer">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                </button>
+                <button id="nextBtn" class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white cursor-pointer">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitinerario LIVE -->
+    <section class="bg-neutral-900/30 py-32 lg:py-48 px-6 lg:px-20">
+        <div class="max-w-[1440px] mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div class="order-2 lg:order-1">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="aspect-[3/4] overflow-hidden">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ZR31VClXTvwMdAV-J2tE0JT8M2ZJ01vxfE__rQnGkhSpuOcxw9w2ga0b5SrZWi8vrRY19tmhB2P_Y9iH9JMf8DlWIyioyr0f98361TstDGM9GL9SBPTUybKTk4osrpW2O_qPhVaRty8ZjWt8TLhmdC9cF9LkY1tFfIJa-zOQN3OhoFe3m2RJa3uIK1OXxul5F5IazUbrCERwKmmGXTdS9Z3aBlJmliew3Ew55VXDIuyuu_IKLFBwqyCJWkJj2mRsZBDOcerm150" class="w-full h-full object-cover hover:scale-110 transition-transform duration-1000" data-alt="Close up of a DJ controller with cinematic lighting">
+                    </div>
+                    <div class="aspect-[3/4] overflow-hidden mt-12">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDp3RwQHwuQctieXdv40j7411sP95UMEVKGDquUo8If1SjeqlCdnQo93g1ruAJ_813kuo3tGSDHlVZY_FehBuEG0DYb75gJDmQWLCh39nJ9zp2VBBH3YFIoiH7RNzDPpopSOG34nFx3fAzfug12KC6ew5r_1dt9eIj7lmGUidPjl3JyyeSTz4TWc_ZJuNvs69ifXdnZBVkLZF2WTTulmtqSBfmXhyEksw-DJRqy_CYqHGePSrWor_Rd-lPjI_gf7cEJqr5UJruGy2g" class="w-full h-full object-cover hover:scale-110 transition-transform duration-1000" data-alt="Crowd hands up at a high energy live show">
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 lg:order-2">
+                <h2 class="lov-heading text-6xl md:text-8xl font-black text-white/5 leading-none mb-[-20px] select-none text-right">LIVE</h2>
+                <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10 text-right mb-8">Vitinerario <span class="text-primary">LIVE</span></h2>
+                <p class="font-refined text-lg text-slate-300 leading-relaxed font-light text-right max-w-lg ml-auto mb-10">
+                    Vuoi offrire un’esperienza sensoriale che lascerà i tuoi ospiti senza parole? Con il format Live, la tua struttura può diventare il palcoscenico di un viaggio emozionale che celebra l'incontro tra i piaceri del vino e la scoperta dei sensi. Immagina di accogliere i tuoi ospiti in una serata guidata dove saranno invitati a esplorare profumi e le sfumature del vino attraverso il tatto, l’olfatto e il gusto. È un percorso che risveglia i sensi e permette di immergersi in un’esperienza intima e indimenticabile. Nella seconda parte della serata, i partecipanti si cimenteranno in una degustazione dove ogni vino sarà abbinato a piatti selezionati per esaltarne i sapori. Questa esperienza coinvolge la tua cucina e valorizza i prodotti culinari, creando un’atmosfera che sorprende e conquista gli ospiti, spingendoli a riscoprire le sfumature uniche di ogni calice.
+                </p>
+               @*  <div class="flex justify-end">
+                    <a href="#" class="group flex items-center gap-4 lov-heading text-sm font-bold tracking-[0.2em] text-white">
+                        Explore Live Tech
+                        <span class="size-10 bg-primary rounded-full flex items-center justify-center group-hover:translate-x-2 transition-transform">
+                            <span class="material-symbols-outlined text-white">chevron_right</span>
+                        </span>
+                    </a>
+                </div> *@
+            </div>
+        </div>
+    </section>
+
+    <!-- Vitinerario ART -->
+    <section class="py-32 lg:py-48 px-6 lg:px-20 max-w-[1440px] mx-auto">
+        <div class="text-center mb-24">
+            <h2 class="lov-heading text-6xl md:text-9xl font-black text-white/10 leading-none mb-[-40px] select-none">ART</h2>
+            <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10 mb-6">Vitinerario <span class="text-primary">ART</span></h2>
+            <div class="w-24 h-1 bg-primary mx-auto mb-8"></div>
+            <p class="font-refined text-slate-400 max-w-2xl mx-auto italic font-light text-xl">
+                "Where curation meets architectural innovation. Transforming venues into immersive galleries of light and sound."
+            </p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuyf0R-_jrl-hwSRswURq1Z9Z3wHwq9fUkq2HWQfVLOxW-lB-gIKOmpULmNff4Y9AjwUWJ-wR-R7WgyFJFkvOweXKn3RT5HaiDGwd6Wx2zwV49z4XUThWx_QsYeB3YEjknPJlQb2Nl_Ueh-b5QbCMjyTibXzUJU83Nk9-uQmhlg-obdXusLHGYXWIEh3dPbRGm5IO92kHWNai64e5yj8shy_CtBnzWYDpuL4JU3IoRn0P6PDH6gtZ7YbOavqx2rTwbc_FRryUdzww" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract red and black light installation">
+               @*  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Installations</span>
+                </div> *@
+            </div>
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSKsAX5RLaEQw28S7Q9pxzwWrXx2HZMQn4IYwwATx1N3qwoXZS6XYvNXbhsvN5oSsVIMQyC-EZqFaWdfwoqqn83P2tj7trrSMlJq_ueVllGyzop73o0lueNRjPVfO71gQDnea7gUyQp6eWKZ3Li7ypSl4C__9L-lHYfsETD4jCSWZGzUC2mjeDJ6tA--xctJDzlWSSvb01zSv52hj4n2RPo5TbSk-WYu16DeWHst4A4udfpYipXupP3tDKZk_hX_vm1uw_8DMOZXk" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern sculpture in a minimal gallery setting">
+                @* <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Sculptural</span>
+                </div> *@
+            </div>
+            <div class="relative group overflow-hidden aspect-square">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH4Rlym1q3IcAhFK-IBnUVboiZCAEAGPBM54-qb0NF58D2MjcQg72BsdrZ-0xmG01_-Q86SP_5r8dOjPsGCPZWsPLUCy-4W8Jxgkvf0eUpAWMweOgdq9sAaOSUTIL7Ha96Lt3yU1KpJ-m14iYMj0kDvqh6O7VCmOm00krOVXRMOv9s9yfOH1a0VoIzik6jogngLj-VG8ZdmX1kNHLozjy_IgSDr7JtIil9wxTWxNqkwaB1hHn-A1yImnq8FEytWfUGJMGmVXxugRg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Cinematic projection on a large architectural facade">
+               @*  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Immersive</span>
+                </div> *@
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section / Join the Collective -->
+    <section id="join-collective" class="relative py-32 lg:py-48 px-6 text-center border-t border-white/5 overflow-hidden">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h2 class="lov-heading text-4xl md:text-6xl font-black mb-8 text-white">Join the Collective</h2>
+            <p class="font-refined text-slate-400 max-w-xl mx-auto mb-12 text-lg">
+                We are currently selecting exclusive production partners for the upcoming season. Shape the future of event experiences with us.
+            </p>
+
+            <!-- Success Message -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="bg-green-500/20 border border-green-500/50 text-green-200 p-4 mb-8 rounded">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <!-- Form -->
+            <form asp-action="Producers" method="post" class="text-left space-y-6 bg-white/5 p-8 md:p-12 rounded-lg backdrop-blur-sm border border-white/10">
+                <div asp-validation-summary="ModelOnly" class="text-red-400 text-sm font-bold mb-4"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label asp-for="CompanyName" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="CompanyName" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Your Company Name" />
+                        <span asp-validation-for="CompanyName" class="text-primary text-xs font-bold"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label asp-for="ContactPerson" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="ContactPerson" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Full Name" />
+                        <span asp-validation-for="ContactPerson" class="text-primary text-xs font-bold"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label asp-for="Email" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="Email" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="email@company.com" />
+                        <span asp-validation-for="Email" class="text-primary text-xs font-bold"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label asp-for="RequestType" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <div class="relative">
+                            <select asp-for="RequestType" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer transition-colors">
+                                <option value="" disabled selected>Select an Option</option>
+                                <option value="Richiedi Informazioni">Richiedi Informazioni</option>
+                                <option value="Ospita un Evento">Ospita un Evento</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+                        </div>
+                        <span asp-validation-for="RequestType" class="text-primary text-xs font-bold"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label asp-for="Message" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                    <textarea asp-for="Message" rows="4" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Tell us about your proposal..."></textarea>
+                    <span asp-validation-for="Message" class="text-primary text-xs font-bold"></span>
+                </div>
+
+                <div class="pt-4 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <button type="submit" class="w-full md:w-auto bg-primary hover:bg-white hover:text-charcoal px-12 py-5 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300 text-sm text-white">
+                        Send Request
+                    </button>
+
+                    <a href="@Url.Action("DownloadBrochure")" class="flex items-center gap-3 font-refined text-sm tracking-widest uppercase font-bold text-slate-100 hover:text-primary transition-colors">
+                        Download Brochure <span class="material-symbols-outlined">download</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.getElementById('carousel-track');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let scrollAmount = 0;
+
+        // Use first child width as scroll step, fallback to screen width percentage
+        function getScrollStep() {
+             const firstItem = track.firstElementChild;
+             return firstItem ? firstItem.clientWidth + 24 : window.innerWidth * 0.8; // 24 is gap
+        }
+
+        const scrollNext = () => {
+            const step = getScrollStep();
+            // Check if we are at the end
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                 track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                 track.scrollBy({ left: step, behavior: 'smooth' });
+            }
+        };
+
+        const scrollPrev = () => {
+             const step = getScrollStep();
+             track.scrollBy({ left: -step, behavior: 'smooth' });
+        };
+
+        nextBtn.addEventListener('click', () => {
+            scrollNext();
+            resetAutoplay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            scrollPrev();
+            resetAutoplay();
+        });
+
+        // Autoplay
+        let autoplayInterval = setInterval(scrollNext, 5000);
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(scrollNext, 5000);
+        }
+
+        // Pause on hover (optional but recommended for UX)
+        track.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+        track.addEventListener('mouseleave', () => resetAutoplay());
+    });
+</script>

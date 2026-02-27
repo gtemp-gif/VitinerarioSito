@@ -1,0 +1,263 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "The Harvest Gala | Vitinerario Event Details";
+}
+
+ @section TailwindConfig {
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D31A53",
+                        "deep-charcoal": "#121212",
+                        "dark-card": "#1a1a1a"
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                @@apply bg-[#121212] text-white;
+            }
+        }
+        :root {
+            --primary: #D31A53;
+            --background: #121212;
+            --card-bg: #1a1a1a;
+            --card-border: #2a2a2a;
+        }
+    </style>
+} 
+
+@* <nav class="absolute top-0 w-full z-50 flex items-center justify-between px-12 py-8 bg-transparent">
+    <div class="flex items-center space-x-2">
+        <div class="w-10 h-10 bg-primary flex items-center justify-center rounded-full">
+            <span class="text-white font-bold text-xl">V</span>
+        </div>
+        <span class="text-white tracking-widest text-xl font-bold uppercase">Vitinerario</span>
+    </div>
+    <div class="hidden md:flex space-x-12 text-white/90 text-sm uppercase tracking-widest">
+        <a href="#" class="hover:text-primary transition-colors">Wine Guides</a>
+        <a href="#" class="hover:text-primary transition-colors">Travel</a>
+        <a href="#" class="hover:text-primary transition-colors">Culture</a>
+        <a href="#" class="hover:text-primary transition-colors">Events</a>
+    </div>
+    <div>
+        <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full text-sm uppercase tracking-wider hover:bg-white/20 transition-all">
+            Magazine
+        </button>
+    </div>
+</nav> *@
+
+<header class="relative h-[85vh] overflow-hidden flex items-end pb-24">
+    <div class="absolute inset-0">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDdwobGboANv0ds4Hr4chhDGzwkOCNIRiizi9GY9zFkdQbd4wm5d6NvUX83hAQGC1OFOPr0pF-Z1q5NaDzcD1Hk5q6AOwPkpOGVdcdXRlSvTmfe5TYlyAz6EVmTr6OH-nPcIb77fgr0XFmF2v2QNyv9OdV7cZQ7dgkvzBC08Ipq_fPngkKed15RIRAT_eWDxtB0hXR3YAx3YkWCidLg-7OjoFgcHzfE2PrtCwsFBuXJzN9ranmSgVVT-5Wrc7qRPMbYyQV__A43nA4" alt="The Harvest Gala Venue" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
+    </div>
+    <div class="container mx-auto px-12 relative z-10">
+        <div class="max-w-4xl">
+            <span class="inline-block px-4 py-1 mb-6 border border-primary text-primary rounded-full text-sm uppercase tracking-[0.2em] font-bold">Exclusive Experience</span>
+            <h1 class="text-6xl md:text-8xl text-white font-bold leading-tight mb-6">
+                The Harvest Gala: <br>
+                <span class="italic font-normal">An Evening at Castello d'Oro.</span>
+            </h1>
+            <p class="text-xl text-stone-200 max-w-2xl font-light italic opacity-90">
+                A celestial celebration of the viticulture heritage, featuring rare vintages and a bespoke menu crafted for the world's most discerning palates.
+            </p>
+        </div>
+    </div>
+</header>
+
+<section class="container mx-auto px-12 -mt-12 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-0 bg-dark-card shadow-2xl rounded-xl overflow-hidden border border-stone-800">
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
+            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Date & Time</span>
+            <p class="text-xl font-bold text-white">Saturday, Oct 12th</p>
+            <p class="text-stone-400">18:30 — 23:00</p>
+        </div>
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
+            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Location</span>
+            <p class="text-xl font-bold text-white">Tuscany, Italy</p>
+            <p class="text-stone-400 underline cursor-pointer">View on map</p>
+        </div>
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
+            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Dress Code</span>
+            <p class="text-xl font-bold text-white">Black Tie</p>
+            <p class="text-stone-400">Tuscan Elegance</p>
+        </div>
+        <div class="p-8 bg-primary text-white flex flex-col justify-center items-center">
+            <span class="text-white/70 text-xs uppercase tracking-widest mb-2 font-bold">Attendance</span>
+            <p class="text-3xl font-bold mb-1">€250</p>
+            <p class="text-white/70 text-xs uppercase">Per Honored Guest</p>
+        </div>
+    </div>
+</section>
+
+<main class="container mx-auto px-12 py-24">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
+        <div class="lg:col-span-7">
+            <div class="mb-16">
+                <h2 class="text-4xl font-bold mb-8 text-white">The Narrative</h2>
+                <div class="prose prose-invert max-w-none text-lg leading-relaxed text-stone-400 space-y-6">
+                    <p>
+                        As the golden sun dips below the rolling hills of Tuscany, Castello d'Oro opens its iron gates for a night of unparalleled sensory discovery. The Harvest Gala is not merely an event; it is a ritualistic tribute to the soil, the sun, and the centuries of wisdom distilled into every bottle of our reserve.
+                    </p>
+                    <p>
+                        Guests will be escorted through the ancient limestone cellars, where the aroma of aged oak and fermenting grapes tells the story of the 2024 harvest. Under the guidance of our Master Sommelier, you will explore a vertical tasting of our estate's most acclaimed vintages, paired meticulously with seasonal delicacies harvested from our own kitchen gardens.
+                    </p>
+                </div>
+            </div>
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-8 text-white flex items-center">
+                    <span class="w-8 h-px bg-primary mr-4"></span>
+                    The Experience
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="flex items-start space-x-4">
+                        <span class="material-icons text-primary">restaurant</span>
+                        <div>
+                            <h4 class="font-bold text-white">Five-Course Pairing</h4>
+                            <p class="text-sm text-stone-500">Gourmet menu designed by Michelin-starred Chef Lorenzo Ricci.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <span class="material-icons text-primary">meeting_room</span>
+                        <div>
+                            <h4 class="font-bold text-white">Private Cellar Tour</h4>
+                            <p class="text-sm text-stone-500">Access to the restricted 'Grand Reserve' subterranean vaults.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <span class="material-icons text-primary">music_note</span>
+                        <div>
+                            <h4 class="font-bold text-white">Live Quartet</h4>
+                            <p class="text-sm text-stone-500">Contemporary classical music performed by the Florence String Ensemble.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <span class="material-icons text-primary">star</span>
+                        <div>
+                            <h4 class="font-bold text-white">Sommelier Spotlight</h4>
+                            <p class="text-sm text-stone-500">Insightful narratives by Master Sommelier Marco Valenti.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lg:col-span-5">
+            <div class="bg-dark-card p-10 rounded-xl mb-12 border border-stone-800">
+                <h3 class="text-2xl font-bold mb-8 text-white uppercase tracking-widest text-center">Order of the Evening</h3>
+                <div class="space-y-8 relative">
+                    <div class="absolute left-4 top-0 bottom-0 w-px bg-stone-800"></div>
+                    <div class="relative pl-12">
+                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-primary ring-4 ring-dark-card"></div>
+                        <span class="text-xs font-bold text-primary uppercase tracking-tighter">18:30</span>
+                        <h4 class="font-bold text-white">Arrival & Aperitivo</h4>
+                        <p class="text-sm text-stone-500">Sparkling welcome in the Lavender Gardens.</p>
+                    </div>
+                    <div class="relative pl-12">
+                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
+                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">19:15</span>
+                        <h4 class="font-bold text-white">The Descent</h4>
+                        <p class="text-sm text-stone-500">Guided torch-lit tour through the history cellars.</p>
+                    </div>
+                    <div class="relative pl-12">
+                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
+                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">20:00</span>
+                        <h4 class="font-bold text-white">The Gala Banquet</h4>
+                        <p class="text-sm text-stone-500">Seated five-course dinner in the Grand Ballroom.</p>
+                    </div>
+                    <div class="relative pl-12">
+                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
+                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">22:00</span>
+                        <h4 class="font-bold text-white">Dessert & Digestifs</h4>
+                        <p class="text-sm text-stone-500">Star-gazing on the terrace with limited Grappa selection.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center p-6 bg-dark-card rounded-xl border border-stone-800">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1C1D1cHMAzmqQ_Y9gL54QoxToAbdYoyMSLvHXNqXqYpHaCK5e26aCska0uwFmEbhViyenUwt9xyYRKdA7CAJyb88vnfu0uaZL3bBlc7YeYjJJvnCJWqf8lUv_hK0cDiMP3xrWlUuNpTRJWNw9yE2a_-OzIYx1a9EII5hCUnF1KzLBDa6umpQJeEHKPzXhekUoNxJu-gTd8NzbZZvEoDpR2j3qE8SET8bgv68VDSn4A3M4ME8FIa41-Sm6CpFPxU1Z-MPwpLwT_4s" alt="Master Sommelier Marco Valenti" class="w-20 h-20 rounded-full object-cover grayscale">
+                <div class="ml-6">
+                    <span class="text-[10px] uppercase tracking-widest text-primary font-bold">Featured Expert</span>
+                    <h4 class="text-lg font-bold text-white leading-tight">Marco Valenti</h4>
+                    <p class="text-sm text-stone-500 italic">"Wine is the memory of the land."</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<section class="bg-dark-card py-24">
+    <div class="container mx-auto px-12">
+        <div class="mb-12 flex justify-between items-end">
+            <div>
+                <h2 class="text-4xl font-bold text-white mb-4">The Venue</h2>
+                <p class="text-stone-400 max-w-xl">Castello d'Oro is a 14th-century fortress nestled in the heart of Chianti Classico, renowned for its architectural grandeur and volcanic soil.</p>
+            </div>
+            <div class="flex space-x-2">
+                <button class="w-12 h-12 rounded-full border border-stone-800 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
+                    <span class="material-icons">chevron_left</span>
+                </button>
+                <button class="w-12 h-12 rounded-full border border-stone-800 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
+                    <span class="material-icons">chevron_right</span>
+                </button>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="h-80 rounded-xl overflow-hidden group relative">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw0y37XwizvTfJgrtrT3HYTUiIxKQjXLmKzypWIgz2FbWz5mVtBrSzhg1_ZSbKrVHC6yZ3XMxcG3M6OnXG10QRuG6lrndzDTQIHvlZeOP9aEqiBKBBFrktYyk68wFUPRYymDEmg_iDBT6FTIHx4HbzDisBbPKEwrThA4kBaqcOzGLxVoj5UTyA5XhXwSuaDouVHqM6TxfeNEWxT5t5N4Heacz-qvdsydY5ZyEceKR7vBsd4Nl837Q5nQg2cTZseV0lOPv-LSyrnoE" alt="Vineyard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <div class="h-80 rounded-xl overflow-hidden group relative">
+                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTAGEenIhIij6eGcS7OPRTe5Bqh_fxseTCXDiUq2RXz9BzCy_Kyo4I4BEY6fOHfxj2plLlb4n5KgG-9WaPonTTXhTuOfrTU2DGXu8wT9tGEtfUI-TPlDUGG8iaWbpCfswnQ5326Sz0inBU8JW7MDGgEIWZDSgAyv3cSZGVBZYsIooq5HsT9GiUYTwLtLhFL_eI9XQgm0gBTrMBzCmAt5Og11hceL3_nxwJAxsRg3JlS8DEOG-XukcmbiixJBruU72R22pstr17lWI" alt="Ballroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+            </div>
+            <div class="h-80 rounded-xl overflow-hidden group relative border border-stone-800">
+                <div class="w-full h-full bg-stone-900 flex items-center justify-center overflow-hidden">
+                    <div class="absolute inset-0 grayscale opacity-40 hover:opacity-100 transition-opacity">
+                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEcsJQMavyHfW8C4MLzjVGAX_Tfp7aVA7hqDUcizP_HgSkncwG0sqnGpgqjdtYO459lqGFj4wX0GexsTtiBM6VEa3sBhuw5h8_RMNqItP_GrxdBECCZmuROmei113D4Cv7Xhv4-COtJGd2lgHyIvWBbUrtIf2eQhb4KQgATLpRJ_-IzROzC4oYX95hrxNj49xFoOfOqqoAWIeO2q8L28-EnZK4NjiWXcU3C0bFDk5SY9OGs00y9pUWY1fFfGZmcs-rTSCnDNP4iHM">
+                    </div>
+                    <div class="relative z-10 text-center px-6">
+                        <span class="material-icons text-primary text-4xl mb-2">location_on</span>
+                        <h4 class="font-bold text-white uppercase tracking-wider">Castello d'Oro</h4>
+                        <p class="text-xs text-stone-400">Via della Vigna, 12, 53011 Siena SI, Italy</p>
+                        <button class="mt-4 text-primary text-xs font-bold border-b border-primary uppercase">Open Directions</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="fixed bottom-0 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
+    <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4 flex items-center space-x-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div class="hidden md:block">
+            <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Event Inclusions</p>
+            <p class="text-white text-sm italic">5 Courses + Wine Pairing + Tour</p>
+        </div>
+        <div class="h-10 w-px bg-white/10 hidden md:block"></div>
+        <div class="flex items-center space-x-8">
+            <div class="text-center md:text-left">
+                <p class="text-primary font-bold text-xl leading-none">€250</p>
+                <p class="text-[10px] text-white/50 uppercase tracking-tighter">Per Guest</p>
+            </div>
+            <button class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 uppercase tracking-widest text-xs">
+                Reserve Your Seat
+            </button>
+        </div>
+    </div>
+</div>
+

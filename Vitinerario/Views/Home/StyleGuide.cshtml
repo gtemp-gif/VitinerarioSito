@@ -1,0 +1,276 @@
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Vitinerario Dark UI Style Guide";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d31a53",
+                        "deep-charcoal": "#121212",
+                        "surface-dark": "#1e1e1e",
+                        "warm-ivory": "#FAF9F6",
+                        "stone-grey": "#A8A29E",
+                        "dark-olive": "#3f4234",
+                        "neutral-light": "#e7e5e4",
+                    },
+                    fontFamily: {
+                        "display": ["Montserrat", "sans-serif"],
+                        "sans": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0px",
+                        "lg": "2px",
+                        "xl": "4px",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                font-family: 'Roboto', sans-serif;
+                -webkit-font-smoothing: antialiased;
+                background-color: #121212;
+                color: #A8A29E;
+            }
+            h1, h2, h3, h4, .font-lovelo {
+                font-family: 'Montserrat', sans-serif;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+            }
+        }
+        .bg-deep-charcoal { background-color: #121212; }
+    </style>
+}
+
+<main class="max-w-7xl mx-auto px-6 pt-32 pb-12 lg:pb-20">
+    <header class="mb-20 border-b border-white/10 pb-12">
+        <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+            <div>
+                <h1 class="text-primary text-5xl lg:text-7xl font-black tracking-tighter mb-4">Vitinerario</h1>
+                <p class="text-xl text-stone-grey/80 max-w-2xl font-light">
+                    A premium wine, culture, and travel magazine. Design standards for a sophisticated editorial experience in a dark aesthetic.
+                </p>
+            </div>
+            <div class="text-right">
+                <span class="text-xs font-bold uppercase tracking-[0.3em] text-primary">Dark UI Style Guide v2.0</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="mb-24">
+        <div class="flex items-center gap-4 mb-10">
+            <span class="h-px flex-1 bg-white/10"></span>
+            <h2 class="text-2xl text-white">01. Dark Foundations</h2>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            <div class="space-y-3">
+                <div class="h-32 w-full rounded-lg bg-primary shadow-lg shadow-primary/10"></div>
+                <div>
+                    <p class="font-bold text-white uppercase text-sm">Burgundy</p>
+                    <p class="text-xs font-mono uppercase opacity-60">#D31A53</p>
+                    <p class="text-[10px] mt-1 italic">Brand Accent & Interaction</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="h-32 w-full rounded-lg bg-deep-charcoal border border-white/10 shadow-sm"></div>
+                <div>
+                    <p class="font-bold text-white uppercase text-sm">Deep Charcoal</p>
+                    <p class="text-xs font-mono uppercase opacity-60">#121212</p>
+                    <p class="text-[10px] mt-1 italic">Main Background</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="h-32 w-full rounded-lg bg-surface-dark border border-white/5 shadow-sm"></div>
+                <div>
+                    <p class="font-bold text-white uppercase text-sm">Surface Dark</p>
+                    <p class="text-xs font-mono uppercase opacity-60">#1E1E1E</p>
+                    <p class="text-[10px] mt-1 italic">Component Surface</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="h-32 w-full rounded-lg bg-stone-grey shadow-sm"></div>
+                <div>
+                    <p class="font-bold text-white uppercase text-sm">Stone Grey</p>
+                    <p class="text-xs font-mono uppercase opacity-60">#A8A29E</p>
+                    <p class="text-[10px] mt-1 italic">Body & Muted Text</p>
+                </div>
+            </div>
+            <div class="space-y-3">
+                <div class="h-32 w-full rounded-lg bg-primary/20 border border-primary/30 shadow-sm"></div>
+                <div>
+                    <p class="font-bold text-white uppercase text-sm">Glow State</p>
+                    <p class="text-xs font-mono uppercase opacity-60">#D31A53 @@ 20%</p>
+                    <p class="text-[10px] mt-1 italic">Subtle Highlights</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <div class="flex items-center gap-4 mb-10">
+            <span class="h-px flex-1 bg-white/10"></span>
+            <h2 class="text-2xl text-white">02. Typography</h2>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-16">
+            <div class="space-y-8">
+                <div>
+                    <p class="text-xs font-bold uppercase tracking-widest text-primary mb-6">Display Scale (Lovelo Style)</p>
+                    <h1 class="text-6xl text-white mb-4 leading-none">Heading 01</h1>
+                    <h2 class="text-4xl text-white mb-4 leading-none">Heading 02</h2>
+                    <h3 class="text-2xl text-white mb-4 leading-none">Heading 03</h3>
+                </div>
+                <div class="pt-8 border-t border-white/10">
+                    <p class="text-xs font-bold uppercase tracking-widest text-primary mb-6">UI & Body Scale (Roboto)</p>
+                    <p class="text-lg text-stone-grey leading-relaxed mb-6 font-light italic">"The art of viniculture is as much about the soil as it is about the soul."</p>
+                    <p class="text-base text-stone-grey leading-relaxed mb-4">Experience the heritage of the world's finest vineyards through our curated digital magazine. Sophistication meets modern dark performance.</p>
+                    <p class="text-sm font-medium text-white mb-2">Label - Medium 14px</p>
+                    <p class="text-xs uppercase tracking-[0.2em] text-stone-grey">Small Capsule Text 12px</p>
+                </div>
+            </div>
+            <div class="bg-surface-dark p-10 rounded-lg border border-white/5 flex flex-col justify-center">
+                <p class="font-display text-8xl text-primary/20 leading-none mb-6">Aa</p>
+                <p class="text-2xl text-white mb-2 uppercase font-black tracking-tighter">LOVELO CAPS</p>
+                <p class="text-sm text-stone-grey leading-relaxed mb-8">A high-impact, geometric sans-serif designed for headers. It brings a modern, architectural strength to the Vitinerario brand in the dark workspace.</p>
+                <p class="text-2xl text-white mb-2 font-normal">Roboto Sans</p>
+                <p class="text-sm text-stone-grey leading-relaxed">Versatile, legible, and clean. Roboto provides the functional backbone for all body copy and long-form editorial content.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <div class="flex items-center gap-4 mb-10">
+            <span class="h-px flex-1 bg-white/10"></span>
+            <h2 class="text-2xl text-white">03. UI Components</h2>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <div class="grid md:grid-cols-2 gap-12">
+            <div class="space-y-8">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-primary">Interactive Elements</h4>
+                <div class="flex flex-wrap items-center gap-4">
+                    <button class="bg-primary text-white px-10 py-3 rounded-lg font-bold uppercase text-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">Subscribe</button>
+                    <button class="border border-white/20 text-white px-10 py-3 rounded-lg font-bold uppercase text-sm hover:bg-white/5 transition-all">Explore</button>
+                    <button class="text-primary font-black uppercase text-xs flex items-center gap-2 group tracking-widest">
+                        Read More
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                </div>
+                <div class="pt-8 border-t border-white/10">
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-6">Input Architecture</h4>
+                    <div class="space-y-4">
+                        <div class="relative max-w-sm">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-stone-grey/60">
+                                <span class="material-symbols-outlined text-lg">search</span>
+                            </span>
+                            <input type="text" class="w-full pl-10 pr-4 py-3 bg-surface-dark border border-white/10 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-white text-sm" placeholder="Search archives...">
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-stone-grey">
+                            <span class="hover:text-primary cursor-pointer">Magazine</span>
+                            <span class="text-white/10">|</span>
+                            <span class="hover:text-primary cursor-pointer">Travel</span>
+                            <span class="text-white/10">|</span>
+                            <span class="text-primary">Bordeaux</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-surface-dark p-10 rounded-lg border border-white/5">
+                <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-8">Iconography</h4>
+                <div class="grid grid-cols-4 gap-8">
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">wine_bar</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Tasting</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">explore</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Explore</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">auto_stories</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Magazine</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">calendar_today</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Events</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">restaurant</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Culture</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">landscape</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Terroir</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">map</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">Routes</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-2">
+                        <span class="material-symbols-outlined text-3xl text-primary">account_balance</span>
+                        <span class="text-[9px] uppercase font-bold tracking-widest opacity-60">History</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mb-24">
+        <div class="flex items-center gap-4 mb-10">
+            <span class="h-px flex-1 bg-white/10"></span>
+            <h2 class="text-2xl text-white">04. Dark Editorial Patterns</h2>
+            <span class="h-px flex-1 bg-white/10"></span>
+        </div>
+        <div class="grid lg:grid-cols-3 gap-8">
+            <article class="group">
+                <div class="overflow-hidden rounded-lg mb-6 bg-surface-dark aspect-[4/5] relative border border-white/5">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYLg7lQNU7hWFGZ1Bnso7a6qS80hhxBX8Mr2Fq5PV-AwCPFLP--08lXnypHQk3FcnJM-W1FYYjZH_4Kft2OQ5a9VKcZntFsWN1kpyzY6f9hQXd5NFwbApE8DGqSF8fJvaf5MgXzNi9q8E6bdNdtOod3njJ_DhcshJWq_LmVSDY93CUiyHo_AE_FZJb16u49IKIulVzd0KbTHDyvKyLlbgH1xEybs23-_mqfOgn1KTS6eAmsMU4d_qciLvnnKShopQ0a17s8n2m54Y" alt="Luxury wine cellar" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-primary text-white text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm">Vintage 2024</span>
+                    </div>
+                </div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Culture & Terroir</p>
+                <h3 class="text-2xl text-white group-hover:text-primary transition-colors leading-tight">The Secrets of the Tuscan Hills</h3>
+            </article>
+            <article class="group">
+                <div class="overflow-hidden rounded-lg mb-6 bg-surface-dark aspect-[4/5] relative border border-white/5">
+                    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDENDyBPCuMIqlHUGrAzOO9c7YLtb7OiNBxYcM2EO96e4X-N1DQBzYKO6jEX7lJqmpXG6W4irV3O3SKOR3MVypjEYnakdH14nfHH5iu54bjga9T2bfUxKu9u9O4BTzumd_Ku0dvLDeU3JKB4Lq0qQwzmyGsWj3c_T7wiP2IWAXveN-8jWURi6fUN18nvDuQaln-TJPAHNCsE-Fzj5jUm6NGVW7_Tpm0pa9nA55y8Ys_-7mM7fZppht-WrWAu-E3ISvDLNaieXrEbqw" alt="Vineyard at sunset" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 opacity-80">
+                    <div class="absolute top-4 left-4">
+                        <span class="bg-white text-black text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm">Destinations</span>
+                    </div>
+                </div>
+                <p class="text-[10px] font-bold uppercase tracking-widest text-primary mb-2">Travel Guide</p>
+                <h3 class="text-2xl text-white group-hover:text-primary transition-colors leading-tight">7 Vineyards to Visit This Autumn</h3>
+            </article>
+            <div class="bg-surface-dark text-white p-12 rounded-lg border-l-4 border-primary flex flex-col justify-center">
+                <span class="material-symbols-outlined text-4xl mb-6 text-primary">format_quote</span>
+                <p class="text-2xl font-light italic leading-relaxed mb-10 text-stone-grey">"Wine is the only artwork you can drink, a story told in every sip of the harvest."</p>
+                <div class="flex items-center gap-3">
+                    <div class="h-px w-8 bg-primary"></div>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-white">Lucien Vallotton</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-32 pt-12 border-t border-white/10 text-center">
+        <p class="text-primary text-3xl font-black mb-8 tracking-tighter uppercase italic">Vitinerario</p>
+        <div class="flex justify-center flex-wrap gap-8 text-[10px] font-bold uppercase tracking-[0.4em] text-stone-grey/60">
+            <a href="#" class="hover:text-primary transition-colors">Brand Assets</a>
+            <a href="#" class="hover:text-primary transition-colors">Editorial Policy</a>
+            <a href="#" class="hover:text-primary transition-colors">Contact Press</a>
+        </div>
+        <p class="mt-12 text-[10px] text-stone-grey/30 uppercase tracking-widest">© 2024 Vitinerario Magazine. All design tokens are proprietary.</p>
+    </footer>
+</main>

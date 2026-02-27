@@ -1,6 +1,183 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Privacy Policy | Vitinerario";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "lovelo": ["Montserrat", "sans-serif"],
+                        "body": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lovelo-heading {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 900;
+        }
+        .progress-bar {
+            height: 2px;
+            background: #d11a51;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30%;
+            z-index: 100;
+        }
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(to right, #d11a51, transparent);
+        }
+    </style>
+}
+
+<!-- Progress Bar -->
+<div class="progress-bar"></div>
+
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-body antialiased pt-32">
+    <!-- Main Layout Grid -->
+    <main class="flex-1 max-w-7xl mx-auto w-full px-6 md:px-16 pb-32">
+        <!-- Hero Title -->
+        <div class="mb-32">
+            <p class="text-primary lovelo-heading text-sm mb-4">Legal Framework</p>
+            <h1 class="lovelo-heading text-6xl md:text-8xl lg:text-[10rem] leading-none text-white opacity-90 -ml-1 md:-ml-2">
+                Privacy <br>Policy
+            </h1>
+            <div class="mt-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div class="max-w-md">
+                    <p class="text-slate-400 text-lg leading-relaxed">
+                        We are committed to protecting your privacy and ensuring your data is handled with care and transparency.
+                    </p>
+                </div>
+                <div class="text-right">
+                    <p class="text-slate-500 uppercase tracking-tighter text-xs">Last updated</p>
+                    <p class="text-primary font-bold text-xl">FEBRUARY 25, 2026</p>
+                </div>
+            </div>
+            <div class="editorial-line mt-12 w-full opacity-30"></div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+            <!-- Sticky Sidebar Navigation -->
+            <aside class="lg:col-span-3 hidden lg:block">
+                <div class="sticky top-40 flex flex-col gap-8">
+                    <h4 class="lovelo-heading text-xs text-slate-500">Directory</h4>
+                    <nav class="flex flex-col gap-4">
+                        <a href="#collection" class="text-primary text-sm flex items-center gap-3 font-medium">
+                            <span class="text-[10px] lovelo-heading">01</span> Data Collection
+                        </a>
+                        <a href="#usage" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">02</span> Data Usage
+                        </a>
+                        <a href="#cookies" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">03</span> Cookies
+                        </a>
+                        <a href="#contact" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                            <span class="text-[10px] lovelo-heading">04</span> Contact Us
+                        </a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Content Sections -->
+            <div class="lg:col-span-8 lg:col-start-5 space-y-32">
+                <!-- Section 1 -->
+                <section id="collection" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">01</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Data Collection</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            We collect personal information that you voluntarily provide to us when you register on the Vitinerario platform, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 2 -->
+                <section id="usage" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">02</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Data Usage</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            We use personal information collected via our Services for a variety of business purposes described below. We process your personal information for these purposes in reliance on our legitimate business interests, in order to enter into or perform a contract with you, with your consent, and/or for compliance with our legal obligations.
+                        </p>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section id="cookies" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">03</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Cookies and Tracking</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            We may use cookies and similar tracking technologies (like web beacons and pixels) to access or store information. Specific information about how we use such technologies and how you can refuse certain cookies is set out in our Cookie Notice.
+                        </p>
+                    </div>
+                </section>
+
+                 <!-- Section 4 -->
+                <section id="contact" class="scroll-mt-32">
+                    <div class="flex items-start gap-8 mb-8">
+                        <span class="lovelo-heading text-4xl text-primary opacity-50">04</span>
+                        <h2 class="lovelo-heading text-3xl text-white pt-2">Contact Us</h2>
+                    </div>
+                    <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light">
+                        <p>
+                            If you have questions or comments about this policy, you may email us at <a href="mailto:privacy@vitinerario.com" class="text-primary hover:underline transition-all">privacy@vitinerario.com</a>.
+                        </p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-white/5 pt-24 pb-12">
+        <div class="max-w-7xl mx-auto px-6 md:px-16">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-24">
+                <div class="col-span-1 md:col-span-2">
+                    <h2 class="lovelo-heading text-3xl text-white mb-8 tracking-tighter">Vitinerario</h2>
+                    <p class="text-slate-500 max-w-sm leading-relaxed text-sm">
+                        The definitive platform for architectural travel.
+                    </p>
+                </div>
+                <div>
+                     <h4 class="lovelo-heading text-xs text-white mb-6">Company</h4>
+                    <ul class="space-y-4 text-xs uppercase tracking-widest text-slate-500">
+                        <li><a href="#" class="hover:text-primary">Our Story</a></li>
+                        <li><a href="@Url.Action("Privacy")" class="text-primary">Privacy Policy</a></li>
+                        <li><a href="@Url.Action("Terms")" class="hover:text-primary">Terms of Use</a></li>
+                        <li><a href="#" class="hover:text-primary">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+             <div class="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 text-[10px] lovelo-heading text-slate-600">
+                <p>© 2026 Vitinerario International. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+</div>
