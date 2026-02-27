@@ -85,7 +85,7 @@ namespace Vitinerario.Controllers
 
         public IActionResult DownloadBrochure()
         {
-            string filePath = Path.Combine(_env.WebRootPath, "Assets", "doc", "presentation_deck.pdf");
+            string filePath = Path.Combine(_env.WebRootPath, "Assets", "doc", "Brochure Vitinerario.pdf");
 
             if (!System.IO.File.Exists(filePath))
             {
@@ -93,7 +93,7 @@ namespace Vitinerario.Controllers
             }
 
             byte[] fileBytes = System.IO.File.ReadAllBytes(filePath);
-            return File(fileBytes, "application/pdf", "Vitinerario_Deck.pdf");
+            return File(fileBytes, "application/pdf", "Brochure Vitinerario.pdf");
         }
 
         public IActionResult Article()

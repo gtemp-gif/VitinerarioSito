@@ -144,13 +144,13 @@
     <div class="absolute inset-0 hero-overlay flex items-end pb-32">
         <div class="max-w-7xl mx-auto px-6 w-full text-white">
             <div class="max-w-4xl">
-                <span class="inline-block px-4 py-1.5 bg-primary text-[10px] uppercase tracking-widest-plus font-black mb-8">Featured Story</span>
+                @* <span class="inline-block px-4 py-1.5 bg-primary text-[10px] uppercase tracking-widest-plus font-black mb-8">Featured Story</span> *@
                 <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">The Art of the <br>Harvest.</h1>
                 <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">An intimate journey through the golden hours of the Chianti Classico region.</p>
-                <a href="@Url.Action("Article")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
+               @*  <a href="@Url.Action("Article")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
                     Read Feature
                     <span class="material-icons ml-3 group-hover:translate-x-2 transition-transform">arrow_forward</span>
-                </a>
+                </a> *@
             </div>
         </div>
     </div>
@@ -158,7 +158,9 @@
 
 <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 mb-8">
-        <span class="text-[9px] uppercase tracking-widest-plus font-black text-white/30">Official Partners</span>
+        <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
+        @* <span class="text-[9px] uppercase tracking-widest-plus font-black text-white/30">Official Partners</span> *@
+
     </div>
     <div class="flex overflow-hidden whitespace-nowrap">
         <div class="flex animate-scroll items-center gap-24">
@@ -202,7 +204,10 @@
             <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Experts suggest 2024 could be the most balanced harvest in a decade due to unique climatic patterns across Spain.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">2 Hours Ago</span>
-                <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                <a href="@Url.Action("Article")"
+                   class="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-icons text-primary text-sm">arrow_forward</span>
+                </a>
             </div>
         </article>
         <article class="group cursor-pointer flex flex-col">
@@ -218,7 +223,10 @@
                 <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Auction prices for Karuizawa and Yamazaki continue to climb, reaching new historical peaks this quarter.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">5 Hours Ago</span>
-                <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                <a href="@Url.Action("Article")"
+                   class="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-icons text-primary text-sm">arrow_forward</span>
+                </a>
             </div>
         </article>
         <article class="group cursor-pointer flex flex-col">
@@ -234,7 +242,12 @@
                 <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">Vitinerario Circle members gain early registration for the most anticipated tasting event of the year.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">12 Hours Ago</span>
-                <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                <a href="@Url.Action("EventDetails")"
+                   class="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-icons text-primary text-sm">
+                        arrow_forward
+                    </span>
+                </a>
             </div>
         </article>
         <article class="group cursor-pointer flex flex-col">
@@ -250,7 +263,12 @@
              <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">A new alliance of boutique wineries announces a zero-carbon trail through the heart of the region.</p>
             <div class="mt-auto flex items-center justify-between">
                 <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">1 Day Ago</span>
-                <span class="material-icons text-primary text-sm opacity-0 group-hover:opacity-100 transition-opacity">arrow_forward</span>
+                <a href="@Url.Action("Podcast")"
+                   class="opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span class="material-icons text-primary text-sm">
+                        arrow_forward
+                    </span>
+                </a>
             </div>
         </article>
     </div>
