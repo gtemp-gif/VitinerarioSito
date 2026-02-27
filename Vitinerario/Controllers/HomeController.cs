@@ -1,16 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Vitinerario.Models;
 using System.IO;
+using Vitinerario.Services;
 
 namespace Vitinerario.Controllers
 {
     public class HomeController : Controller
     {
         private readonly IWebHostEnvironment _env;
+        private readonly IEmailService _emailService;
+        private readonly IConfiguration _configuration;
 
-        public HomeController(IWebHostEnvironment env)
+        public HomeController(IWebHostEnvironment env, IEmailService emailService, IConfiguration configuration)
         {
             _env = env;
+            _emailService = emailService;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -46,7 +51,7 @@ namespace Vitinerario.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Producers(ProducerViewModel model)
+        public async Task<IActionResult> Producers(ProducerViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -68,10 +73,9 @@ namespace Vitinerario.Controllers
                     <p>{model.Message}</p>
                 ";
 
-                // TODO: Integrate Proprietary DLL for email sending here.
-                // Example: EmailService.Send("admin@vitinerario.com", subject, body);
+                string adminEmail = _configuration["AdminEmail"];
+                await _emailService.SendEmailAsync(adminEmail, subject, body);
 
-                // Simulate success for now
                 TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
                 return RedirectToAction(nameof(Producers));
             }
