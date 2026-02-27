@@ -1,9 +1,10 @@
+@model Vitinerario.Models.ProducerViewModel
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Producers | Vitinerario";
 }
 
- @section TailwindConfig {
+@section TailwindConfig {
     <script>
         tailwind.config = {
             darkMode: "class",
@@ -37,11 +38,9 @@
         .lov-heading { font-family: 'Montserrat', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        html { scroll-behavior: smooth; }
     </style>
 }
-
-<!-- Top Navigation -->
-
 
 <!-- Hero Section -->
 <section class="relative h-screen w-full flex items-center justify-center overflow-hidden text-slate-100">
@@ -58,17 +57,17 @@
             A sophisticated platform for producers to craft cinematic event journeys across the globe. Excellence met with editorial precision.
         </p>
         <div class="mt-12 flex flex-col md:flex-row items-center justify-center gap-6">
-            <button class="bg-primary hover:bg-white hover:text-charcoal w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300">
+            <a href="#join-collective" class="bg-primary hover:bg-white hover:text-charcoal w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300">
                 Partner With Us
-            </button>
-            <button class="border border-white/30 hover:border-white w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all">
+            </a>
+            @* <button class="border border-white/30 hover:border-white w-full md:w-auto px-10 py-4 rounded-sm font-refined font-bold uppercase tracking-widest transition-all">
                 View Portfolio
-            </button>
+            </button> *@
         </div>
     </div>
-    <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce opacity-50">
+   @*  <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce opacity-50">
         <span class="material-symbols-outlined text-4xl text-white">keyboard_double_arrow_down</span>
-    </div>
+    </div> *@
 </section>
 
 <!-- Main Content Sections -->
@@ -82,13 +81,14 @@
             </div>
             <div class="lg:col-span-4 lg:text-right">
                 <p class="font-refined text-slate-400 leading-relaxed max-w-md ml-auto">
-                    Global reach without logistical compromise. Bringing high-end production to the world's most breathtaking and challenging locations.
+                    Il format On Tour è l’occasione perfetta per valorizzare il territorio e le sue eccellenze, per un’esperienza turistica completa che attrae amanti del vino, dell' olio, della natura e della cultura gastronomica. Offri ai tuoi ospiti un’esperienza completa, organizzando percorsi tra vigneti, uliveti e borghi che si concludono in una degustazione presso la tua location. Il percorso diventa un’occasione per conoscere la storia e la cultura del territorio, mentre la degustazione, diventa il momento clou per assaporare i tuoi prodotti. Ogni piatto racconta una storia, ogni calice invita a esplorare nuovi orizzonti di gusto, rendendo ogni passo di questo percorso un'esperienza unica e irripetibile.
+
                 </p>
             </div>
         </div>
         <!-- Image Carousel Component -->
-        <div class="relative group">
-            <div class="flex gap-6 overflow-x-auto hide-scrollbar pb-10 snap-x snap-mandatory">
+        <div class="relative group" id="carousel-container">
+            <div class="flex gap-6 overflow-x-auto hide-scrollbar pb-10 snap-x snap-mandatory" id="carousel-track" style="scroll-behavior: smooth;">
                 <div class="min-w-[80vw] md:min-w-[45vw] lg:min-w-[35vw] snap-start aspect-[4/5] bg-neutral-900 overflow-hidden group/item">
                     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUYZtOGf_VfvFu1ht6W4Dj9IHkY12zVRLuLlfqxvHDaUOZsQ5LNL_Dm5a8oTDD12TWvqiXYABdaYeYcb3DRiFe3jxedpVOmNT6VHJ9-XlZIgZ_wn4tUdC22Ghpz7Jmj1aFYhTVtUtppdB329Oh7GRQLv4KISDpxJmT40FxN7JkYmMbSilIRhO92s0YrcAmI2-W5DTPI0B5YBbB4Ak9knwAZodlj1JXLvYfVAcwyG1jnwU_YIyZEIpt1f4Q4503RMpaDhto2pgUXYQ" class="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all duration-700 scale-105 group-hover/item:scale-100" data-alt="Vibrant outdoor festival stage at sunset">
                 </div>
@@ -101,10 +101,10 @@
             </div>
             <!-- Navigation UI -->
             <div class="flex justify-end gap-4 mt-6">
-                <button class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white">
+                <button id="prevBtn" class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white cursor-pointer">
                     <span class="material-symbols-outlined">arrow_back</span>
                 </button>
-                <button class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white">
+                <button id="nextBtn" class="size-12 border border-white/10 flex items-center justify-center hover:bg-white hover:text-charcoal transition-all text-white cursor-pointer">
                     <span class="material-symbols-outlined">arrow_forward</span>
                 </button>
             </div>
@@ -128,16 +128,16 @@
                 <h2 class="lov-heading text-6xl md:text-8xl font-black text-white/5 leading-none mb-[-20px] select-none text-right">LIVE</h2>
                 <h2 class="lov-heading text-4xl md:text-6xl font-black text-white relative z-10 text-right mb-8">Vitinerario <span class="text-primary">LIVE</span></h2>
                 <p class="font-refined text-lg text-slate-300 leading-relaxed font-light text-right max-w-lg ml-auto mb-10">
-                    Dynamic performances met with seamless technical execution. We provide the infrastructure for high-energy engagements that resonate across digital and physical spaces.
+                    Vuoi offrire un’esperienza sensoriale che lascerà i tuoi ospiti senza parole? Con il format Live, la tua struttura può diventare il palcoscenico di un viaggio emozionale che celebra l'incontro tra i piaceri del vino e la scoperta dei sensi. Immagina di accogliere i tuoi ospiti in una serata guidata dove saranno invitati a esplorare profumi e le sfumature del vino attraverso il tatto, l’olfatto e il gusto. È un percorso che risveglia i sensi e permette di immergersi in un’esperienza intima e indimenticabile. Nella seconda parte della serata, i partecipanti si cimenteranno in una degustazione dove ogni vino sarà abbinato a piatti selezionati per esaltarne i sapori. Questa esperienza coinvolge la tua cucina e valorizza i prodotti culinari, creando un’atmosfera che sorprende e conquista gli ospiti, spingendoli a riscoprire le sfumature uniche di ogni calice.
                 </p>
-                <div class="flex justify-end">
+               @*  <div class="flex justify-end">
                     <a href="#" class="group flex items-center gap-4 lov-heading text-sm font-bold tracking-[0.2em] text-white">
                         Explore Live Tech
                         <span class="size-10 bg-primary rounded-full flex items-center justify-center group-hover:translate-x-2 transition-transform">
                             <span class="material-symbols-outlined text-white">chevron_right</span>
                         </span>
                     </a>
-                </div>
+                </div> *@
             </div>
         </div>
     </section>
@@ -155,42 +155,149 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-1">
             <div class="relative group overflow-hidden aspect-square">
                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCuyf0R-_jrl-hwSRswURq1Z9Z3wHwq9fUkq2HWQfVLOxW-lB-gIKOmpULmNff4Y9AjwUWJ-wR-R7WgyFJFkvOweXKn3RT5HaiDGwd6Wx2zwV49z4XUThWx_QsYeB3YEjknPJlQb2Nl_Ueh-b5QbCMjyTibXzUJU83Nk9-uQmhlg-obdXusLHGYXWIEh3dPbRGm5IO92kHWNai64e5yj8shy_CtBnzWYDpuL4JU3IoRn0P6PDH6gtZ7YbOavqx2rTwbc_FRryUdzww" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Abstract red and black light installation">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+               @*  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Installations</span>
-                </div>
+                </div> *@
             </div>
             <div class="relative group overflow-hidden aspect-square">
                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSKsAX5RLaEQw28S7Q9pxzwWrXx2HZMQn4IYwwATx1N3qwoXZS6XYvNXbhsvN5oSsVIMQyC-EZqFaWdfwoqqn83P2tj7trrSMlJq_ueVllGyzop73o0lueNRjPVfO71gQDnea7gUyQp6eWKZ3Li7ypSl4C__9L-lHYfsETD4jCSWZGzUC2mjeDJ6tA--xctJDzlWSSvb01zSv52hj4n2RPo5TbSk-WYu16DeWHst4A4udfpYipXupP3tDKZk_hX_vm1uw_8DMOZXk" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Modern sculpture in a minimal gallery setting">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                @* <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Sculptural</span>
-                </div>
+                </div> *@
             </div>
             <div class="relative group overflow-hidden aspect-square">
                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCH4Rlym1q3IcAhFK-IBnUVboiZCAEAGPBM54-qb0NF58D2MjcQg72BsdrZ-0xmG01_-Q86SP_5r8dOjPsGCPZWsPLUCy-4W8Jxgkvf0eUpAWMweOgdq9sAaOSUTIL7Ha96Lt3yU1KpJ-m14iYMj0kDvqh6O7VCmOm00krOVXRMOv9s9yfOH1a0VoIzik6jogngLj-VG8ZdmX1kNHLozjy_IgSDr7JtIil9wxTWxNqkwaB1hHn-A1yImnq8FEytWfUGJMGmVXxugRg" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="Cinematic projection on a large architectural facade">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+               @*  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <span class="lov-heading text-xs tracking-widest bg-white text-charcoal px-4 py-2">Immersive</span>
-                </div>
+                </div> *@
             </div>
         </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section class="relative py-32 lg:py-48 px-6 text-center border-t border-white/5 overflow-hidden">
+    <!-- Final CTA Section / Join the Collective -->
+    <section id="join-collective" class="relative py-32 lg:py-48 px-6 text-center border-t border-white/5 overflow-hidden">
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-primary/10 blur-[120px] rounded-full pointer-events-none"></div>
-        <div class="relative z-10">
+        <div class="relative z-10 max-w-4xl mx-auto">
             <h2 class="lov-heading text-4xl md:text-6xl font-black mb-8 text-white">Join the Collective</h2>
             <p class="font-refined text-slate-400 max-w-xl mx-auto mb-12 text-lg">
                 We are currently selecting exclusive production partners for the upcoming season. Shape the future of event experiences with us.
             </p>
-            <div class="flex flex-col md:flex-row items-center justify-center gap-6">
-                <button class="bg-primary hover:bg-white hover:text-charcoal px-12 py-5 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300 text-sm text-white">
-                    Apply to Partner
-                </button>
-                <button class="flex items-center gap-3 font-refined text-sm tracking-widest uppercase font-bold text-slate-100 hover:text-primary transition-colors">
-                    Download Deck <span class="material-symbols-outlined">download</span>
-                </button>
-            </div>
+
+            <!-- Success Message -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="bg-green-500/20 border border-green-500/50 text-green-200 p-4 mb-8 rounded">
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            <!-- Form -->
+            <form asp-action="Producers" method="post" class="text-left space-y-6 bg-white/5 p-8 md:p-12 rounded-lg backdrop-blur-sm border border-white/10">
+                <div asp-validation-summary="ModelOnly" class="text-red-400 text-sm font-bold mb-4"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label asp-for="CompanyName" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="CompanyName" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Your Company Name" />
+                        <span asp-validation-for="CompanyName" class="text-primary text-xs font-bold"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label asp-for="ContactPerson" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="ContactPerson" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Full Name" />
+                        <span asp-validation-for="ContactPerson" class="text-primary text-xs font-bold"></span>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label asp-for="Email" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <input asp-for="Email" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="email@company.com" />
+                        <span asp-validation-for="Email" class="text-primary text-xs font-bold"></span>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label asp-for="RequestType" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                        <div class="relative">
+                            <select asp-for="RequestType" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none appearance-none cursor-pointer transition-colors">
+                                <option value="" disabled selected>Select an Option</option>
+                                <option value="Richiedi Informazioni">Richiedi Informazioni</option>
+                                <option value="Ospita un Evento">Ospita un Evento</option>
+                            </select>
+                            <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">expand_more</span>
+                        </div>
+                        <span asp-validation-for="RequestType" class="text-primary text-xs font-bold"></span>
+                    </div>
+                </div>
+
+                <div class="space-y-2">
+                    <label asp-for="Message" class="text-xs font-bold uppercase tracking-widest text-slate-400"></label>
+                    <textarea asp-for="Message" rows="4" class="w-full bg-charcoal border border-white/20 p-4 text-white focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-colors" placeholder="Tell us about your proposal..."></textarea>
+                    <span asp-validation-for="Message" class="text-primary text-xs font-bold"></span>
+                </div>
+
+                <div class="pt-4 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <button type="submit" class="w-full md:w-auto bg-primary hover:bg-white hover:text-charcoal px-12 py-5 rounded-sm font-refined font-bold uppercase tracking-widest transition-all duration-300 text-sm text-white">
+                        Send Request
+                    </button>
+
+                    <a href="@Url.Action("DownloadBrochure")" class="flex items-center gap-3 font-refined text-sm tracking-widest uppercase font-bold text-slate-100 hover:text-primary transition-colors">
+                        Download Brochure <span class="material-symbols-outlined">download</span>
+                    </a>
+                </div>
+            </form>
         </div>
     </section>
 </main>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const track = document.getElementById('carousel-track');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let scrollAmount = 0;
+
+        // Use first child width as scroll step, fallback to screen width percentage
+        function getScrollStep() {
+             const firstItem = track.firstElementChild;
+             return firstItem ? firstItem.clientWidth + 24 : window.innerWidth * 0.8; // 24 is gap
+        }
+
+        const scrollNext = () => {
+            const step = getScrollStep();
+            // Check if we are at the end
+            if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 10) {
+                 track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                 track.scrollBy({ left: step, behavior: 'smooth' });
+            }
+        };
+
+        const scrollPrev = () => {
+             const step = getScrollStep();
+             track.scrollBy({ left: -step, behavior: 'smooth' });
+        };
+
+        nextBtn.addEventListener('click', () => {
+            scrollNext();
+            resetAutoplay();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            scrollPrev();
+            resetAutoplay();
+        });
+
+        // Autoplay
+        let autoplayInterval = setInterval(scrollNext, 5000);
+
+        function resetAutoplay() {
+            clearInterval(autoplayInterval);
+            autoplayInterval = setInterval(scrollNext, 5000);
+        }
+
+        // Pause on hover (optional but recommended for UX)
+        track.addEventListener('mouseenter', () => clearInterval(autoplayInterval));
+        track.addEventListener('mouseleave', () => resetAutoplay());
+    });
+</script>

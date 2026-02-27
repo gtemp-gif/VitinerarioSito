@@ -11,6 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="MailHelper">
+      <HintPath>wwwroot\dll\MailHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="MailKit">
+      <HintPath>wwwroot\dll\MailKit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Resources\Views\Shared\SharedResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
