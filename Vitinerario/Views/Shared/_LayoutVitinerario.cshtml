@@ -89,11 +89,11 @@
                 <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a>
                 <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">Podcast</a>
             </nav>
-           @*  <div class="flex items-center gap-6">
-                <button class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all">
+            <div class="flex items-center gap-6">
+                <a href="@Url.Action("Partecipa", "Eventi")" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all decoration-0">
                     Inquire Now
-                </button>
-            </div> *@
+                </a>
+            </div>
         </div>
     </header>
     @RenderBody()
