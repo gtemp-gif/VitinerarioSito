@@ -50,6 +50,14 @@
             text-wrap: balance;
         }
 
+        .hide-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+
         @@keyframes scroll {
             0% {
                 transform: translateX(0);
@@ -133,6 +141,10 @@
                     <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-video rounded-xl overflow-hidden shadow-2xl">
                         <img alt="Wine pour" class="w-full h-full object-cover" data-alt="Close up of red wine being poured into glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuusAwiS7NsacdpjON-1J9WyhsrPnM_FE5mpHP-2y5VMvypFHM3ORexdnf9fC0AndU7no1cXP8DHAWziHYPIJeFVLlJJZuHstoj69Ia5mSrn7eI0D7GQ0GIYPPDEqXQ6VYl7I045lhgDnblBSV5uaQ74aKkXZLn6jkL9A7rm05Q4FGemWLDU0Y_Wp-ewSxJ58Y7dcqwA7AZuwI3zWL36ryB2aSzodXFlz67PXJqmciSFhvBq94I3FnToaZjvQQW2-PLpISDKbJ_uc"/>
                     </div>
+                </div>
+                <div class="flex justify-center gap-2 mt-6">
+                    <div class="size-2 rounded-full bg-primary"></div>
+                    <div class="size-2 rounded-full bg-primary/20"></div>
                 </div>
             </div>
             <div class="lg:col-span-5">
@@ -249,6 +261,30 @@
                 let startX;
                 let scrollLeft;
                 let autoScrollInterval;
+
+                const dotsContainer = carousel.nextElementSibling;
+                let dots = [];
+                if (dotsContainer && dotsContainer.classList.contains('flex', 'justify-center')) {
+                    dots = dotsContainer.querySelectorAll('div');
+                }
+
+                function updateDots() {
+                    if (dots.length === 0) return;
+                    const scrollRatio = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth);
+                    const activeIndex = Math.min(Math.round(scrollRatio * (dots.length - 1)), dots.length - 1);
+
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.remove('bg-primary/20');
+                            dot.classList.add('bg-primary');
+                        } else {
+                            dot.classList.remove('bg-primary');
+                            dot.classList.add('bg-primary/20');
+                        }
+                    });
+                }
+
+                carousel.addEventListener('scroll', updateDots);
 
                 // Mouse Drag Scrolling
                 carousel.addEventListener('mousedown', (e) => {
