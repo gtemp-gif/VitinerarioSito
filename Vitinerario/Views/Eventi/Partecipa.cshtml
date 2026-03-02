@@ -5,11 +5,72 @@
     ViewData["Title"] = "Partecipa all'Evento";
 }
 
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d31a53",
+                        "dark-charcoal": "#121212",
+                        "charcoal-light": "#1e1e1e",
+                        "accent-burgundy": "#d31a53"
+                    },
+                    fontFamily: {
+                        "body": ["Roboto", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "lovelo": ["Montserrat", "sans-serif"]
+                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
+                    }
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        body {
+            @@apply font-body bg-dark-charcoal text-white/90 antialiased;
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-brand {
+            @@apply font-display tracking-architectural uppercase;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.8) 100%);
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        @@keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 40s linear infinite;
+        }
+    </style>
+}
+
 <main>
     <!-- Hero Section -->
     <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
         <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-gradient-to-b from-charcoal/60 via-charcoal/40 to-charcoal z-10"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-dark-charcoal/60 via-dark-charcoal/40 to-dark-charcoal z-10"></div>
             <img alt="Cinematic vineyard at sunset" class="w-full h-full object-cover" data-alt="Sunlit rolling hills of a vineyard at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkNcSS6UhGwjRBR67iOnQOcJlRYAWcQs_vAB7G2kR--C2Se4XKCfnY5l74dUpm32cSR-Vm6cOZuWh9s9b37xn3GXEULm9K8-zcjTh_aMKVTZtJAB2-5xNmUibJfj0f8-2r823-e_eaBz9rCJgAdPVWgeQJzXTaAQiuiQcEcXwxHc2mguCy6l_YLEwjBjIBPc6ZQ2YU7thRWBY5tFilhb-bGjGTyWhExaeK0hiZI8aM-TqZ7xmh2G-laQt7PtDcxJtNNGKNM6pYrZA"/>
         </div>
         <div class="relative z-20 text-center px-6 max-w-4xl mx-auto">
@@ -128,45 +189,45 @@
                 </p>
             </div>
 
-            <div class="bg-charcoal p-10 md:p-14 rounded-xl shadow-2xl border border-white/5">
+            <div class="bg-dark-charcoal p-10 md:p-14 border border-white/5">
                 @if (TempData["SuccessMessage"] != null)
                 {
-                    <div class="mb-8 p-4 bg-green-500/10 border border-green-500 text-green-400 rounded-lg text-sm font-bold text-center">
+                    <div class="mb-8 p-4 bg-green-500/10 border border-green-500 text-green-400 text-sm font-bold text-center">
                         @TempData["SuccessMessage"]
                     </div>
                 }
 
                 <form asp-action="Partecipa" method="post" class="space-y-8">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="space-y-2">
-                            <label asp-for="Nome" class="text-xs uppercase tracking-widest font-bold text-white/60 block font-display">Nome</label>
-                            <input asp-for="Nome" class="w-full bg-transparent border-0 border-b border-white/20 px-0 py-3 text-sm text-white focus:ring-0 focus:border-primary transition-colors placeholder:text-white/20" placeholder="Il tuo nome" />
-                            <span asp-validation-for="Nome" class="text-primary text-xs font-bold mt-2 block"></span>
+                        <div class="group relative space-y-2">
+                            <label asp-for="Nome" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Nome</label>
+                            <input asp-for="Nome" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Il tuo nome" />
+                            <span asp-validation-for="Nome" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
                         </div>
 
-                        <div class="space-y-2">
-                            <label asp-for="Cognome" class="text-xs uppercase tracking-widest font-bold text-white/60 block font-display">Cognome</label>
-                            <input asp-for="Cognome" class="w-full bg-transparent border-0 border-b border-white/20 px-0 py-3 text-sm text-white focus:ring-0 focus:border-primary transition-colors placeholder:text-white/20" placeholder="Il tuo cognome" />
-                            <span asp-validation-for="Cognome" class="text-primary text-xs font-bold mt-2 block"></span>
+                        <div class="group relative space-y-2">
+                            <label asp-for="Cognome" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Cognome</label>
+                            <input asp-for="Cognome" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Il tuo cognome" />
+                            <span asp-validation-for="Cognome" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
                         </div>
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Email" class="text-xs uppercase tracking-widest font-bold text-white/60 block font-display">Email</label>
-                        <input asp-for="Email" class="w-full bg-transparent border-0 border-b border-white/20 px-0 py-3 text-sm text-white focus:ring-0 focus:border-primary transition-colors placeholder:text-white/20" placeholder="email@esempio.com" />
-                        <span asp-validation-for="Email" class="text-primary text-xs font-bold mt-2 block"></span>
+                    <div class="group relative space-y-2">
+                        <label asp-for="Email" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email Address</label>
+                        <input asp-for="Email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="email@address.com" />
+                        <span asp-validation-for="Email" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
                     </div>
 
-                    <div class="space-y-2">
-                        <label asp-for="Evento" class="text-xs uppercase tracking-widest font-bold text-white/60 block font-display">Evento</label>
-                        <select asp-for="Evento" asp-items="ViewBag.Eventi" class="w-full bg-transparent border-0 border-b border-white/20 px-0 py-3 text-sm text-white focus:ring-0 focus:border-primary transition-colors [&>option]:bg-charcoal [&>option]:text-white">
-                            <option value="">-- Seleziona un Evento --</option>
+                    <div class="group relative space-y-2">
+                        <label asp-for="Evento" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Evento</label>
+                        <select asp-for="Evento" asp-items="ViewBag.Eventi" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all text-white/60">
+                            <option value="" class="bg-dark-charcoal">-- Seleziona un Evento --</option>
                         </select>
-                        <span asp-validation-for="Evento" class="text-primary text-xs font-bold mt-2 block"></span>
+                        <span asp-validation-for="Evento" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
                     </div>
 
                     <div class="pt-6">
-                        <button type="submit" class="w-full bg-primary hover:bg-primary/90 text-white py-5 rounded-lg text-sm font-bold uppercase tracking-[0.2em] transition-all shadow-lg shadow-primary/20">
+                        <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
                             Invia Richiesta
                         </button>
                     </div>
@@ -179,4 +240,65 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousels = document.querySelectorAll('.overflow-x-auto');
+
+            carousels.forEach(carousel => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                let autoScrollInterval;
+
+                // Mouse Drag Scrolling
+                carousel.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    carousel.classList.add('cursor-grabbing');
+                    startX = e.pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                    clearInterval(autoScrollInterval); // Pause on drag
+                });
+                carousel.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    carousel.classList.remove('cursor-grabbing');
+                    startAutoScroll(); // Resume on leave
+                });
+                carousel.addEventListener('mouseup', () => {
+                    isDown = false;
+                    carousel.classList.remove('cursor-grabbing');
+                    startAutoScroll(); // Resume on drop
+                });
+                carousel.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+
+                // Auto Scroll Logic
+                function startAutoScroll() {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = setInterval(() => {
+                        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                        const cardWidth = carousel.querySelector('div').offsetWidth + 16; // Add gap
+
+                        if (carousel.scrollLeft >= maxScroll - 10) {
+                            // Smoothly jump to start when reaching the end
+                            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                        }
+                    }, 5000);
+                }
+
+                // Initial start
+                startAutoScroll();
+
+                // Pause auto scroll on touch interaction (mobile)
+                carousel.addEventListener('touchstart', () => clearInterval(autoScrollInterval), { passive: true });
+                carousel.addEventListener('touchend', startAutoScroll, { passive: true });
+            });
+        });
+    </script>
 }
