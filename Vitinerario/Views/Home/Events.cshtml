@@ -31,49 +31,45 @@
     </script>
 }
 
-@section Styles {
-    <style>
-        .lovelo-style {
-            font-family: 'Noto Sans', sans-serif;
-            letter-spacing: 0.1em;
-            font-weight: 800;
-        }
-    </style>
-} 
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const eventCards = document.querySelectorAll('.event-card');
 
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background-dark text-slate-100 font-sans selection:bg-primary selection:text-white">
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active button state
+                    filterBtns.forEach(b => {
+                        b.classList.remove('bg-primary', 'text-white');
+                        b.classList.add('text-white/50');
+                    });
+                    btn.classList.remove('text-white/50');
+                    btn.classList.add('bg-primary', 'text-white');
 
-    <!-- Navigation Bar -->
-   @*  <header class="sticky top-0 z-50 w-full border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 md:px-16 py-4">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <div class="flex items-center gap-10">
-                <div class="flex items-center gap-3">
-                    <div class="text-primary size-8">
-                        <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                            <path clip-rule="evenodd" d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z" fill="currentColor" fill-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <h1 class="font-display text-2xl font-bold tracking-tight">Vitinerario</h1>
-                </div>
-                <nav class="hidden lg:flex items-center gap-8">
-                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Home</a>
-                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Experiences</a>
-                    <a class="text-primary text-sm font-medium" href="#">Events</a>
-                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Vineyards</a>
-                    <a class="text-sm font-medium hover:text-primary transition-colors" href="#">Contact</a>
-                </nav>
-            </div>
-            <div class="flex items-center gap-6">
-                <div class="hidden sm:flex items-center bg-white/5 rounded-lg px-3 py-1.5 border border-white/10">
-                    <span class="material-symbols-outlined text-white/40 text-sm">search</span>
-                    <input class="bg-transparent border-none focus:ring-0 text-sm placeholder:text-white/30 w-32 md:w-48" placeholder="Search events..." type="text"/>
-                </div>
-                <button class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-all uppercase tracking-wider">
-                    Inquire
-                </button>
-            </div>
-        </div>
-    </header> *@
+                    const selectedYear = btn.getAttribute('data-filter');
+
+                    // Filter cards
+                    eventCards.forEach(card => {
+                        card.classList.remove('opacity-100', 'hidden');
+                        card.classList.add('opacity-0');
+
+                        setTimeout(() => {
+                            if (selectedYear === 'all' || card.getAttribute('data-year') === selectedYear) {
+                                card.classList.remove('hidden');
+                                setTimeout(() => card.classList.replace('opacity-0', 'opacity-100'), 50);
+                            } else {
+                                card.classList.add('hidden');
+                            }
+                        }, 500); // Wait for fade out
+                    });
+                });
+            });
+        });
+    </script>
+}
+
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-dark-charcoal text-slate-100 font-body selection:bg-primary selection:text-white">
 
     <main class="flex-1 max-w-7xl mx-auto w-full px-6 pt-32 pb-12 md:px-16">
         <!-- Hero Section -->
@@ -90,13 +86,19 @@
 
         <!-- 2024 Events Section -->
         <section class="mb-24">
-            <div class="flex items-center gap-6 mb-12">
-                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2024</h3>
-                <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
+            <!-- Filter Bar -->
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
+                <h3 class="font-display text-2xl md:text-3xl font-bold whitespace-nowrap text-white/90 uppercase tracking-tight">Our Events</h3>
+                <div class="flex gap-2 bg-white/5 p-1 rounded-full border border-white/10" id="year-filters">
+                    <button class="filter-btn active bg-primary text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all" data-filter="all">All</button>
+                    <button class="filter-btn text-white/50 hover:text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all" data-filter="2024">2024</button>
+                    <button class="filter-btn text-white/50 hover:text-white px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all" data-filter="2025">2025</button>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10" id="events-grid">
                 <!-- Card 1 -->
-                <div class="flex flex-col group cursor-pointer">
+                <div class="event-card flex flex-col group cursor-pointer transition-opacity duration-500 opacity-100" data-year="2024">
                     <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWAas9dsAp5c6JWFFx452TI7sx4Wa_AEBEUK7a3PNC9nbmbsqeSVM1FFJcjwaOGnJ1SkVj-yKHwvehtohxOkaH8f53KM7MOOClG19rUhRHvz-SZnkQSJ5bQCEsAZySkns6PCHSI9YUWDtJTEWzMrQHAiSUq5Qgo1T82hoz4o9_Aq4bZCO3CQz0wUA26Vl6ZjbJPzST2RjGR9EDLJNfFeyxzYSdK1eMDW55Aho-IDGaiJEt0jvHZPqfB5cMSgSVmUF_RYojRxG8jew" alt="Grand Cru Gala" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Black tie gala dinner setup">
                         <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
@@ -104,7 +106,7 @@
                             <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">JUN</p>
                         </div>
                     </div>
-                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">GRAND CRU GALA</h4>
+                    <h4 class="font-display text-xl mb-2 group-hover:text-primary transition-colors">GRAND CRU GALA</h4>
                     <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <p class="font-display italic">Florence, Italy</p>
@@ -115,7 +117,7 @@
                     </a>
                 </div>
                 <!-- Card 2 -->
-                <div class="flex flex-col group cursor-pointer">
+                <div class="event-card flex flex-col group cursor-pointer transition-opacity duration-500 opacity-100" data-year="2024">
                     <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-4oxrO9D5nZoXPFROCEKfMgWvcWW94rGGuxP_X9s8xE374xV23HpI9_DWVApkoo6RP-J0WfhWhodV5Hiv-wmSwGQC8MwJrBcvpJJU2mXpoH5l232gt8kb1W9ZPC3MqHo2v3UgCxVt8qvi1lv9beXTmxZ57lOTc2Aaps6ZdpjLUsXrb4sQRtslXa5n1WnrnxzPJ-uZaX1669XHpAyIQcjcCqNBY7knZToOCbUdgvZxeCwTvIWKMdPc6pswaKJ0yvDG3i_CJSCOddU" alt="Tuscan Harvest Tour" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Golden hour vineyard in Tuscany">
                         <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
@@ -123,7 +125,7 @@
                             <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">SEP</p>
                         </div>
                     </div>
-                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">TUSCAN HARVEST TOUR</h4>
+                    <h4 class="font-display text-xl mb-2 group-hover:text-primary transition-colors">TUSCAN HARVEST TOUR</h4>
                     <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <p class="font-display italic">Siena, Italy</p>
@@ -134,7 +136,7 @@
                     </a>
                 </div>
                 <!-- Card 3 -->
-                <div class="flex flex-col group cursor-pointer">
+                <div class="event-card flex flex-col group cursor-pointer transition-opacity duration-500 opacity-100" data-year="2024">
                     <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVlOCCz8B463gC020Ayk_0XIk3gbHv8pmVIknjdY5680-WH4BVxkkqQNaOq6TnUx_LqIj9b35uFmX9bqP2-WVmHdpLMiOie7aFUjhRF9mRNsKXDELExcLV0ECE9-cncweNr4esDlsXAcPnkVeNiXVDY77WxR9vpWNuRx2iJJ22Mmza9tsFySxuLZ_U1h7CMNlkniqUmFfbIJprR4_awRCoqYXK3K6sUwgdZTs5rCAhMBnk9Yfn0BpELeTLCcgG4fwGS6jIzTTxTe8" alt="Private Cellar Tasting" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Sommelier pouring vintage wine">
                         <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
@@ -142,7 +144,7 @@
                             <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">NOV</p>
                         </div>
                     </div>
-                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">PRIVATE CELLAR TASTING</h4>
+                    <h4 class="font-display text-xl mb-2 group-hover:text-primary transition-colors">PRIVATE CELLAR TASTING</h4>
                     <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <p class="font-display italic">Bordeaux, France</p>
@@ -155,15 +157,8 @@
             </div>
         </section>
 
-        <!-- 2025 Events Section -->
-        <section class="mb-24">
-            <div class="flex items-center gap-6 mb-12">
-                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2025</h3>
-                <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 <!-- Card 4 -->
-                <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                <div class="event-card flex flex-col group cursor-pointer transition-opacity duration-500 opacity-100" data-year="2025">
                     <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoFhUii2l824Spy8X9uADjtWzYWm8PBCflfOsBm4SI-g8SDWhi2Tw6dlauWSss0AYowc41f-UINbnfuSnyWZq7wtmA0Uh8b1IaXoFDW9jL0CCCqq_Uq1aug1_7OErzMAFffI6pRMUNA3bt4c2nFLLwDaIp9en1CXblbFmhLsSA38C1blVsIahlPax7a6R4353y78OSqx-hbBZwlwgFqBxnxKFZoYx80b3CxRk6HLxsxspFvggX7nhBil2AD0lHuzzX8qSDBUn-Hy0" alt="Bordeaux Spring Release" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Spring vineyard in bloom">
                         <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
@@ -171,7 +166,7 @@
                             <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">APR</p>
                         </div>
                     </div>
-                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">BORDEAUX SPRING RELEASE</h4>
+                    <h4 class="font-display text-xl mb-2 group-hover:text-primary transition-colors">BORDEAUX SPRING RELEASE</h4>
                     <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <p class="font-display italic">Saint-Émilion, France</p>
@@ -182,7 +177,7 @@
                     </a>
                 </div>
                 <!-- Card 5 -->
-                <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                <div class="event-card flex flex-col group cursor-pointer transition-opacity duration-500 opacity-100" data-year="2025">
                     <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
                         <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLXf7AFUYYdmCX0wjxSPRQtw82j1euUFSzGhQSYalz9pzySrDejrY9ab7S9RihX9C4nsUZn1SQDNedXH4VgLfTeqb0Cio4gKxnZzhY1fAHBwDI0d6q96-GwuPvqDPtHhnImgwPFg04c9D3tdGS1h9W3V_kuJirteHZO_t9m2B3mj8cHhHLhfWhZT86_ij-kocRsXBXAkWjyq265EWwDHX3U8nhiyDL_Q2FR77ePVPqxlIdpbBhKXiESlVy4djEqfVavKqmoEmHSTk" alt="Artisanal Workshop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Hands working with grapevines">
                         <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
@@ -190,7 +185,7 @@
                             <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">MAY</p>
                         </div>
                     </div>
-                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">ARTISANAL WORKSHOPS</h4>
+                    <h4 class="font-display text-xl mb-2 group-hover:text-primary transition-colors">ARTISANAL WORKSHOPS</h4>
                     <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
                         <span class="material-symbols-outlined text-[18px]">location_on</span>
                         <p class="font-display italic">Napa Valley, USA</p>
@@ -201,7 +196,9 @@
                     </a>
                 </div>
             </div>
+            </div>
         </section>
+        </div>
     </main>
 
     <!-- Footer -->
