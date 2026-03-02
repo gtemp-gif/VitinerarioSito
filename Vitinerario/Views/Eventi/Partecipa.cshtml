@@ -5,59 +5,336 @@
     ViewData["Title"] = "Partecipa all'Evento";
 }
 
-<section class="min-h-screen flex items-center justify-center pt-32 pb-20 px-6 bg-dark-charcoal">
-    <div class="max-w-md w-full bg-charcoal-light border border-white/5 p-8 rounded-xl shadow-2xl relative">
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d31a53",
+                        "dark-charcoal": "#121212",
+                        "charcoal-light": "#1e1e1e",
+                        "accent-burgundy": "#d31a53"
+                    },
+                    fontFamily: {
+                        "body": ["Roboto", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "lovelo": ["Montserrat", "sans-serif"]
+                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
+                    }
+                },
+            },
+        }
+    </script>
+}
 
-        @if (TempData["SuccessMessage"] != null)
-        {
-            <div class="mb-6 p-4 bg-green-500/10 border border-green-500 text-green-400 rounded text-sm font-bold">
-                @TempData["SuccessMessage"]
-            </div>
+@section Styles {
+    <style type="text/tailwindcss">
+        body {
+            @@apply font-body bg-dark-charcoal text-white/90 antialiased;
         }
 
-        <div class="text-center mb-10">
-            <h2 class="text-3xl font-lovelo font-black text-white mb-2 uppercase">Join the Circle</h2>
-            <p class="text-white/50 text-sm">Secure your place at our exclusive events.</p>
+        h1, h2, h3, h4, h5, h6, .nav-brand {
+            @@apply font-display tracking-architectural uppercase;
+        }
+
+        .hero-overlay {
+            background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.8) 100%);
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+
+        @@keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-scroll {
+            animation: scroll 40s linear infinite;
+        }
+    </style>
+}
+
+<main>
+    <!-- Hero Section -->
+    <section class="relative h-[85vh] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-dark-charcoal/60 via-dark-charcoal/40 to-dark-charcoal z-10"></div>
+            <img alt="Cinematic vineyard at sunset" class="w-full h-full object-cover" data-alt="Sunlit rolling hills of a vineyard at dusk" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkNcSS6UhGwjRBR67iOnQOcJlRYAWcQs_vAB7G2kR--C2Se4XKCfnY5l74dUpm32cSR-Vm6cOZuWh9s9b37xn3GXEULm9K8-zcjTh_aMKVTZtJAB2-5xNmUibJfj0f8-2r823-e_eaBz9rCJgAdPVWgeQJzXTaAQiuiQcEcXwxHc2mguCy6l_YLEwjBjIBPc6ZQ2YU7thRWBY5tFilhb-bGjGTyWhExaeK0hiZI8aM-TqZ7xmh2G-laQt7PtDcxJtNNGKNM6pYrZA"/>
         </div>
-
-        <form asp-action="Partecipa" method="post" class="space-y-6">
-            <div class="space-y-2">
-                <label asp-for="Nome" class="text-[10px] uppercase tracking-widest font-bold text-white/60 block"></label>
-                <input asp-for="Nome" class="w-full bg-dark-charcoal border border-white/10 rounded px-4 py-3 text-sm text-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="Il tuo nome" />
-                <span asp-validation-for="Nome" class="text-primary text-xs font-bold mt-1 block"></span>
-            </div>
-
-            <div class="space-y-2">
-                <label asp-for="Cognome" class="text-[10px] uppercase tracking-widest font-bold text-white/60 block"></label>
-                <input asp-for="Cognome" class="w-full bg-dark-charcoal border border-white/10 rounded px-4 py-3 text-sm text-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="Il tuo cognome" />
-                <span asp-validation-for="Cognome" class="text-primary text-xs font-bold mt-1 block"></span>
-            </div>
-
-            <div class="space-y-2">
-                <label asp-for="Email" class="text-[10px] uppercase tracking-widest font-bold text-white/60 block"></label>
-                <input asp-for="Email" class="w-full bg-dark-charcoal border border-white/10 rounded px-4 py-3 text-sm text-white placeholder-white/20 focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="email@esempio.com" />
-                <span asp-validation-for="Email" class="text-primary text-xs font-bold mt-1 block"></span>
-            </div>
-
-            <div class="space-y-2">
-                <label asp-for="Evento" class="text-[10px] uppercase tracking-widest font-bold text-white/60 block"></label>
-                <select asp-for="Evento" asp-items="ViewBag.Eventi" class="w-full bg-dark-charcoal border border-white/10 rounded px-4 py-3 text-sm text-white focus:ring-1 focus:ring-primary focus:border-primary transition-all">
-                    <option value="">-- Seleziona un Evento --</option>
-                </select>
-                <span asp-validation-for="Evento" class="text-primary text-xs font-bold mt-1 block"></span>
-            </div>
-
-            <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-4 rounded text-xs font-black uppercase tracking-widest transition-all mt-4">
-                Invia Richiesta
+        <div class="relative z-20 text-center px-6 max-w-4xl mx-auto">
+            <h2 class="text-white text-6xl md:text-8xl font-black mb-6 leading-none font-display">Join the Journey</h2>
+            <p class="text-white/90 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed mb-10">
+                Experience world-class wine, culture, and sensory immersion through our curated events designed for the discerning traveler.
+            </p>
+            <button onclick="document.getElementById('registration-form').scrollIntoView({behavior: 'smooth'})" class="bg-primary text-white px-12 py-4 rounded-lg text-lg font-bold uppercase tracking-widest hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+                Explore Experiences
             </button>
-        </form>
-
-        <div class="mt-8 text-center">
-            <a asp-controller="Home" asp-action="Index" class="text-white/40 hover:text-white text-xs uppercase tracking-widest transition-colors">Torna alla Home</a>
         </div>
-    </div>
-</section>
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 animate-bounce cursor-pointer" onclick="document.getElementById('registration-form').scrollIntoView({behavior: 'smooth'})">
+            <span class="material-symbols-outlined text-white text-3xl">keyboard_double_arrow_down</span>
+        </div>
+    </section>
+
+    <!-- Section: Vitinerario ON TOUR -->
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-16 items-center">
+            <div class="lg:col-span-5 order-2 lg:order-1">
+                <span class="text-primary font-bold tracking-[0.3em] uppercase mb-4 block font-display">Travel &amp; Discovery</span>
+                <h3 class="text-4xl md:text-5xl font-black mb-8 text-white font-display">Vitinerario ON TOUR</h3>
+                <p class="text-white/60 text-lg leading-relaxed mb-10">
+                    Embark on a traveling experience that transcends the ordinary. Our guided tours offer a sophisticated narrative of landscape and legacy, taking you through hidden valleys and legendary estates where history meets the horizon.
+                </p>
+                <button class="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-lg font-bold uppercase tracking-widest hover:bg-primary/90 transition-colors">
+                    Explore Calendar
+                    <span class="material-symbols-outlined">calendar_month</span>
+                </button>
+            </div>
+            <div class="lg:col-span-7 order-1 lg:order-2">
+                <div class="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory p-2">
+                    <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
+                        <img alt="Vintage car in vineyard" class="w-full h-full object-cover" data-alt="Vintage classic car driving through lush vineyards" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAPYtm6cjbpdLGnxSN7Kmzl5avo_ggDrX8EznX_wWErKGJLB2LxvDN3YGFb5qYLNOW90yzgu5Tyt3Tehb8FeCVM5nMwK-QkXhPqdRd0jYouXxspPyVHfWTftt3po4Z8sxgoHcwJwOG3hhc7XwF1zYiLPILqojEb4vUcvBYXbxcR1siTjPjcThlhQJmTL4FEBps8L_FWoypaWXKyDMTgLFooTSD8kl3bNavow2rC_rvUJIQQOl2zHtPls0OpHwgWikyobaShIYHWVQ"/>
+                    </div>
+                    <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
+                        <img alt="Wine tasting table" class="w-full h-full object-cover" data-alt="Elegant outdoor wine tasting setup in a garden" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiIf5aIPcXnfzmZK9nQH1AMsRgvxBDi4wx1kotTKOyyzCTBYi9OIQP-iDvrqMpv3UwW32iEh9aZ_5Il1C3cjaYJWGEraREoEzUUDTrvU838DttdkrlRl9mI81cKrlRedL42d25DW4CddmKkl1fiTB1Ch4tD8RezUQxNJKNLvUHv8cJCDCC7Vyl0N1f40AXzxPHB3cf6Cz84KEZwNcwcJj2u7C-tBFMibqDhs0WqaCsn8bRsgvM9u4VBuJUQKSoQs6Acbwdq3_RqAo"/>
+                    </div>
+                    <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-[4/5] rounded-xl overflow-hidden shadow-2xl">
+                        <img alt="Mountain landscape" class="w-full h-full object-cover" data-alt="Dramatic mountain landscape overlooking a valley of vines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTJ4ZH6c86eb8ig3cErwTtxJooaqUkBOmric4B-JDCCZeZ706HheZowPNj4NqTCK1QlOfAIMzDMmxyPCATts6d3WPm_GL5Y0C_trlTF3O24nXlvXfo4zoHZHybjsSCn1Fb85seXNSd7OBYACPANd9Ntds1Wf4TNOaxHH92WBj81f1QWeh2RSOrTxO8RYO3rSpTaIhESkZEef8vlY7Gi3o0eCKLKH0uMZjh411rdtXXuwfLsmItJryDjVOvxZ99Z4VAf9F4cZP0KKQ"/>
+                    </div>
+                </div>
+                <div class="flex justify-center gap-2 mt-6">
+                    <div class="size-2 rounded-full bg-primary"></div>
+                    <div class="size-2 rounded-full bg-primary/20"></div>
+                    <div class="size-2 rounded-full bg-primary/20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Vitinerario LIVE -->
+    <section class="py-24 px-6 bg-charcoal-light border-y border-white/5">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-12 gap-16 items-center">
+            <div class="lg:col-span-7">
+                <div class="flex gap-4 overflow-x-auto hide-scrollbar snap-x snap-mandatory p-2">
+                    <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-video rounded-xl overflow-hidden shadow-2xl">
+                        <img alt="Jazz performance" class="w-full h-full object-cover" data-alt="Live jazz musician performing in a dimly lit cellar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClMJxjzGyj18iBNyfBFHLXCIT8rSFywAscTA9CQkkUKEHVts5W9pqxSm-EJoeV6Xgndxgz2eItReAoc-5G6O35lTCpw9x3113Wv6KmMuZfa8iMpy7Me1fJHpkgklOrQrfjKbGB3YB8wPtXVxd65U2gBITWAv-mjNN1Jzh_ajGWkNtqtGeBk1B666KDP-fSr852VGtet7nCj3o29BTJlhBVDCy3Xq16h6kv7bGTgjtQUwhfKL4r744f7Y_lXdyzNjjj7X2nU1s7o-A"/>
+                    </div>
+                    <div class="min-w-[80%] md:min-w-[60%] snap-center aspect-video rounded-xl overflow-hidden shadow-2xl">
+                        <img alt="Wine pour" class="w-full h-full object-cover" data-alt="Close up of red wine being poured into glass" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuusAwiS7NsacdpjON-1J9WyhsrPnM_FE5mpHP-2y5VMvypFHM3ORexdnf9fC0AndU7no1cXP8DHAWziHYPIJeFVLlJJZuHstoj69Ia5mSrn7eI0D7GQ0GIYPPDEqXQ6VYl7I045lhgDnblBSV5uaQ74aKkXZLn6jkL9A7rm05Q4FGemWLDU0Y_Wp-ewSxJ58Y7dcqwA7AZuwI3zWL36ryB2aSzodXFlz67PXJqmciSFhvBq94I3FnToaZjvQQW2-PLpISDKbJ_uc"/>
+                    </div>
+                </div>
+                <div class="flex justify-center gap-2 mt-6">
+                    <div class="size-2 rounded-full bg-primary"></div>
+                    <div class="size-2 rounded-full bg-primary/20"></div>
+                </div>
+            </div>
+            <div class="lg:col-span-5">
+                <span class="text-primary font-bold tracking-[0.3em] uppercase mb-4 block font-display">Sensory Performances</span>
+                <h3 class="text-4xl md:text-5xl font-black mb-8 font-display">Vitinerario LIVE</h3>
+                <p class="text-white/60 text-lg leading-relaxed mb-10">
+                    The art of the tasting elevated by live soundscapes. Experience exclusive cellar gatherings where every note of music is paired with the perfect vintage, creating an immersive atmosphere for the senses.
+                </p>
+                <button onclick="document.getElementById('registration-form').scrollIntoView({behavior: 'smooth'})" class="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-lg font-bold uppercase tracking-widest hover:bg-primary/90 transition-colors">
+                    Book Experience
+                    <span class="material-symbols-outlined">confirmation_number</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section: Vitinerario ART -->
+    <section class="py-24 px-6 max-w-7xl mx-auto">
+        <div class="grid lg:grid-cols-12 gap-16 items-center">
+            <div class="lg:col-span-5 order-2 lg:order-1">
+                <span class="text-primary font-bold tracking-[0.3em] uppercase mb-4 block font-display">Culture &amp; Canvas</span>
+                <h3 class="text-4xl md:text-5xl font-black mb-8 text-white font-display">Vitinerario ART</h3>
+                <p class="text-white/60 text-lg leading-relaxed mb-10">
+                    Where the craft of winemaking meets contemporary creative expression. Explore revolving installations and gallery spaces set within architectural wonders, curated to inspire and provoke thought.
+                </p>
+                <button class="flex items-center gap-3 bg-primary text-white px-8 py-4 rounded-lg font-bold uppercase tracking-widest hover:bg-primary/90 transition-colors">
+                    View Exhibitions
+                    <span class="material-symbols-outlined">palette</span>
+                </button>
+            </div>
+            <div class="lg:col-span-7 order-1 lg:order-2">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-4">
+                        <img alt="Modern gallery" class="w-full rounded-xl shadow-lg aspect-square object-cover" data-alt="Modern minimalist art gallery with white walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPQUmkCkKMhmocp-MHy7GlJuv_CdOt_vJc1_8RGbc6hn-5LMVBTuHnfq8YIuDFkA9BGMNXcCt8NGhFyL-WwzQCjzNm2_mt9hmrErfd0eBK4HukRCIifDLg4Ce85luAwKXjVSm4tXtlRBVaGC3EsZ7-RdHt1Ta8ScBsyCPBcKE48C9g-5YXP-82P9GhXl24TU4DhaWJJ-ClIM0ekOZhiyn7qW2x2BOhPQv2E9iLFAbuitfKpfDjKvArRbsW1-HHQcFU9rriK8Ju9MY"/>
+                        <img alt="Art installation" class="w-full rounded-xl shadow-lg aspect-[3/4] object-cover" data-alt="Contemporary light installation in a dark room" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXJJxpOzOFM9JMajBpznxKgHCpoqtUprOZlypa1MV2EKUdJctVCp09oWTaODOfCmtTiPR-n2-Y54WLQpqP1YdSCfSOEa8os3IHg7B_NrefbeKb0dHX9aup--TloVZJmnWd_YCYKMfPFD_kEZNke6wQQ3uj4SLfQimGoAj_7dQoCC94HafDq6-XA-XaEqMd4zx0NTosEjNUJdWMHzya02-ORe2VOkU4Sfi0esBo4PHJ10Xl0PTBf2-oznpw19gWBO3tVBi2x9-eFtA"/>
+                    </div>
+                    <div class="space-y-4 pt-8">
+                        <img alt="Classical painting" class="w-full rounded-xl shadow-lg aspect-[3/4] object-cover" data-alt="A classical painting illuminated by soft spotlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkqB-wNLycLrzsWWpvB0rXqpIXTu_Nktdb4rJPuoSKcUteyafsjh0hrINpb2EJPozdmySil8dzTx3IGm2gWs_Ne48NjyWo-QO6CLuzL7BcYmYPZzQ054iyOEsAtbPqqTiM-aqRlg5zDORRPZGvIu8ylvn1f8EDX9NGgYzDw4qILHy85uHcEvNuP253z7AtefN0i70du02a0Cux_f1e642kveL5COdu69bEVcdgovJGjnVrw5T9m-hbbzIgFWUyBYRyICxD4-O7xPo"/>
+                        <img alt="Sculpture" class="w-full rounded-xl shadow-lg aspect-square object-cover" data-alt="Modern abstract sculpture made of glass and metal" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD54xlHOcTBB2RtX1mo1aCrK91sLQSpcCK9pBhqbBZ0pf3aOWVf8ysbXjKFBvSBRLK9PMHP6hTGACL0E2jgYAA1oYleUnExXr9n228xr_FblZeCkEXIrSeEUSfS4pgr4Uvvsg7ezjAo22lJpwcjuA_RW3zU02C5YoxC4Uu802tmXK_HbnPMEsD5CDKEkdg2B0TIZAp6KkrcPrU3RFdTAWuqeCxXHpUH1IBWdJShT2AXkWgsuaqquw4hz12liZLBer0BG75eVzYuRsk"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section id="registration-form" class="py-24 px-6 bg-charcoal-light border-t border-white/5">
+        <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="text-primary font-bold tracking-[0.3em] uppercase mb-4 block font-display">Join the Circle</span>
+                <h3 class="text-4xl md:text-5xl font-black mb-6 text-white font-display">Secure Your Place</h3>
+                <p class="text-white/60 text-lg leading-relaxed">
+                    Register below for our exclusive events and experiences. Limited availability.
+                </p>
+            </div>
+
+            <div class="bg-dark-charcoal p-10 md:p-14 border border-white/5">
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="mb-8 p-4 bg-green-500/10 border border-green-500 text-green-400 text-sm font-bold text-center">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                <form asp-action="Partecipa" method="post" class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="group relative space-y-2">
+                            <label asp-for="Nome" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Nome</label>
+                            <input asp-for="Nome" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Il tuo nome" />
+                            <span asp-validation-for="Nome" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
+                        </div>
+
+                        <div class="group relative space-y-2">
+                            <label asp-for="Cognome" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Cognome</label>
+                            <input asp-for="Cognome" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Il tuo cognome" />
+                            <span asp-validation-for="Cognome" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
+                        </div>
+                    </div>
+
+                    <div class="group relative space-y-2">
+                        <label asp-for="Email" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email Address</label>
+                        <input asp-for="Email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="email@address.com" />
+                        <span asp-validation-for="Email" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
+                    </div>
+
+                    <div class="group relative space-y-2">
+                        <label asp-for="Evento" class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Evento</label>
+                        <select asp-for="Evento" asp-items="ViewBag.Eventi" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all text-white/60">
+                            <option value="" class="bg-dark-charcoal">-- Seleziona un Evento --</option>
+                        </select>
+                        <span asp-validation-for="Evento" class="text-primary text-[9px] font-bold mt-2 block tracking-widest"></span>
+                    </div>
+
+                    <div class="pt-6">
+                        <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
+                            Invia Richiesta
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+</main>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const carousels = document.querySelectorAll('.overflow-x-auto');
+
+            carousels.forEach(carousel => {
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+                let autoScrollInterval;
+
+                const dotsContainer = carousel.nextElementSibling;
+                let dots = [];
+                if (dotsContainer && dotsContainer.classList.contains('flex', 'justify-center')) {
+                    dots = dotsContainer.querySelectorAll('div');
+                }
+
+                function updateDots() {
+                    if (dots.length === 0) return;
+                    const scrollRatio = carousel.scrollLeft / (carousel.scrollWidth - carousel.clientWidth);
+                    const activeIndex = Math.min(Math.round(scrollRatio * (dots.length - 1)), dots.length - 1);
+
+                    dots.forEach((dot, index) => {
+                        if (index === activeIndex) {
+                            dot.classList.remove('bg-primary/20');
+                            dot.classList.add('bg-primary');
+                        } else {
+                            dot.classList.remove('bg-primary');
+                            dot.classList.add('bg-primary/20');
+                        }
+                    });
+                }
+
+                carousel.addEventListener('scroll', updateDots);
+
+                // Mouse Drag Scrolling
+                carousel.addEventListener('mousedown', (e) => {
+                    isDown = true;
+                    carousel.classList.add('cursor-grabbing');
+                    startX = e.pageX - carousel.offsetLeft;
+                    scrollLeft = carousel.scrollLeft;
+                    clearInterval(autoScrollInterval); // Pause on drag
+                });
+                carousel.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    carousel.classList.remove('cursor-grabbing');
+                    startAutoScroll(); // Resume on leave
+                });
+                carousel.addEventListener('mouseup', () => {
+                    isDown = false;
+                    carousel.classList.remove('cursor-grabbing');
+                    startAutoScroll(); // Resume on drop
+                });
+                carousel.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - carousel.offsetLeft;
+                    const walk = (x - startX) * 2;
+                    carousel.scrollLeft = scrollLeft - walk;
+                });
+
+                // Auto Scroll Logic
+                function startAutoScroll() {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = setInterval(() => {
+                        const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+                        const cardWidth = carousel.querySelector('div').offsetWidth + 16; // Add gap
+
+                        if (carousel.scrollLeft >= maxScroll - 10) {
+                            // Smoothly jump to start when reaching the end
+                            carousel.scrollTo({ left: 0, behavior: 'smooth' });
+                        } else {
+                            carousel.scrollBy({ left: cardWidth, behavior: 'smooth' });
+                        }
+                    }, 5000);
+                }
+
+                // Initial start
+                startAutoScroll();
+
+                // Pause auto scroll on touch interaction (mobile)
+                carousel.addEventListener('touchstart', () => clearInterval(autoScrollInterval), { passive: true });
+                carousel.addEventListener('touchend', startAutoScroll, { passive: true });
+            });
+        });
+    </script>
 }
