@@ -1,6 +1,8 @@
+@using Vitinerario.Models.Dtos
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Archive";
+    var articles = ViewBag.Articles ?? new List<ContentDto>();
 }
 
 @section TailwindConfig {
@@ -71,8 +73,53 @@
     </section> 
     <!-- Article List -->
     <section class="max-w-[1200px] mx-auto px-6 md:px-20 space-y-24 pb-32">
+
+        @if (articles != null && articles.Count > 0)
+        {
+            @foreach (var item in articles)
+            {
+                // 1. Logica per la sottostringa: prendiamo i primi 150 caratteri o meno se il testo è più corto
+                var previewText = !string.IsNullOrEmpty(item.Text) && item.Text.Length > 150
+                ? item.Text.Substring(0, 150) + "..."
+                : item.Text;
+
+                <article class="flex flex-col md:flex-row gap-12 group">
+                    <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
+                        <img src="@item.CoverImage" alt="miniature" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Aminiature">
+                    </div>
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
+                        <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
+                            <span>@item.Title</span>
+                            <span class="w-8 h-[1px] bg-primary/30"></span>
+                            <span class="text-slate-500">@item.PublishDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+                        @* 2. Passiamo l'ID dell'articolo anche nel titolo per una migliore UX *@
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })">
+                            <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
+                                @item.Title
+                            </h3>
+                        </a>
+                        <p class="text-slate-400 font-sans leading-relaxed text-base">
+                            @previewText
+                        </p>
+                        @* 2. Passaggio dell'ID dell'articolo nell'URL *@
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })" class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform">
+                            Read More
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+            }
+        }
+        else
+        {
+            <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
+                Nessun Articolo Disponibile
+            </h3>
+            
+        }
         <!-- Article 1 -->
-        <article class="flex flex-col md:flex-row gap-12 group">
+      @*   <article class="flex flex-col md:flex-row gap-12 group">
             <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
                 <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqsLLkGDqJIyUOdwRXL9SX2B2VoFXzaCL_6tkkhnViblUsIvao8gp4doybd935W0ZcZgz3-5xWDeoljAU6XOsCuvI6DaaaOm0jZ7CUnVn4JnNddCblT9VBFOv2mfOmHizc6I_ek7ScpJ-Jai0WRXxWUMdpb70QcCgIySn03Jj5OBfGHX0PEU3b3_q0PVLocjmjrj7jYj0zG-3rSaK8FLpCdgwS1ns5JWlBzmlNKNwR_e5gPnW1IwUVtfwJV8MnxU8ihwGGBEt_uk" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Ancient stone wine cellar with wooden barrels in Tuscany">
             </div>
@@ -134,7 +181,7 @@
                 </a>
             </div>
         </article>
-    </section>
+    </section> *@
     <!-- Pagination -->
     <section class="max-w-[1200px] mx-auto px-6 md:px-20 pb-24">
         <div class="flex items-center justify-center gap-8 border-t border-white/10 pt-16">

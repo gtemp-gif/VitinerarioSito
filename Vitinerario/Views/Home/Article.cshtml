@@ -1,7 +1,8 @@
+@model Vitinerario.Models.Dtos.ContentDto
 
 @{
     Layout = "_LayoutVitinerario";
-    ViewData["Title"] = "Vitinerario | The Soul of Tuscany's Hidden Vineyards";
+    ViewData["Title"] = $"Vitinerario | {Model?.Title ?? "Article"}";
 }
 
 @section TailwindConfig {
@@ -29,7 +30,7 @@
             },
         }
     </script>
-} 
+}
 
 @section Styles {
     <style type="text/tailwindcss">
@@ -37,20 +38,25 @@
             body {
                 @@apply bg-dark-charcoal text-zinc-300 font-body antialiased;
             }
+
             h1, h2, h3, h4 {
                 @@apply font-display uppercase tracking-tight;
             }
         }
+
         .premium-gradient {
             background: linear-gradient(180deg, rgba(18,18,18,0) 0%, rgba(18,18,18,0.8) 80%, rgba(18,18,18,1) 100%);
         }
+
         .moody-image {
             filter: sepia(20%) contrast(110%) brightness(85%);
             transition: filter 0.5s ease;
         }
-        .moody-image:hover {
-            filter: sepia(10%) contrast(105%) brightness(95%);
-        }
+
+            .moody-image:hover {
+                filter: sepia(10%) contrast(105%) brightness(95%);
+            }
+
         .drop-cap::first-letter {
             float: left;
             font-size: 5rem;
@@ -61,188 +67,105 @@
             font-weight: 900;
             font-family: 'Montserrat', sans-serif;
         }
-        .reading-progress-bar {
-            width: 42%;
-        }::selection {
-            background-color: #d31a53;
-            color: white;
-        }
     </style>
 }
 
 <main class="flex-1">
-<!-- Full-Bleed Cinematic Hero -->
-<section class="relative h-[90vh] w-full overflow-hidden">
-<div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105" data-alt="Close up of a premium wine producer in a sun-drenched vineyard" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC9CibRg0FEJMIx_IF0wDafKtBz9Of6mJSJzt8FNPkwn68AXlU0wSzMVySgbxpkhNipWuxCx1EgfhgeL-q0HKM6YetYzVk5hvh2U4Ourjc8u9aryFv0HcnBTnDtpLq0FGBkk4sM8f5B_NisBBGCQV5XggSKUXXBvQTERI5MSk-4ClAHHSADTPyq9TI3tT5ONKkQ5xNyK_6MKs4A2azaXY6QVy7wTNtTM39-horsNDrtxez270omuM4p5LLYSLgZPvNk5jkRMkyYK00');">
-</div>
-<div class="absolute inset-0 premium-gradient"></div>
-<div class="absolute bottom-0 left-0 w-full p-8 md:p-20 flex flex-col items-start gap-6">
-<div class="flex items-center gap-3">
-<span class="bg-primary px-3 py-1 text-[10px] uppercase tracking-[0.2em] font-bold text-white">The Terroir Series</span>
-<span class="text-slate-400 text-sm">October 2023</span>
-</div>
-<h1 class="text-5xl md:text-8xl font-black max-w-4xl leading-[0.9] text-white tracking-tighter">
-                        THE SILENT <br/>ALCHEMY OF <br/><span class="text-primary">MARCO VALENTI</span>
-</h1>
-<p class="text-lg md:text-xl text-slate-300 max-w-2xl font-light leading-relaxed">
-                        Deep in the rolling hills of Tuscany, one man is redefining the boundaries between tradition and modern Viticulture. We spent a week discovering the secrets of his legendary cellar.
+    <section class="relative h-[90vh] w-full overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+             style="background-image: url('@(string.IsNullOrEmpty(Model.CoverImage) ? "https://lh3.googleusercontent.com/aida-public/AB6AXuC9CibRg0FEJMIx_IF0wDafKtBz9Of6mJSJzt8FNPkwn68AXlU0wSzMVySgbxpkhNipWuxCx1EgfhgeL-q0HKM6YetYzVk5hvh2U4Ourjc8u9aryFv0HcnBTnDtpLq0FGBkk4sM8f5B_NisBBGCQV5XggSKUXXBvQTERI5MSk-4ClAHHSADTPyq9TI3tT5ONKkQ5xNyK_6MKs4A2azaXY6QVy7wTNtTM39-horsNDrtxez270omuM4p5LLYSLgZPvNk5jkRMkyYK00" : Model.CoverImage)');">
+        </div>
+        <div class="absolute inset-0 premium-gradient"></div>
+        <div class="absolute bottom-0 left-0 w-full p-8 md:p-20 flex flex-col items-start gap-6">
+            <div class="flex items-center gap-3">
+                <span class="text-slate-400 text-sm">@Model.PublishDate.ToString("MMMM yyyy")</span>
+            </div>
+            <h1 class="text-5xl md:text-8xl font-black max-w-4xl leading-[0.9] text-white tracking-tighter">
+                @Model.Title
+            </h1>
+        </div>
+    </section>
+
+    <article class="mx-auto max-w-[1200px] px-6 py-24 flex flex-col md:flex-row gap-16">
+        <aside class="md:w-1/4 flex flex-col gap-12">
+            <div class="space-y-4">
+                <h4 class="text-primary text-xs uppercase tracking-widest font-bold">Scritto da</h4>
+                <div class="flex items-center gap-4">
+                    <div class="size-16 rounded-full overflow-hidden border border-primary/30">
+                        <img class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4gHx3a0hVz6s4ha25jvFFb-QCvk1KI18F7HoU6ahpO5-VA3n4HMejT9MhchRQMFXxftRrcS0Iuf1x8fw-SXaJBHelXenvYRunKHlMZbUQbixwCXdA72XYp7XyddNXn31R56OF81MV_eTqjQqZYQZT6HU9Ga65FxlA8kWydvIjstiSwdrT-OAo0y9zZBUGlK2Iq9_6vfqh8K5msoL1fyM4ED3eEIuY9oVs1ckvlw6PrvStva2YI4fJCp7-ZNMPnjWCtC-RUoi2p30" alt="Author" />
+                    </div>
+                    <div>
+                        <p class="text-white font-bold">Vitinerario Team</p>
+                        <p class="text-slate-500 text-sm">Redazione</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">Published</h4>
+                <p class="text-white/60 uppercase text-sm tracking-wide">@Model.PublishDate.ToString("MMM dd, yyyy")</p>
+            </div>
+
+            <div class="space-y-6 pt-2">
+                <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
+                    <span class="material-symbols-outlined text-base">share</span> Share
+                </button>
+                <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
+                    <span class="material-symbols-outlined text-base">bookmark</span> Save
+                </button>
+            </div>
+        </aside>
+
+        <div class="md:w-3/4 space-y-12">
+            <div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
+                @if (!string.IsNullOrEmpty(Model.Text))
+                {
+                    <p class="drop-cap whitespace-pre-line">
+                        @Model.Text
                     </p>
-</div>
-</section>
-<!-- Article Body Container -->
-<article class="mx-auto max-w-[1200px] px-6 py-24 flex flex-col md:flex-row gap-16">
-<!-- Sidebar info -->
-       
-<aside class="md:w-1/4 flex flex-col gap-12">
-<div class="space-y-4">
-<h4 class="text-primary text-xs uppercase tracking-widest font-bold">Scritto da </h4>
-<div class="flex items-center gap-4">
-<div class="size-16 rounded-full overflow-hidden border border-primary/30">
-<img class="h-full w-full object-cover" data-alt="Portrait of winemaker Marco Valenti" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB4gHx3a0hVz6s4ha25jvFFb-QCvk1KI18F7HoU6ahpO5-VA3n4HMejT9MhchRQMFXxftRrcS0Iuf1x8fw-SXaJBHelXenvYRunKHlMZbUQbixwCXdA72XYp7XyddNXn31R56OF81MV_eTqjQqZYQZT6HU9Ga65FxlA8kWydvIjstiSwdrT-OAo0y9zZBUGlK2Iq9_6vfqh8K5msoL1fyM4ED3eEIuY9oVs1ckvlw6PrvStva2YI4fJCp7-ZNMPnjWCtC-RUoi2p30"/>
-</div>
-<div>
-<p class="text-white font-bold">Marco Valenti</p>
-<p class="text-slate-500 text-sm">Valenti Vineyards</p>
-</div>
-</div>
-</div>
-@* <div class="space-y-6 border-l border-primary/30 pl-6">
-<h4 class="text-primary text-xs uppercase tracking-widest font-bold">Sensory Profile</h4>
-<div class="space-y-4">
-<div>
-<p class="text-[10px] uppercase text-slate-500 tracking-tighter">Palate</p>
-<p class="text-slate-200 text-sm italic">Black cherry, aged leather, volcanic mineral notes.</p>
-</div>
-<div>
-<p class="text-[10px] uppercase text-slate-500 tracking-tighter">Aroma</p>
-<p class="text-slate-200 text-sm italic">Violets, damp earth, and hints of toasted cedar.</p>
-</div>
-<div>
-<p class="text-[10px] uppercase text-slate-500 tracking-tighter">Perfect Pairing</p>
-<p class="text-slate-200 text-sm italic">Wild mushroom risotto with 24-month aged parmesan.</p>
-</div>
-</div>
-</div>
- *@
+                }
+            </div>
 
+            <div class="grid grid-cols-12 gap-4 h-[600px]">
+                <div class="col-span-8 h-full rounded-xl overflow-hidden group">
+                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                         src="@Model.CoverImage" alt="Gallery 1" />
+                </div>
+                <div class="col-span-4 flex flex-col gap-4">
+                    <div class="h-1/2 rounded-xl overflow-hidden group border border-white/5">
+                        <div class="h-full w-full bg-charcoal-light flex items-center justify-center">
+                            <span class="text-primary/20 text-4xl font-display">VIT</span>
+                        </div>
+                    </div>
+                    <div class="h-1/2 rounded-xl overflow-hidden group border border-white/5">
+                        <div class="h-full w-full bg-charcoal-light flex items-center justify-center">
+                            <span class="text-primary/20 text-4xl font-display">ART</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
 
- <!-- PUBLISHED -->
- <div class="space-y-3">
-     <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">Published</h4>
-     <p class="text-white/60 uppercase text-sm tracking-wide">Oct 14, 2023</p>
- </div>
+    <section class="bg-dark-charcoal border-t border-white/5 py-24 px-6 md:px-20">
+        <div class="mx-auto max-w-[1400px]">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-4xl font-display text-white">Altri articoli</h2>
+                    <p class="text-slate-500 mt-2 italic font-body">Continua l'esplorazione</p>
+                </div>
+                <a class="text-primary font-bold flex items-center gap-2 group" href="@Url.Action("Archive")">
+                    View All <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                </a>
+            </div>
 
-<!-- ACTIONS -->
-<div class="space-y-6 pt-2">
-    <!-- Share -->
-    <button type="button"
-            class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-        <span class="material-symbols-outlined text-base">share</span>
-        Share
-    </button>
-
-    <!-- Save -->
-    <button type="button"
-            class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-        <span class="material-symbols-outlined text-base">bookmark</span>
-        Save
-    </button>
- </div>
-
-</aside>
-<!-- Article Text -->
-<div class="md:w-3/4 space-y-12">
-<div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
-<p class="first-letter:text-7xl first-letter:font-bold first-letter:mr-3 first-letter:float-left first-letter:text-[#d31a53]">
-                            When we first arrived at Valenti's estate, the mist was still clinging to the vines. Marco wasn't in his office; he was knee-deep in soil, testing the moisture after the previous night's rainfall. This is the hands-on philosophy that has made his wines some of the most sought-after in the Mediterranean.
-                        </p>
-<p>
-                            "You don't make wine in the cellar," Marco says, wiping his hands on a worn apron. "You make it in the winter, when the vines are sleeping, and in the spring, when the first buds fight through the cold. My role is simply not to ruin what nature has already perfected."
-                        </p>
-</div>
-<!-- Large Pull Quote -->
-<div class="py-12 border-y border-white/5">
-<span class="material-symbols-outlined text-6xl text-primary/40 block mb-4">format_quote</span>
-<blockquote class="text-3xl md:text-5xl font-display text-white italic leading-tight">
-                            "Wine is the only <span class="text-primary">artwork</span> you can drink, a liquid reflection of the soil and the season."
-                        </blockquote>
-</div>
-<div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
-<h3 class="text-3xl font-display text-white pt-6">The Evolution of the Vintage</h3>
-<p>
-                            Valenti's approach is famously minimalist. He uses no commercial yeasts, no heavy filtration, and a dedication to ancient lunar calendars that would make many modern oenologists scoff. Yet, the results are undeniable. The 2018 Riserva, which we had the privilege of tasting directly from the barrel, possesses a structure that feels both architectural and ethereal.
-                        </p>
-</div>
-<!-- Image Gallery Modular Grid -->
-<div class="grid grid-cols-12 gap-4 h-[600px]">
-<div class="col-span-8 h-full rounded-xl overflow-hidden group">
-<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Interior of a dimly lit wine cellar with oak barrels" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCawNjxOlocdkO0PrAP8ZBkzp5BdMyYOky_XfbSsY08dejEgljvrBbj1sp14WfpWNGCVkY9EcSSlVsIz6WEnUbUgl4ZbtpEEpF8HIjcXN-gGGSqNfVR0njL4FvxYeD88nzJCTKvVGHF0_rQEeSVV8cZr-kCii9Ng4-6f-qBXobcN0AzXDSVdC5wSgVTsA5yoqz9HMye_Qv5FTCnYSrPKudb0n2F3rMUhHv2nuzmyiT0nkYNZljL-oyE4o8GfiaS_gr7J7D91JQ3PNU"/>
-</div>
-<div class="col-span-4 flex flex-col gap-4">
-<div class="h-1/2 rounded-xl overflow-hidden group">
-<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Close up of wine grapes on the vine" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2E-SVTFiBMLb3ZfP_1leHrXMjmtqbcPXIZ6uQnOtkHNBZ8WfdyNIEYih5EZiIOi-ABZ68t_t1LQTlQjj19tRgP_0BVZ72_F3CWvTSa_oN_W9XCNGXqaVg1GhIUmreQTgAcPS8iYo0mRfmqKYQsIzr-J9tV9v-3ngcl4QEy0wynB4NLuP3PNrlaPJlHE-o69tVbktu8rWgvsgsMg2FUPab-EjbIflRWGlPbmaSUZX92UqbjjGR02-QtRpw2svG9_gvlxQBx7xLsjg"/>
-</div>
-<div class="h-1/2 rounded-xl overflow-hidden group">
-<img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="A glass of red wine against a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfLrgeVCweqvidX7Bg0j5pJYkjNBDCXz89F2R_tg8HXiBFuQ3T9F9Xlb2bce-hUl5GDaVDn0sj_o2RSlCJcSdWU6S5031VBPChBpgxW1cpiLxGFFQWb1VC4nz8rQuggdsJ-u0lB5i63UG-DhrfvtMW7U99UQtJeucHXSo0-W1aMmio5VGk0KIkdWdbSLCudLPqjfooTLxXz3RuO_0SMWcWKbdff6pUczvbrL4CT01c0YperFvYrSWDwcMtnQP7XxdNt4Vpz7fpBew"/>
-</div>
-</div>
-</div>
-<div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
-<p>
-                            As we concluded our afternoon, we walked through the 'Library'—a collection of bottles dating back to Marco's grandfather's time. Each bottle represents a different era of the family, a different climate, and a different struggle. To drink a Valenti wine is to consume a piece of history.
-                        </p>
-</div>
-<!-- CTA Section -->
-@* <div class="bg-charcoal-light rounded-lg p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 border border-white/5">
-<div class="text-center md:text-left">
-<h4 class="text-2xl font-display text-white">Experience the Valenti Estate</h4>
-<p class="text-slate-400 mt-2 font-body">Private tours and vertical tastings available by appointment.</p>
-</div>
-<button class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-10 rounded-lg transition-all uppercase tracking-widest text-sm shadow-lg shadow-primary/20">
-                            Book a Tour
-                        </button>
-</div>
- *@
-</div>
-</article>
-<!-- Related Stories -->
-<section class="bg-dark-charcoal border-t border-white/5 py-24 px-6 md:px-20">
-<div class="mx-auto max-w-[1400px]">
-<div class="flex justify-between items-end mb-12">
-<div>
-<h2 class="text-4xl font-display text-white">Altri articoli</h2>
-<p class="text-slate-500 mt-2 italic font-body">More from the world of premium viticulture</p>
-</div>
-<a class="text-primary font-bold flex items-center gap-2 group" href="@Url.Action("Archive")">
-    View All <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</a>
-</div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<!-- Story 1 -->
-<div class="group cursor-pointer">
-<div class="aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-white/10">
-<img class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Sun setting over rows of vines" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5C2al9B7Th7tFgesBRaQuHjsXzrcuBub3xmjnCLtlUeBIUhfI9hhJgIlJRBwBf7Ua0cdH30nfThWfh5t2Lj8Uh0zuAORWxfBSqMUY9XgVzZ0qgRqlO62Rkr928o90mB-G9lwCUj5P3j5iPgy-2sWmF2ApsVnabRdI0nBkmwwHUMwFItxjO7B4gw0i97KjvkR2ope0kglhnBfvhXYcdtBvx_KnaYcNKS7qDxNIDzFOyLnTFcfBdJZFHUo1XME7q0gsUnTZpSiH8qs"/>
-</div>
-<h3 class="text-xl font-display text-white group-hover:text-primary transition-colors">The Volcanic Terroir of Etna</h3>
-<p class="text-slate-500 text-sm mt-2 line-clamp-2 font-body">How lava-rich soil creates some of the world's most unique mineral-forward whites.</p>
-</div>
-<!-- Story 2 -->
-<div class="group cursor-pointer">
-<div class="aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-white/10">
-<img class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Modern architecture of a luxury winery" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA7KKDvzCXOSQd33FsPmjYMEyXLUdl4EC5l3n_WWfLJtyViRDFJDkDL5_zU8k6R8It5vm6feTqeUVR2hnRwpjDYS4v2w45FOuKmRUVmZPROjVcGrPNBiDaQaRnfzcb7tG9f-kQYD2SsWy72vtQ250jsR9VQKZxZYClUqo1dqUj0Si_TLCoVv0F6EOWC06dntdBhXyX3Z_aAtrO6SEygfJn0snOp1iVVGL5PFbaupqI4XSTIK4AyB4lmoS8zPbNagO25RRz6SJSts2E"/>
-</div>
-<h3 class="text-xl font-display text-white group-hover:text-primary transition-colors">Architecture in the Vineyard</h3>
-<p class="text-slate-500 text-sm mt-2 line-clamp-2 font-body">The fusion of modern design and traditional functionality in luxury wine production.</p>
-</div>
-<!-- Story 3 -->
-<div class="group cursor-pointer">
-<div class="aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-white/10">
-<img class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Chef plating a gourmet dish in a restaurant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDclGreWk2wAFdiUPIiEJivL9bohd6x_ZKXEKKqBOdi0rDf91PZ5I2E1vt6l0mPkrysIaSfZXZJZwsFPZ8wDXgXoCKwREeEyC_tUWi32AH40l0E1r-70VFj6uqZw7g3Ip3No7sHq2vdFmCL_1wrR_aJvuUMlUy0-la2cHxxX3vvAgLycxSjip9lekPxzJfLSnc1mJey9GBmIZ0GXEOwEjP3DG9vqiQ2qYuruw8cb3o_hXxUWhwRbBTy9b5_deSnWAHR4epxWjPswjk"/>
-</div>
-<h3 class="text-xl font-display text-white group-hover:text-primary transition-colors">Beyond the Bottle: Pairing Art</h3>
-<p class="text-slate-500 text-sm mt-2 line-clamp-2 font-body">Master sommelier Clara Rossi shares the secrets to unconventional seasonal pairings.</p>
-</div>
-</div>
-</div>
-</section>
+            @* Qui potresti inserire una lista di "Related" passata tramite ViewBag o PartialView *@
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 opacity-50 pointer-events-none">
+                <div class="group">
+                    <div class="aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-white/10 bg-charcoal-light"></div>
+                    <h3 class="text-xl font-display text-white">Loading more stories...</h3>
+                </div>
+            </div>
+        </div>
+    </section>
 </main>

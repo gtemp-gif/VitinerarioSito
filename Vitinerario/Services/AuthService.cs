@@ -22,17 +22,13 @@ namespace Vitinerario.Services
 
         public async Task<string> GetTokenAsync()
         {
-            if (_memoryCache.TryGetValue(TokenCacheKey, out string cachedToken) && !string.IsNullOrEmpty(cachedToken))
-            {
-                return cachedToken;
-            }
-
-            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Auth/token";
-
-            // Sending the Secret in the Body
-            var content = new StringContent($"\"{_apiSettings.Secret}\"", Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync(url, content);
+           // var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Auth/token";
+           var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Auth/login";
+            // Definisci l'oggetto anonimo con la proprietà 'token' in minuscolo
+            //var requestBody = new { token = _apiSettings.Secret };
+            var requestBody = new { username = "VIT.Site2026", password = "Test1234" };
+                // Invia la richiesta POST
+                var response = await _httpClient.PostAsJsonAsync(url, requestBody);
 
             if (!response.IsSuccessStatusCode)
             {

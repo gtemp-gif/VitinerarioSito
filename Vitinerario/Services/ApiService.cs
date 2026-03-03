@@ -1,7 +1,8 @@
+using Microsoft.Extensions.Caching.Memory;
 using System.Text.Json;
+using Vitinerario.Helpers;
 using Vitinerario.Models;
 using Vitinerario.Models.Dtos;
-using Vitinerario.Helpers;
 
 namespace Vitinerario.Services
 {
@@ -9,16 +10,30 @@ namespace Vitinerario.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IAuthService _authService;
-
-        public ApiService(IHttpClientFactory httpClientFactory, IAuthService authService)
+        private readonly IMemoryCache _memoryCache;
+        private const string TokenCacheKey = "VitinerarioAuthToken";
+        public ApiService(IHttpClientFactory httpClientFactory, IAuthService authService,IMemoryCache memoryCache)
         {
             _httpClient = httpClientFactory.CreateClient("VitinerarioApi");
             _authService = authService;
+            _memoryCache = memoryCache;
         }
 
         private async Task AddAuthHeaderAsync()
         {
-            var token = await _authService.GetTokenAsync();
+            //var token = await _authService.GetTokenAsync();
+            var token = string.Empty;
+            string cachedToken = (string)_memoryCache.Get(TokenCacheKey);
+            if (cachedToken == null)
+            {
+                token = await _authService.GetTokenAsync();
+            }
+            else
+            {
+                token = cachedToken;
+            }
+
+
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
@@ -57,8 +72,8 @@ namespace Vitinerario.Services
         public async Task<List<ContentDto>> GetContentsByTypeAsync(string type, int langId)
         {
             await AddAuthHeaderAsync();
-            var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-
+            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
+            var response = await _httpClient.GetAsync($"contents/type/{type}");
             if (!response.IsSuccessStatusCode)
             {
                 return new List<ContentDto>();
@@ -68,6 +83,22 @@ namespace Vitinerario.Services
             var contents = JsonSerializer.Deserialize<List<ContentDto>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
             return contents ?? new List<ContentDto>();
+        }
+
+        public async Task<ContentDto> GetContentById(int id, int langId)
+        {
+            await AddAuthHeaderAsync();
+            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
+            var response = await _httpClient.GetAsync($"contents/{id}");
+            if (!response.IsSuccessStatusCode)
+            {
+                return new ContentDto();
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var contents = JsonSerializer.Deserialize<ContentDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return contents ?? new ContentDto();
         }
 
         public async Task<List<ContentDto>> GetPodcastsAsync(int langId)

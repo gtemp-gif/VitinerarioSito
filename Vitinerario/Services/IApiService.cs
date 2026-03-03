@@ -11,5 +11,6 @@ namespace Vitinerario.Services
         Task<List<ContentDto>> GetPodcastsAsync(int langId);
         Task<bool> SubmitProducerAsync(ProducerViewModel model);
         Task<bool> SubmitPartecipaAsync(PartecipaViewModel model);
+        Task<ContentDto?> GetContentById(int id, int langId);
     }
 }

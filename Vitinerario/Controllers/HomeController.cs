@@ -3,6 +3,7 @@ using Vitinerario.Models;
 using Vitinerario.Services;
 using Vitinerario.Helpers;
 using System.IO;
+using Vitinerario.Models.Dtos;
 
 namespace Vitinerario.Controllers
 {
@@ -20,17 +21,22 @@ namespace Vitinerario.Controllers
         public async Task<IActionResult> Index()
         {
             var events = await _apiService.GetEventsAsync();
+            var articles = await _apiService.GetContentsByTypeAsync("blog", LanguageHelper.GetCurrentLangId());
+            var podcasts = await _apiService.GetPodcastsAsync(LanguageHelper.GetCurrentLangId());
+
             // Taking top 3 for index display
             ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventViewModel>();
+            ViewBag.LatestArticles = articles?.Take(4).ToList() ?? new List<ContentDto>();
+            ViewBag.LatestPodcasts = podcasts?.Take(3).ToList() ?? new List<ContentDto>();
             return View();
         }
 
         public async Task<IActionResult> Archive()
         {
             int langId = LanguageHelper.GetCurrentLangId();
-            var articles = await _apiService.GetContentsByTypeAsync("news", langId);
-            return View(articles);
-          //  return View();
+            var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
+            ViewBag.Articles = articles?.OrderByDescending(a => a.PublishDate).ToList() ?? new List<ContentDto>();
+            return View();
         }
 
         public IActionResult EventDetails()
@@ -101,11 +107,25 @@ namespace Vitinerario.Controllers
             return File(fileBytes, "application/pdf", "Brochure Vitinerario.pdf");
         }
 
-        public async Task<IActionResult> Article()
+        public async Task<IActionResult> Article(int id)
         {
+            if (id == null || id == 0)
+            {
+                return RedirectToAction("Archive");
+            }
+
             int langId = LanguageHelper.GetCurrentLangId();
-            var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
-            return View(articles);
+
+            // Recuperiamo il singolo articolo tramite il suo ID
+            // Nota: Assicurati che il metodo nel servizio si chiami GetContentById (singolare)
+            var article = await _apiService.GetContentById(id, langId);
+
+            if (article == null)
+            {
+                return NotFound();
+            }
+
+            return View(article);
         }
 
         public IActionResult Terms()
