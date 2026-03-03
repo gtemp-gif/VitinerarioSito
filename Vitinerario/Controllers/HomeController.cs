@@ -97,9 +97,11 @@ namespace Vitinerario.Controllers
             return File(fileBytes, "application/pdf", "Brochure Vitinerario.pdf");
         }
 
-        public IActionResult Article()
+        public async Task<IActionResult> Article()
         {
-            return View();
+            // Esempio: passo langId = 1 (inglese), per recuperare dal DB "blog"
+            var articles = await _apiService.GetContentsByTypeAsync("blog", 1);
+            return View(articles);
         }
 
         public IActionResult Terms()
@@ -112,9 +114,11 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        public IActionResult Podcast()
+        public async Task<IActionResult> Podcast()
         {
-            return View();
+            // Esempio: passo langId = 1
+            var podcasts = await _apiService.GetPodcastsAsync(1);
+            return View(podcasts);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
