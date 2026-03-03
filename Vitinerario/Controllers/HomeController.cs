@@ -25,9 +25,12 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        public IActionResult Archive()
+        public async Task<IActionResult> Archive()
         {
-            return View();
+            int langId = LanguageHelper.GetCurrentLangId();
+            var articles = await _apiService.GetContentsByTypeAsync("news", langId);
+            return View(articles);
+          //  return View();
         }
 
         public IActionResult EventDetails()
