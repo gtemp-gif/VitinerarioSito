@@ -2,7 +2,25 @@
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "The Harvest Gala | Vitinerario Event Details";
 }
+@{
+    // Numero prenotazioni (Italia)
+    var bookingPhoneDisplay = "0971 1561325";
 
+    // Normalizzazione (toglie spazi e simboli)
+    var bookingPhoneRaw = bookingPhoneDisplay
+        .Replace(" ", "")
+        .Replace("-", "")
+        .Replace("(", "")
+        .Replace(")", "");
+
+    // È mobile se inizia con 3 (Italia)
+    var isMobile = bookingPhoneRaw.StartsWith("3");
+
+    // Link finale
+    var bookingHref = isMobile
+        ? $"https://wa.me/39{bookingPhoneRaw}"   // WhatsApp
+        : $"tel:+39{bookingPhoneRaw}";           // Chiamata
+}
  @section TailwindConfig {
     <script>
         tailwind.config = {
@@ -44,25 +62,7 @@
     </style>
 } 
 
-@* <nav class="absolute top-0 w-full z-50 flex items-center justify-between px-12 py-8 bg-transparent">
-    <div class="flex items-center space-x-2">
-        <div class="w-10 h-10 bg-primary flex items-center justify-center rounded-full">
-            <span class="text-white font-bold text-xl">V</span>
-        </div>
-        <span class="text-white tracking-widest text-xl font-bold uppercase">Vitinerario</span>
-    </div>
-    <div class="hidden md:flex space-x-12 text-white/90 text-sm uppercase tracking-widest">
-        <a href="#" class="hover:text-primary transition-colors">Wine Guides</a>
-        <a href="#" class="hover:text-primary transition-colors">Travel</a>
-        <a href="#" class="hover:text-primary transition-colors">Culture</a>
-        <a href="#" class="hover:text-primary transition-colors">Events</a>
-    </div>
-    <div>
-        <button class="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-2 rounded-full text-sm uppercase tracking-wider hover:bg-white/20 transition-all">
-            Magazine
-        </button>
-    </div>
-</nav> *@
+
 
 <header class="relative h-[85vh] overflow-hidden flex items-end pb-24">
     <div class="absolute inset-0">
@@ -88,17 +88,28 @@
         <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
             <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Date & Time</span>
             <p class="text-xl font-bold text-white">Saturday, Oct 12th</p>
-            <p class="text-stone-400">18:30 — 23:00</p>
+            <p class="text-stone-400">h. 18:30 </p>
         </div>
         <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
             <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Location</span>
             <p class="text-xl font-bold text-white">Tuscany, Italy</p>
-            <p class="text-stone-400 underline cursor-pointer">View on map</p>
+            <p class="text-stone-400 underline cursor-pointer">View on map</p> 
         </div>
-        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
+     @*    <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
             <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Dress Code</span>
             <p class="text-xl font-bold text-white">Black Tie</p>
             <p class="text-stone-400">Tuscan Elegance</p>
+        </div> *@
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
+            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
+                <span class="material-symbols-outlined text-sm">phone_in_talk</span> Prenotazioni al 
+            </span>
+            <a href="@bookingHref"
+               @(isMobile ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")
+               class="text-xl font-bold text-white hover:text-primary transition-colors">
+                @bookingPhoneDisplay
+            </a>
+            <p class="text-stone-400 italic">  </p> 
         </div>
         <div class="p-8 bg-primary text-white flex flex-col justify-center items-center">
             <span class="text-white/70 text-xs uppercase tracking-widest mb-2 font-bold">Attendance</span>
@@ -201,7 +212,7 @@
         </div>
     </div>
 </main>
-
+@* 
 <section class="bg-dark-card py-24">
     <div class="container mx-auto px-12">
         <div class="mb-12 flex justify-between items-end">
@@ -241,7 +252,7 @@
         </div>
     </div>
 </section>
-
+ *@
 <div class="fixed bottom-0 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
     <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4 flex items-center space-x-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div class="hidden md:block">
@@ -254,7 +265,9 @@
                 <p class="text-primary font-bold text-xl leading-none">€250</p>
                 <p class="text-[10px] text-white/50 uppercase tracking-tighter">Per Guest</p>
             </div>
-            <button class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 uppercase tracking-widest text-xs">
+            <button type="button"
+                    onclick="window.open('@bookingHref','_blank')"
+                    class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 uppercase tracking-widest text-xs">
                 Reserve Your Seat
             </button>
         </div>
