@@ -12,8 +12,6 @@ builder.Services.AddHttpClient<Vitinerario.Services.IAuthService, Vitinerario.Se
     client.DefaultRequestHeaders.Add("User-Agent", "The userAgent field is required.");
 });
 
-builder.Services.AddTransient<Vitinerario.Services.AuthHeaderHandler>();
-
 builder.Services.AddHttpClient("VitinerarioApi", client =>
 {
     var baseUrl = builder.Configuration.GetValue<string>("ApiSettings:BaseUrl");
@@ -22,8 +20,7 @@ builder.Services.AddHttpClient("VitinerarioApi", client =>
         client.BaseAddress = new Uri(baseUrl);
     }
     client.DefaultRequestHeaders.Add("User-Agent", "The userAgent field is required.");
-})
-.AddHttpMessageHandler<Vitinerario.Services.AuthHeaderHandler>();
+});
 
 builder.Services.AddScoped<Vitinerario.Services.IApiService, Vitinerario.Services.ApiService>();
 
