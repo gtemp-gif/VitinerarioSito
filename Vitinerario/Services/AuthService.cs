@@ -29,11 +29,11 @@ namespace Vitinerario.Services
 
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Auth/token";
 
-            // Definisci l'oggetto anonimo con la proprietà 'token' in minuscolo
-            var requestBody = new { token = _apiSettings.Secret };
+            // Sending the Secret in the Body
+            var content = new StringContent($"\"{_apiSettings.Secret}\"", Encoding.UTF8, "application/json");
 
-            // Invia la richiesta POST
-            var response = await _httpClient.PostAsJsonAsync(url, requestBody);
+            var response = await _httpClient.PostAsync(url, content);
+
             if (!response.IsSuccessStatusCode)
             {
                 var errorMsg = await response.Content.ReadAsStringAsync();
