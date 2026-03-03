@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Vitinerario.Models;
 using Vitinerario.Models.Dtos;
+using Vitinerario.Helpers;
 
 namespace Vitinerario.Services
 {
@@ -15,9 +16,8 @@ namespace Vitinerario.Services
 
         public async Task<List<EventViewModel>> GetEventsAsync()
         {
-            // Legacy GetEventsAsync, redirecting to the new one with default langId 1 (English) or handling it as is.
-            // I'll rewrite this to fetch from the new endpoint and map to EventViewModel to avoid breaking changes in other places that might still call this parameterless method.
-            var dtos = await GetEventsAsync(1);
+            int langId = LanguageHelper.GetCurrentLangId();
+            var dtos = await GetEventsAsync(langId);
             return dtos.Select(e => new EventViewModel
             {
                 Id = e.Id.ToString(),
@@ -78,6 +78,14 @@ namespace Vitinerario.Services
         {
             var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync("Producers", content);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> SubmitPartecipaAsync(PartecipaViewModel model)
+        {
+            var content = new StringContent(JsonSerializer.Serialize(model), System.Text.Encoding.UTF8, "application/json");
+            // Assuming the endpoint for participation is /EventParticipants or similar. Using 'partecipa' as standard fallback
+            var response = await _httpClient.PostAsync("partecipa", content);
             return response.IsSuccessStatusCode;
         }
     }

@@ -27,10 +27,24 @@ namespace Vitinerario.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Logic to save participation would go here (could also be replaced by an API call)
+                try
+                {
+                    bool isSuccess = await _apiService.SubmitPartecipaAsync(model);
 
-                TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
-                return RedirectToAction("Partecipa");
+                    if (isSuccess)
+                    {
+                        TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
+                        return RedirectToAction("Partecipa");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Errore durante l'invio della richiesta. Riprova più tardi.");
+                    }
+                }
+                catch (Exception)
+                {
+                    ModelState.AddModelError("", "Si è verificato un errore di rete. Riprova.");
+                }
             }
 
             ViewBag.Eventi = await GetEventiListAsync();

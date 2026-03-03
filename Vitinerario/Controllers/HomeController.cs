@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Vitinerario.Models;
 using Vitinerario.Services;
+using Vitinerario.Helpers;
 using System.IO;
 
 namespace Vitinerario.Controllers
@@ -99,8 +100,8 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Article()
         {
-            // Esempio: passo langId = 1 (inglese), per recuperare dal DB "blog"
-            var articles = await _apiService.GetContentsByTypeAsync("blog", 1);
+            int langId = LanguageHelper.GetCurrentLangId();
+            var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
             return View(articles);
         }
 
@@ -116,8 +117,8 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Podcast()
         {
-            // Esempio: passo langId = 1
-            var podcasts = await _apiService.GetPodcastsAsync(1);
+            int langId = LanguageHelper.GetCurrentLangId();
+            var podcasts = await _apiService.GetPodcastsAsync(langId);
             return View(podcasts);
         }
 
