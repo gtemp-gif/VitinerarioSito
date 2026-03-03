@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Vitinerario.Models;
+using Vitinerario.Services;
 using System.IO;
 
 namespace Vitinerario.Controllers
@@ -7,14 +8,19 @@ namespace Vitinerario.Controllers
     public class HomeController : Controller
     {
         private readonly IWebHostEnvironment _env;
+        private readonly IApiService _apiService;
 
-        public HomeController(IWebHostEnvironment env)
+        public HomeController(IWebHostEnvironment env, IApiService apiService)
         {
             _env = env;
+            _apiService = apiService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var events = await _apiService.GetEventsAsync();
+            // Taking top 3 for index display
+            ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventViewModel>();
             return View();
         }
 
@@ -28,9 +34,10 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        public IActionResult Events()
+        public async Task<IActionResult> Events()
         {
-            return View();
+            var events = await _apiService.GetEventsAsync();
+            return View(events ?? new List<EventViewModel>());
         }
 
         public IActionResult StyleGuide()
@@ -46,34 +53,28 @@ namespace Vitinerario.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Producers(ProducerViewModel model)
+        public async Task<IActionResult> Producers(ProducerViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            // --- EMAIL SENDING LOGIC ---
             try
             {
-                string subject = $"{model.RequestType} - Richiesta da Pagina Producers";
-                string body = $@"
-                    <h2>Nuova Richiesta da Pagina Producers</h2>
-                    <p><strong>Azienda:</strong> {model.CompanyName}</p>
-                    <p><strong>Referente:</strong> {model.ContactPerson}</p>
-                    <p><strong>Email:</strong> {model.Email}</p>
-                    <p><strong>Tipo Richiesta:</strong> {model.RequestType}</p>
-                    <hr />
-                    <p><strong>Messaggio:</strong></p>
-                    <p>{model.Message}</p>
-                ";
+                // Submitting producer request using the real API
+                bool isSuccess = await _apiService.SubmitProducerAsync(model);
 
-                // TODO: Integrate Proprietary DLL for email sending here.
-                // Example: EmailService.Send("admin@vitinerario.com", subject, body);
-
-                // Simulate success for now
-                TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
-                return RedirectToAction(nameof(Producers));
+                if (isSuccess)
+                {
+                    TempData["SuccessMessage"] = "Richiesta inviata con successo! Ti contatteremo presto.";
+                    return RedirectToAction(nameof(Producers));
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Errore durante l'invio della richiesta al server. Riprova più tardi.");
+                    return View(model);
+                }
             }
             catch (Exception ex)
             {
@@ -96,9 +97,11 @@ namespace Vitinerario.Controllers
             return File(fileBytes, "application/pdf", "Brochure Vitinerario.pdf");
         }
 
-        public IActionResult Article()
+        public async Task<IActionResult> Article()
         {
-            return View();
+            // Esempio: passo langId = 1 (inglese), per recuperare dal DB "blog"
+            var articles = await _apiService.GetContentsByTypeAsync("blog", 1);
+            return View(articles);
         }
 
         public IActionResult Terms()
@@ -111,9 +114,11 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        public IActionResult Podcast()
+        public async Task<IActionResult> Podcast()
         {
-            return View();
+            // Esempio: passo langId = 1
+            var podcasts = await _apiService.GetPodcastsAsync(1);
+            return View(podcasts);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
