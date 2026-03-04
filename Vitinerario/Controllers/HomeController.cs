@@ -39,9 +39,22 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        public IActionResult EventDetails()
+        public async Task<IActionResult> EventDetails(int id)
         {
-            return View();
+            if (id == 0)
+            {
+                return RedirectToAction("Events");
+            }
+
+            int langId = LanguageHelper.GetCurrentLangId();
+            var eventDto = await _apiService.GetEventById(id, langId);
+
+            if (eventDto == null)
+            {
+                return NotFound();
+            }
+
+            return View(eventDto);
         }
 
         public async Task<IActionResult> Events()

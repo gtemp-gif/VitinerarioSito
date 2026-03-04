@@ -14,6 +14,8 @@ namespace Vitinerario.Models.Dtos
         public decimal Price { get; set; }
         public bool IsOnline { get; set; }
         public int LangID { get; set; }
+        public string? Subtitle { get; set; }
+        public string? Coordinates { get; set; }
         public List<EventLinkDto> Links { get; set; } = new();
         public GalleryDto? Gallery { get; set; }
         public List<ExpertDto> Experts { get; set; } = new();

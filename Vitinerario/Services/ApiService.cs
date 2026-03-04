@@ -71,6 +71,23 @@ namespace Vitinerario.Services
             return events ?? new List<EventDto>();
         }
 
+        public async Task<EventDto?> GetEventById(int id, int langId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/events/{id}?langId={langId}");
+
+            if (!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
+            var content = await response.Content.ReadAsStringAsync();
+            var eventDto = JsonSerializer.Deserialize<EventDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return eventDto;
+        }
+
         public async Task<List<ContentDto>> GetContentsByTypeAsync(string type, int langId)
         {
             await AddAuthHeaderAsync();
