@@ -1,12 +1,14 @@
-@using Vitinerario.Models.Dtos
-@model List<EventDto>
+@using Vitinerario.Models
+@model List<EventViewModel>
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Events";
 
+    // Raggruppamento corretto usando la proprietà 'Date' del ViewModel
     var eventsByYear = Model
-        .GroupBy(e => e.EventDate.Year)
-        .OrderBy(g => g.Key)
+        .GroupBy(e => e.Date.Year)
+        .OrderByDescending(g => g.Key) // Ordiniamo dall'anno più recente
         .ToList();
 }
 
@@ -19,17 +21,11 @@
                     colors: {
                         "primary": "#d31a53",
                         "dark-charcoal": "#121212",
-                        "charcoal-light": "#1e1e1e",
-                        "accent-burgundy": "#d31a53"
+                        "charcoal-light": "#1e1e1e"
                     },
                     fontFamily: {
                         "body": ["Roboto", "sans-serif"],
-                        "display": ["Montserrat", "sans-serif"],
-                        "lovelo": ["Montserrat", "sans-serif"]
-                    },
-                    letterSpacing: {
-                        "widest-plus": "0.3em",
-                        "architectural": "0.05em"
+                        "display": ["Montserrat", "sans-serif"]
                     }
                 },
             },
@@ -41,33 +37,23 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterBtns = document.querySelectorAll('.filter-btn');
-            const eventCards = document.querySelectorAll('.event-card');
+            const eventSections = document.querySelectorAll('.event-section');
 
             filterBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Update active button state
-                    filterBtns.forEach(b => {
-                        b.classList.remove('bg-primary', 'text-white', 'border-primary');
-                        b.classList.add('text-white/50', 'border-white/10');
-                    });
-                    btn.classList.remove('text-white/50', 'border-white/10');
-                    btn.classList.add('bg-primary', 'text-white', 'border-primary');
-
                     const selectedYear = btn.getAttribute('data-filter');
 
-                    // Filter cards
-                    eventCards.forEach(card => {
-                        card.classList.remove('opacity-100', 'hidden');
-                        card.classList.add('opacity-0');
+                    // UI State update
+                    filterBtns.forEach(b => b.classList.replace('bg-primary', 'text-white/50'));
+                    btn.classList.replace('text-white/50', 'bg-primary');
 
-                        setTimeout(() => {
-                            if (selectedYear === 'all' || card.getAttribute('data-year') === selectedYear) {
-                                card.classList.remove('hidden');
-                                setTimeout(() => card.classList.replace('opacity-0', 'opacity-100'), 50);
-                            } else {
-                                card.classList.add('hidden');
-                            }
-                        }, 500); // Wait for fade out
+                    // Filter Logic
+                    eventSections.forEach(section => {
+                        if (selectedYear === 'all' || section.getAttribute('data-year') === selectedYear) {
+                            section.style.display = 'block';
+                        } else {
+                            section.style.display = 'none';
+                        }
                     });
                 });
             });
@@ -75,75 +61,71 @@
     </script>
 }
 
-<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-dark-charcoal text-white/90 font-body selection:bg-primary selection:text-white">
+<main class="flex-1 w-full bg-dark-charcoal">
+    <section class="relative h-[70vh] w-full overflow-hidden">
+        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC706C-bHRrX6lWXKlv9iAruIHDJRRMOJByHazE0n5Ow9bYW0Bvg3XL7zP6KxRH_mScbxW_exKvnVK7fN7OyEmIX7J-H_2AOvhH-qcKKSBC7lwag0pS2RwsYmQYlO7faHw0jBvJWBKJagQmh4zBDRu9bZgLk2uWEpLOc3Ju4YrSdJJEtv8FOnrpX12QHrtnIvIrf-k_gP_LvW9qoFpvk1V2sGdCJz67nBBczHVBxtC65hmr-S2gbWoxlPfsyTyfohnhH3wKCYjuhzk" class="absolute inset-0 w-full h-full object-cover opacity-60">
+        <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex items-end pb-20">
+            <div class="max-w-7xl mx-auto px-6 w-full">
+                <span class="text-primary text-xs uppercase tracking-[0.3em] font-black mb-4 block">Our Calendar</span>
+                <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">Exclusive <br>Experiences</h1>
+            </div>
+        </div>
+    </section>
 
-    <main class="flex-1 w-full">
-        <!-- Hero Section -->
-        <section class="relative h-[92vh] w-full overflow-hidden mb-24">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC706C-bHRrX6lWXKlv9iAruIHDJRRMOJByHazE0n5Ow9bYW0Bvg3XL7zP6KxRH_mScbxW_exKvnVK7fN7OyEmIX7J-H_2AOvhH-qcKKSBC7lwag0pS2RwsYmQYlO7faHw0jBvJWBKJagQmh4zBDRu9bZgLk2uWEpLOc3Ju4YrSdJJEtv8FOnrpX12QHrtnIvIrf-k_gP_LvW9qoFpvk1V2sGdCJz67nBBczHVBxtC65hmr-S2gbWoxlPfsyTyfohnhH3wKCYjuhzk" alt="Exclusive Events" class="absolute inset-0 w-full h-full object-cover" data-alt="Luxury wine cellar with candlelit table">
-            <div class="absolute inset-0 bg-gradient-to-b from-dark-charcoal/20 to-dark-charcoal/80 flex items-end pb-32">
-                <div class="max-w-7xl mx-auto px-6 w-full text-white">
-                    <div class="max-w-4xl">
-                        <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black mb-4 block">Our Calendar</span>
-                        <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance font-display tracking-architectural uppercase">Exclusive <br>Experiences.</h1>
-                        <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">Curated cultural journeys and private tastings across the world's finest estates.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-       
-        <div class="max-w-7xl mx-auto px-6 md:px-16 w-full mb-24">
-            <!-- Filter Bar -->
-            <div class="flex flex-col md:flex-row items-center justify-between gap-6 mb-12 border-b border-white/5 pb-8">
-                <h3 class="font-display text-2xl md:text-3xl font-bold whitespace-nowrap text-white/90 uppercase tracking-architectural">Upcoming Events</h3>
-                <div class="flex gap-4" id="year-filters">
-                    <button class="filter-btn active bg-primary text-white border border-primary px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="all">All</button>
-                    @foreach (var yearGroup in eventsByYear)
-                    {
-                        <button class="filter-btn text-white/50 border border-white/10 hover:border-white/30 hover:text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="@yearGroup.Key">@yearGroup.Key</button>
-                    }
-                </div>
-            </div>
-        
-            @if (eventsByYear.Count > 0)
-            {
+    <div class="max-w-7xl mx-auto px-6 py-20">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-16 border-b border-white/10 pb-10">
+            <h3 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Select Year</h3>
+            <div class="flex flex-wrap gap-3">
+                <button class="filter-btn bg-primary text-white px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full" data-filter="all">All</button>
                 @foreach (var yearGroup in eventsByYear)
                 {
-                    <section class="mb-24 event-card transition-opacity duration-500 opacity-100" data-year="@yearGroup.Key">
-                        <div class="flex items-center gap-6 mb-12">
-                            <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events @yearGroup.Key</h3>
-                            <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                            @foreach (var eventItem in yearGroup)
-                            {
-                                <div class="flex flex-col group cursor-pointer">
-                                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                                        <img src="@eventItem.CoverImage" alt="@eventItem.Title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="@eventItem.Title">
-                                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                            <p class="text-primary text-xl font-bold leading-none uppercase">@eventItem.EventDate.ToString("dd")</p>
-                                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">@eventItem.EventDate.ToString("MMM")</p>
-                                        </div>
+                    <button class="filter-btn text-white/50 border border-white/10 px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full hover:border-primary" data-filter="@yearGroup.Key">@yearGroup.Key</button>
+                }
+            </div>
+        </div>
+
+        @if (eventsByYear.Any())
+        {
+            @foreach (var yearGroup in eventsByYear)
+            {
+                <section class="event-section mb-24" data-year="@yearGroup.Key">
+                    <div class="flex items-center gap-6 mb-12">
+                        <h2 class="font-display text-3xl font-black text-white uppercase tracking-tighter">Events @yearGroup.Key</h2>
+                        <div class="h-[1px] flex-1 bg-white/10"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        @foreach (var eventItem in yearGroup)
+                        {
+                            <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl">
+                                <div class="relative aspect-[16/10] overflow-hidden">
+                                    <img src="@eventItem.ImageUrl" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                    <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10">
+                                        <p class="text-primary text-2xl font-black leading-none">@eventItem.Date.ToString("dd")</p>
+                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest">@eventItem.Date.ToString("MMM")</p>
                                     </div>
-                                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors uppercase">@eventItem.Title</h4>
-                                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                                        <span class="material-symbols-outlined text-[18px]">location_on</span>
-                                        <p class="font-display italic">@(string.IsNullOrEmpty(eventItem.Location) ? "To be announced" : eventItem.Location)</p>
+                                </div>
+                                <div class="p-8">
+                                    <h4 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors uppercase">@eventItem.Title</h4>
+                                    <div class="flex items-center gap-2 text-white/40 text-xs mb-6 italic">
+                                        <span class="material-symbols-outlined text-sm">location_on</span>
+                                        @eventItem.Location
                                     </div>
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                                        Details
-                                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-block text-primary text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
+                                        View Details
                                     </a>
                                 </div>
-                            }
-                        </div>
-                    </section>
-                }
+                            </div>
+                        }
+                    </div>
+                </section>
             }
-            else
-            {
-                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90 mt-10">No upcoming events found.</h3>
-            }
-        </div>
-    </main>
-</div>
+        }
+        else
+        {
+            <div class="py-20 text-center">
+                <p class="text-white/30 font-display text-xl uppercase tracking-widest">Nessun evento disponibile al momento.</p>
+            </div>
+        }
+    </div>
+</main>

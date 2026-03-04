@@ -16,6 +16,10 @@ namespace Vitinerario.Services
         public AuthService(HttpClient httpClient, IOptions<ApiSettings> apiSettings, IMemoryCache memoryCache)
         {
             _httpClient = httpClient;
+            if (!_httpClient.DefaultRequestHeaders.Contains("User-Agent"))
+            {
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", "VitinerarioWebApp");
+            }
             _apiSettings = apiSettings.Value;
             _memoryCache = memoryCache;
         }

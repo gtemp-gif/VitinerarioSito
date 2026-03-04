@@ -19,10 +19,14 @@ builder.Services.AddHttpClient("VitinerarioApi", client =>
     {
         client.BaseAddress = new Uri(baseUrl);
     }
+    // AGGIUNGI QUESTA RIGA:
+    client.DefaultRequestHeaders.Add("User-Agent", "VitinerarioWebClient/1.0");
     client.DefaultRequestHeaders.Add("User-Agent", "The userAgent field is required.");
 });
 
 builder.Services.AddScoped<Vitinerario.Services.IApiService, Vitinerario.Services.ApiService>();
+builder.Services.AddScoped<Vitinerario.Services.IAuthService, Vitinerario.Services.AuthService>();
+
 
 var app = builder.Build();
 

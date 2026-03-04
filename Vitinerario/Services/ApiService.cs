@@ -1,8 +1,10 @@
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Options;
 using System.Text.Json;
 using Vitinerario.Helpers;
 using Vitinerario.Models;
 using Vitinerario.Models.Dtos;
+using Vitinerario.Models.Settings;
 
 namespace Vitinerario.Services
 {
@@ -10,29 +12,28 @@ namespace Vitinerario.Services
     {
         private readonly HttpClient _httpClient;
         private readonly IAuthService _authService;
-        private readonly IMemoryCache _memoryCache;
-        private const string TokenCacheKey = "VitinerarioAuthToken";
-        public ApiService(IHttpClientFactory httpClientFactory, IAuthService authService,IMemoryCache memoryCache)
+        private readonly ApiSettings _apiSettings;
+        // Rimuovi IMemoryCache se non la usi per altro, AuthService gestisce già il token
+
+        public ApiService(IHttpClientFactory httpClientFactory,
+                          IAuthService authService,
+                          IOptions<ApiSettings> apiSettings) // Usa IOptions qui
         {
             _httpClient = httpClientFactory.CreateClient("VitinerarioApi");
+            if (!_httpClient.DefaultRequestHeaders.Contains("User-Agent"))
+            {
+                _httpClient.DefaultRequestHeaders.Add("User-Agent", "VitinerarioWebApp");
+            }
             _authService = authService;
-            _memoryCache = memoryCache;
+            _apiSettings = apiSettings.Value; // Estrai il valore qui
         }
 
         private async Task AddAuthHeaderAsync()
         {
-            //var token = await _authService.GetTokenAsync();
-            var token = string.Empty;
-            string cachedToken = (string)_memoryCache.Get(TokenCacheKey);
-            if (cachedToken == null)
-            {
-                token = await _authService.GetTokenAsync();
-            }
-            else
-            {
-                token = cachedToken;
-            }
-
+            // Non serve controllare la cache qui! 
+            // Il metodo GetTokenAsync() del tuo AuthService è già ottimizzato 
+            // per restituire il token dalla cache se presente.
+            var token = await _authService.GetTokenAsync();
 
             _httpClient.DefaultRequestHeaders.Authorization =
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
@@ -56,7 +57,8 @@ namespace Vitinerario.Services
         public async Task<List<EventDto>> GetEventsAsync(int langId)
         {
             await AddAuthHeaderAsync();
-            var response = await _httpClient.GetAsync($"events?langId={langId}");
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/events?langId={langId}");
 
             if (!response.IsSuccessStatusCode)
             {
@@ -72,8 +74,9 @@ namespace Vitinerario.Services
         public async Task<List<ContentDto>> GetContentsByTypeAsync(string type, int langId)
         {
             await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
             // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"contents/type/{type}");
+            var response = await _httpClient.GetAsync($"{url}/contents/type/{type}");
             if (!response.IsSuccessStatusCode)
             {
                 return new List<ContentDto>();
@@ -88,8 +91,9 @@ namespace Vitinerario.Services
         public async Task<ContentDto> GetContentById(int id, int langId)
         {
             await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
             // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"contents/{id}");
+            var response = await _httpClient.GetAsync($"{url}/contents/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return new ContentDto();
@@ -104,7 +108,8 @@ namespace Vitinerario.Services
         public async Task<List<ContentDto>> GetPodcastsAsync(int langId)
         {
             await AddAuthHeaderAsync();
-            var response = await _httpClient.GetAsync($"podcasts?langId={langId}");
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/podcasts");
 
             if (!response.IsSuccessStatusCode)
             {
