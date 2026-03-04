@@ -1,6 +1,13 @@
+@using Vitinerario.Models.Dtos
+@model List<EventDto>
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Events";
+
+    var eventsByYear = Model
+        .GroupBy(e => e.EventDate.Year)
+        .OrderBy(g => g.Key)
+        .ToList();
 }
 
 @section TailwindConfig {
@@ -91,125 +98,52 @@
                 <h3 class="font-display text-2xl md:text-3xl font-bold whitespace-nowrap text-white/90 uppercase tracking-architectural">Upcoming Events</h3>
                 <div class="flex gap-4" id="year-filters">
                     <button class="filter-btn active bg-primary text-white border border-primary px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="all">All</button>
-                    <button class="filter-btn text-white/50 border border-white/10 hover:border-white/30 hover:text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="2024">2024</button>
-                    <button class="filter-btn text-white/50 border border-white/10 hover:border-white/30 hover:text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="2025">2025</button>
+                    @foreach (var yearGroup in eventsByYear)
+                    {
+                        <button class="filter-btn text-white/50 border border-white/10 hover:border-white/30 hover:text-white px-8 py-3 text-[10px] font-bold uppercase tracking-widest transition-all" data-filter="@yearGroup.Key">@yearGroup.Key</button>
+                    }
                 </div>
             </div>
         
-            <!-- 2024 Events Section -->
-            <section class="mb-24">
-                <div class="flex items-center gap-6 mb-12">
-                    <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2024</h3>
-                    <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Card 1 -->
-                    <div class="flex flex-col group cursor-pointer">
-                        <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWAas9dsAp5c6JWFFx452TI7sx4Wa_AEBEUK7a3PNC9nbmbsqeSVM1FFJcjwaOGnJ1SkVj-yKHwvehtohxOkaH8f53KM7MOOClG19rUhRHvz-SZnkQSJ5bQCEsAZySkns6PCHSI9YUWDtJTEWzMrQHAiSUq5Qgo1T82hoz4o9_Aq4bZCO3CQz0wUA26Vl6ZjbJPzST2RjGR9EDLJNfFeyxzYSdK1eMDW55Aho-IDGaiJEt0jvHZPqfB5cMSgSVmUF_RYojRxG8jew" alt="Grand Cru Gala" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Black tie gala dinner setup">
-                            <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                <p class="text-primary text-xl font-bold leading-none uppercase">14</p>
-                                <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">JUN</p>
-                            </div>
+            @if (eventsByYear.Count > 0)
+            {
+                @foreach (var yearGroup in eventsByYear)
+                {
+                    <section class="mb-24 event-card transition-opacity duration-500 opacity-100" data-year="@yearGroup.Key">
+                        <div class="flex items-center gap-6 mb-12">
+                            <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events @yearGroup.Key</h3>
+                            <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
                         </div>
-                        <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">GRAND CRU GALA</h4>
-                        <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            <p class="font-display italic">Florence, Italy</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                            @foreach (var eventItem in yearGroup)
+                            {
+                                <div class="flex flex-col group cursor-pointer">
+                                    <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
+                                        <img src="@eventItem.CoverImage" alt="@eventItem.Title" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="@eventItem.Title">
+                                        <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
+                                            <p class="text-primary text-xl font-bold leading-none uppercase">@eventItem.EventDate.ToString("dd")</p>
+                                            <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">@eventItem.EventDate.ToString("MMM")</p>
+                                        </div>
+                                    </div>
+                                    <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors uppercase">@eventItem.Title</h4>
+                                    <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
+                                        <span class="material-symbols-outlined text-[18px]">location_on</span>
+                                        <p class="font-display italic">@(string.IsNullOrEmpty(eventItem.Location) ? "To be announced" : eventItem.Location)</p>
+                                    </div>
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                                        Details
+                                        <span class="material-symbols-outlined text-[18px]">trending_flat</span>
+                                    </a>
+                                </div>
+                            }
                         </div>
-                        <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            Details
-                            <span class="material-symbols-outlined text-[18px]">trending_flat</span>
-                        </a>
-                    </div>
-                    <!-- Card 2 -->
-                    <div class="flex flex-col group cursor-pointer">
-                        <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-4oxrO9D5nZoXPFROCEKfMgWvcWW94rGGuxP_X9s8xE374xV23HpI9_DWVApkoo6RP-J0WfhWhodV5Hiv-wmSwGQC8MwJrBcvpJJU2mXpoH5l232gt8kb1W9ZPC3MqHo2v3UgCxVt8qvi1lv9beXTmxZ57lOTc2Aaps6ZdpjLUsXrb4sQRtslXa5n1WnrnxzPJ-uZaX1669XHpAyIQcjcCqNBY7knZToOCbUdgvZxeCwTvIWKMdPc6pswaKJ0yvDG3i_CJSCOddU" alt="Tuscan Harvest Tour" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Golden hour vineyard in Tuscany">
-                            <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                <p class="text-primary text-xl font-bold leading-none uppercase">22</p>
-                                <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">SEP</p>
-                            </div>
-                        </div>
-                        <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">TUSCAN HARVEST TOUR</h4>
-                        <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            <p class="font-display italic">Siena, Italy</p>
-                        </div>
-                        <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            Details
-                            <span class="material-symbols-outlined text-[18px]">trending_flat</span>
-                        </a>
-                    </div>
-                    <!-- Card 3 -->
-                    <div class="flex flex-col group cursor-pointer">
-                        <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBVlOCCz8B463gC020Ayk_0XIk3gbHv8pmVIknjdY5680-WH4BVxkkqQNaOq6TnUx_LqIj9b35uFmX9bqP2-WVmHdpLMiOie7aFUjhRF9mRNsKXDELExcLV0ECE9-cncweNr4esDlsXAcPnkVeNiXVDY77WxR9vpWNuRx2iJJ22Mmza9tsFySxuLZ_U1h7CMNlkniqUmFfbIJprR4_awRCoqYXK3K6sUwgdZTs5rCAhMBnk9Yfn0BpELeTLCcgG4fwGS6jIzTTxTe8" alt="Private Cellar Tasting" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Sommelier pouring vintage wine">
-                            <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                <p class="text-primary text-xl font-bold leading-none uppercase">05</p>
-                                <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">NOV</p>
-                            </div>
-                        </div>
-                        <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">PRIVATE CELLAR TASTING</h4>
-                        <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            <p class="font-display italic">Bordeaux, France</p>
-                        </div>
-                        <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            Details
-                            <span class="material-symbols-outlined text-[18px]">trending_flat</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
-
-            <!-- 2025 Events Section -->
-            <section class="mb-24">
-                <div class="flex items-center gap-6 mb-12">
-                    <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90">Events 2025</h3>
-                    <div class="h-[1px] w-full bg-gradient-to-r from-white/20 to-transparent"></div>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <!-- Card 4 -->
-                    <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
-                        <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoFhUii2l824Spy8X9uADjtWzYWm8PBCflfOsBm4SI-g8SDWhi2Tw6dlauWSss0AYowc41f-UINbnfuSnyWZq7wtmA0Uh8b1IaXoFDW9jL0CCCqq_Uq1aug1_7OErzMAFffI6pRMUNA3bt4c2nFLLwDaIp9en1CXblbFmhLsSA38C1blVsIahlPax7a6R4353y78OSqx-hbBZwlwgFqBxnxKFZoYx80b3CxRk6HLxsxspFvggX7nhBil2AD0lHuzzX8qSDBUn-Hy0" alt="Bordeaux Spring Release" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Spring vineyard in bloom">
-                            <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                <p class="text-primary text-xl font-bold leading-none uppercase">12</p>
-                                <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">APR</p>
-                            </div>
-                        </div>
-                        <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">BORDEAUX SPRING RELEASE</h4>
-                        <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            <p class="font-display italic">Saint-Émilion, France</p>
-                        </div>
-                        <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            Details
-                            <span class="material-symbols-outlined text-[18px]">trending_flat</span>
-                        </a>
-                    </div>
-                    <!-- Card 5 -->
-                    <div class="flex flex-col group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
-                        <div class="relative aspect-[16/10] overflow-hidden rounded-lg mb-6">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLXf7AFUYYdmCX0wjxSPRQtw82j1euUFSzGhQSYalz9pzySrDejrY9ab7S9RihX9C4nsUZn1SQDNedXH4VgLfTeqb0Cio4gKxnZzhY1fAHBwDI0d6q96-GwuPvqDPtHhnImgwPFg04c9D3tdGS1h9W3V_kuJirteHZO_t9m2B3mj8cHhHLhfWhZT86_ij-kocRsXBXAkWjyq265EWwDHX3U8nhiyDL_Q2FR77ePVPqxlIdpbBhKXiESlVy4djEqfVavKqmoEmHSTk" alt="Artisanal Workshop" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="Hands working with grapevines">
-                            <div class="absolute top-4 left-4 bg-background-dark/90 backdrop-blur px-3 py-2 rounded border border-white/10 text-center min-w-[60px]">
-                                <p class="text-primary text-xl font-bold leading-none uppercase">30</p>
-                                <p class="text-primary text-[10px] font-bold tracking-tighter uppercase">MAY</p>
-                            </div>
-                        </div>
-                        <h4 class="lovelo-style text-xl mb-2 group-hover:text-primary transition-colors">ARTISANAL WORKSHOPS</h4>
-                        <div class="flex items-center gap-1.5 text-white/50 text-sm mb-4">
-                            <span class="material-symbols-outlined text-[18px]">location_on</span>
-                            <p class="font-display italic">Napa Valley, USA</p>
-                        </div>
-                        <a href="@Url.Action("EventDetails")" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            Details
-                            <span class="material-symbols-outlined text-[18px]">trending_flat</span>
-                        </a>
-                    </div>
-                </div>
-            </section>
+                    </section>
+                }
+            }
+            else
+            {
+                <h3 class="font-display text-2xl font-bold whitespace-nowrap text-white/90 mt-10">No upcoming events found.</h3>
+            }
         </div>
     </main>
 </div>
