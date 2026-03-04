@@ -3,27 +3,34 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = $"{Model.Title} | Vitinerario Event Details";
+
+    // 1. LOGICA TEMPORALE
+    bool isEventPast = DateTime.Now.Date > Model.EventDate.Date;
+
+    // 2. LOGICA PRENOTAZIONE DINAMICA (Basata solo su API)
+    // Prendiamo il numero direttamente dal campo contactInfo del JSON
+    var bookingPhoneDisplay = Model.ContactInfo;
+
+    // Normalizzazione per i link
+    var bookingPhoneRaw = (bookingPhoneDisplay ?? "")
+        .Replace(" ", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "");
+
+    // Verifica se è un cellulare (per WhatsApp)
+    var isMobileNum = bookingPhoneRaw.StartsWith("3") || bookingPhoneRaw.StartsWith("+393") || bookingPhoneRaw.StartsWith("393");
+
+    // Generazione link per il bottone
+    string bookingHref = isMobileNum
+        ? $"https://wa.me/{(bookingPhoneRaw.StartsWith("39") ? bookingPhoneRaw : "39" + bookingPhoneRaw).Replace("+", "")}"
+        : (!string.IsNullOrEmpty(bookingPhoneRaw) ? $"tel:{(bookingPhoneRaw.StartsWith("+") ? bookingPhoneRaw : "+39" + bookingPhoneRaw)}" : "#");
+
+    // Classi CSS dinamiche per il bottone
+    var buttonStyles = isEventPast
+        ? "border border-primary/50 text-primary/50 bg-stone-900 cursor-not-allowed"
+        : "bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 cursor-pointer";
+
 }
-@{
-    // Numero prenotazioni (Italia)
-    var bookingPhoneDisplay = "0971 1561325";
 
-    // Normalizzazione (toglie spazi e simboli)
-    var bookingPhoneRaw = bookingPhoneDisplay
-        .Replace(" ", "")
-        .Replace("-", "")
-        .Replace("(", "")
-        .Replace(")", "");
-
-    // È mobile se inizia con 3 (Italia)
-    var isMobile = bookingPhoneRaw.StartsWith("3");
-
-    // Link finale
-    var bookingHref = isMobile
-        ? $"https://wa.me/39{bookingPhoneRaw}"   // WhatsApp
-        : $"tel:+39{bookingPhoneRaw}";           // Chiamata
-}
- @section TailwindConfig {
+@section TailwindConfig {
     <script>
         tailwind.config = {
             theme: {
@@ -35,15 +42,9 @@
                     },
                     fontFamily: {
                         "display": ["Noto Serif", "serif"]
-                    },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
-                },
-            },
+                    }
+                }
+            }
         }
     </script>
 }
@@ -55,20 +56,12 @@
                 @@apply bg-[#121212] text-white;
             }
         }
-        :root {
-            --primary: #D31A53;
-            --background: #121212;
-            --card-bg: #1a1a1a;
-            --card-border: #2a2a2a;
-        }
     </style>
-} 
-
-
+}
 
 <header class="relative h-[85vh] overflow-hidden flex items-end pb-24">
     <div class="absolute inset-0">
-        <img src="@Model.CoverImage" alt="@Model.Title Venue" class="w-full h-full object-cover">
+        <img src="@Model.HeroImage" alt="@Model.Title Venue" class="w-full h-full object-cover">
         <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
     </div>
     <div class="container mx-auto px-12 relative z-10">
@@ -77,8 +70,21 @@
             {
                 <span class="inline-block px-4 py-1 mb-6 border border-primary text-primary rounded-full text-sm uppercase tracking-[0.2em] font-bold">@Model.Subtitle</span>
             }
-            <h1 class="text-6xl md:text-8xl text-white font-bold leading-tight mb-6">
-                @Model.Title
+
+            @{
+                // Split del titolo: data sopra, nome sotto
+                var headerTitleParts = Model.Title.Split(new[] { " - " }, StringSplitOptions.None);
+                var headerDate = headerTitleParts.Length >= 2 ? headerTitleParts[0] : "";
+                var headerName = headerTitleParts.Length >= 2 ? headerTitleParts[1] : Model.Title;
+            }
+
+            @if (!string.IsNullOrEmpty(headerDate))
+            {
+                <p class="text-primary text-2xl md:text-3xl font-display italic mb-2">@headerDate</p>
+            }
+
+            <h1 class="text-6xl md:text-8xl text-white font-bold leading-[0.9] tracking-tighter uppercase">
+                @headerName
             </h1>
         </div>
     </div>
@@ -86,40 +92,48 @@
 
 <section class="container mx-auto px-12 -mt-12 relative z-20">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-0 bg-dark-card shadow-2xl rounded-xl overflow-hidden border border-stone-800">
-        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
-            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Date & Time</span>
-            <p class="text-xl font-bold text-white">@Model.EventDate.ToString("dd/MM/yyyy")</p>
-            <p class="text-stone-400">h. @Model.EventDate.ToString("HH:mm") </p>
+
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">Date & Time</span>
+            <div class="space-y-1">
+                @{
+                    var infoTitleParts = Model.Title.Split(new[] { " - " }, StringSplitOptions.None);
+                    var cleanDate = infoTitleParts.Length > 0 ? infoTitleParts[0] : Model.EventDate.ToString("dd/MM/yyyy");
+                }
+                <p class="text-xl font-bold text-white">@cleanDate</p>
+                <p class="text-stone-400">h. @Model.EventDate.ToString("HH:mm")</p>
+            </div>
         </div>
-        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
-            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Location</span>
-            <p class="text-xl font-bold text-white">@Model.Location</p>
-            @if (!string.IsNullOrEmpty(Model.Coordinates))
-            {
-                <a href="https://www.google.com/maps/search/?api=1&query=@Model.Coordinates" target="_blank" class="text-stone-400 underline cursor-pointer hover:text-white transition-colors">View on map</a>
-            }
+
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">Location</span>
+            <div class="space-y-1">
+                <p class="text-xl font-bold text-white leading-tight">@(Model.Location ?? "Location da definire")</p>
+                @if (!string.IsNullOrEmpty(Model.Coordinates))
+                {
+                    <a href="https://www.google.com/maps/search/?api=1&query=@Model.Coordinates" target="_blank" class="text-stone-400 text-sm underline cursor-pointer hover:text-white transition-colors block">View on map</a>
+                }
+            </div>
         </div>
-     @*    <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
-            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold">Dress Code</span>
-            <p class="text-xl font-bold text-white">Black Tie</p>
-            <p class="text-stone-400">Tuscan Elegance</p>
-        </div> *@
-        <div class="p-8 border-r border-stone-800 flex flex-col justify-center">
-            <span class="text-primary text-xs uppercase tracking-widest mb-2 font-bold flex items-center gap-2">
-                <span class="material-symbols-outlined text-sm">phone_in_talk</span> Prenotazioni al 
+
+        <div class="p-8 border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold flex items-center gap-2 min-h-[1rem]">
+                <span class="material-symbols-outlined text-sm">phone_in_talk</span> Prenotazioni
             </span>
-            <a href="@bookingHref"
-               @(isMobile ? "target=\"_blank\" rel=\"noopener noreferrer\"" : "")
-               class="text-xl font-bold text-white hover:text-primary transition-colors">
-                @bookingPhoneDisplay
-            </a>
-            <p class="text-stone-400 italic">  </p> 
+            <div class="space-y-1">
+                <p class="text-xl font-bold text-white">
+                    @(string.IsNullOrEmpty(bookingPhoneDisplay) ? "Contattaci per info" : bookingPhoneDisplay)
+                </p>
+            </div>
         </div>
-        <div class="p-8 bg-primary text-white flex flex-col justify-center items-center">
-            <span class="text-white/70 text-xs uppercase tracking-widest mb-2 font-bold">Attendance</span>
-            <p class="text-3xl font-bold mb-1">@Model.Price.ToString("C")</p>
-            <p class="text-white/70 text-xs uppercase">Per Honored Guest</p>
+
+        <div class="p-8 bg-primary text-white flex flex-col justify-start items-center h-full">
+            <span class="text-white/70 text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">Costo per persona</span>
+            <div class="text-center">
+                <p class="text-3xl font-bold">@Model.Price.ToString("C")</p>
+            </div>
         </div>
+
     </div>
 </section>
 
@@ -130,42 +144,6 @@
                 <h2 class="text-4xl font-bold mb-8 text-white">The Narrative</h2>
                 <div class="prose prose-invert max-w-none text-lg leading-relaxed text-stone-400 space-y-6">
                     @Html.Raw(Model.Description)
-                </div>
-            </div>
-            <div class="mb-16">
-                <h3 class="text-2xl font-bold mb-8 text-white flex items-center">
-                    <span class="w-8 h-px bg-primary mr-4"></span>
-                    The Experience
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="flex items-start space-x-4">
-                        <span class="material-icons text-primary">restaurant</span>
-                        <div>
-                            <h4 class="font-bold text-white">Five-Course Pairing</h4>
-                            <p class="text-sm text-stone-500">Gourmet menu designed by Michelin-starred Chef Lorenzo Ricci.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <span class="material-icons text-primary">meeting_room</span>
-                        <div>
-                            <h4 class="font-bold text-white">Private Cellar Tour</h4>
-                            <p class="text-sm text-stone-500">Access to the restricted 'Grand Reserve' subterranean vaults.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <span class="material-icons text-primary">music_note</span>
-                        <div>
-                            <h4 class="font-bold text-white">Live Quartet</h4>
-                            <p class="text-sm text-stone-500">Contemporary classical music performed by the Florence String Ensemble.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start space-x-4">
-                        <span class="material-icons text-primary">star</span>
-                        <div>
-                            <h4 class="font-bold text-white">Sommelier Spotlight</h4>
-                            <p class="text-sm text-stone-500">Insightful narratives by Master Sommelier Marco Valenti.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
 
@@ -179,52 +157,26 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach (var photo in Model.Gallery.Photos)
                         {
-                            <img src="@photo.ImageUrl" alt="@photo.Caption" class="aspect-square object-cover rounded-xl w-full h-full border border-stone-800" />
+                            <div class="aspect-square rounded-xl overflow-hidden border border-stone-800">
+                                <img src="@photo.ImageUrl" alt="@photo.Caption" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110" />
+                            </div>
                         }
                     </div>
                 </div>
             }
         </div>
+
         <div class="lg:col-span-5">
-            <div class="bg-dark-card p-10 rounded-xl mb-12 border border-stone-800">
-                <h3 class="text-2xl font-bold mb-8 text-white uppercase tracking-widest text-center">Order of the Evening</h3>
-                <div class="space-y-8 relative">
-                    <div class="absolute left-4 top-0 bottom-0 w-px bg-stone-800"></div>
-                    <div class="relative pl-12">
-                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-primary ring-4 ring-dark-card"></div>
-                        <span class="text-xs font-bold text-primary uppercase tracking-tighter">18:30</span>
-                        <h4 class="font-bold text-white">Arrival & Aperitivo</h4>
-                        <p class="text-sm text-stone-500">Sparkling welcome in the Lavender Gardens.</p>
-                    </div>
-                    <div class="relative pl-12">
-                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
-                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">19:15</span>
-                        <h4 class="font-bold text-white">The Descent</h4>
-                        <p class="text-sm text-stone-500">Guided torch-lit tour through the history cellars.</p>
-                    </div>
-                    <div class="relative pl-12">
-                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
-                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">20:00</span>
-                        <h4 class="font-bold text-white">The Gala Banquet</h4>
-                        <p class="text-sm text-stone-500">Seated five-course dinner in the Grand Ballroom.</p>
-                    </div>
-                    <div class="relative pl-12">
-                        <div class="absolute left-[0.85rem] top-1.5 w-2 h-2 rounded-full bg-stone-700 ring-4 ring-dark-card"></div>
-                        <span class="text-xs font-bold text-stone-500 uppercase tracking-tighter">22:00</span>
-                        <h4 class="font-bold text-white">Dessert & Digestifs</h4>
-                        <p class="text-sm text-stone-500">Star-gazing on the terrace with limited Grappa selection.</p>
-                    </div>
-                </div>
-            </div>
             @if (Model.Experts != null && Model.Experts.Any())
             {
                 <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-white uppercase tracking-widest mb-6">Featured Experts</h3>
                     @foreach (var expert in Model.Experts)
                     {
                         <div class="flex items-center p-6 bg-dark-card rounded-xl border border-stone-800">
                             <img src="@expert.PhotoUrl" alt="@expert.Name" class="w-20 h-20 rounded-full object-cover grayscale">
                             <div class="ml-6">
-                                <span class="text-[10px] uppercase tracking-widest text-primary font-bold">Featured Expert</span>
+                                <span class="text-[10px] uppercase tracking-widest text-primary font-bold">Expert</span>
                                 <h4 class="text-lg font-bold text-white leading-tight">@expert.Name</h4>
                                 <p class="text-sm text-stone-500 italic">@expert.Bio</p>
                             </div>
@@ -235,65 +187,50 @@
         </div>
     </div>
 </main>
-@* 
-<section class="bg-dark-card py-24">
-    <div class="container mx-auto px-12">
-        <div class="mb-12 flex justify-between items-end">
-            <div>
-                <h2 class="text-4xl font-bold text-white mb-4">The Venue</h2>
-                <p class="text-stone-400 max-w-xl">Castello d'Oro is a 14th-century fortress nestled in the heart of Chianti Classico, renowned for its architectural grandeur and volcanic soil.</p>
-            </div>
-            <div class="flex space-x-2">
-                <button class="w-12 h-12 rounded-full border border-stone-800 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-                    <span class="material-icons">chevron_left</span>
-                </button>
-                <button class="w-12 h-12 rounded-full border border-stone-800 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-                    <span class="material-icons">chevron_right</span>
-                </button>
-            </div>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-            <div class="h-80 rounded-xl overflow-hidden group relative">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAw0y37XwizvTfJgrtrT3HYTUiIxKQjXLmKzypWIgz2FbWz5mVtBrSzhg1_ZSbKrVHC6yZ3XMxcG3M6OnXG10QRuG6lrndzDTQIHvlZeOP9aEqiBKBBFrktYyk68wFUPRYymDEmg_iDBT6FTIHx4HbzDisBbPKEwrThA4kBaqcOzGLxVoj5UTyA5XhXwSuaDouVHqM6TxfeNEWxT5t5N4Heacz-qvdsydY5ZyEceKR7vBsd4Nl837Q5nQg2cTZseV0lOPv-LSyrnoE" alt="Vineyard" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-            </div>
-            <div class="h-80 rounded-xl overflow-hidden group relative">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTAGEenIhIij6eGcS7OPRTe5Bqh_fxseTCXDiUq2RXz9BzCy_Kyo4I4BEY6fOHfxj2plLlb4n5KgG-9WaPonTTXhTuOfrTU2DGXu8wT9tGEtfUI-TPlDUGG8iaWbpCfswnQ5326Sz0inBU8JW7MDGgEIWZDSgAyv3cSZGVBZYsIooq5HsT9GiUYTwLtLhFL_eI9XQgm0gBTrMBzCmAt5Og11hceL3_nxwJAxsRg3JlS8DEOG-XukcmbiixJBruU72R22pstr17lWI" alt="Ballroom" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-            </div>
-            <div class="h-80 rounded-xl overflow-hidden group relative border border-stone-800">
-                <div class="w-full h-full bg-stone-900 flex items-center justify-center overflow-hidden">
-                    <div class="absolute inset-0 grayscale opacity-40 hover:opacity-100 transition-opacity">
-                        <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDEcsJQMavyHfW8C4MLzjVGAX_Tfp7aVA7hqDUcizP_HgSkncwG0sqnGpgqjdtYO459lqGFj4wX0GexsTtiBM6VEa3sBhuw5h8_RMNqItP_GrxdBECCZmuROmei113D4Cv7Xhv4-COtJGd2lgHyIvWBbUrtIf2eQhb4KQgATLpRJ_-IzROzC4oYX95hrxNj49xFoOfOqqoAWIeO2q8L28-EnZK4NjiWXcU3C0bFDk5SY9OGs00y9pUWY1fFfGZmcs-rTSCnDNP4iHM">
-                    </div>
-                    <div class="relative z-10 text-center px-6">
-                        <span class="material-icons text-primary text-4xl mb-2">location_on</span>
-                        <h4 class="font-bold text-white uppercase tracking-wider">Castello d'Oro</h4>
-                        <p class="text-xs text-stone-400">Via della Vigna, 12, 53011 Siena SI, Italy</p>
-                        <button class="mt-4 text-primary text-xs font-bold border-b border-primary uppercase">Open Directions</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
- *@
+
 <div class="fixed bottom-0 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
     <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4 flex items-center space-x-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
         <div class="hidden md:block">
-            <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Event Inclusions</p>
-            <p class="text-white text-sm italic">5 Courses + Wine Pairing + Tour</p>
+            <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Inclusioni Evento</p>
+            <p class="text-white text-sm italic">@(string.IsNullOrEmpty(Model.Subtitle) ? "Exclusive Wine Experience" : Model.Subtitle)</p>
         </div>
         <div class="h-10 w-px bg-white/10 hidden md:block"></div>
         <div class="flex items-center space-x-8">
             <div class="text-center md:text-left">
-                <p class="text-primary font-bold text-xl leading-none">€250</p>
-                <p class="text-[10px] text-white/50 uppercase tracking-tighter">Per Guest</p>
+                <p class="text-primary font-bold text-xl leading-none">@Model.Price.ToString("C")</p>
             </div>
-            <button type="button"
-                    onclick="window.open('@bookingHref','_blank')"
-                    class="bg-primary hover:bg-primary/90 text-white font-bold py-3 px-10 rounded-xl transition-all shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 uppercase tracking-widest text-xs">
-                Reserve Your Seat
-            </button>
+
+            @if (isEventPast)
+            {
+                <button type="button" disabled class="@buttonStyles py-3 px-10 rounded-xl uppercase tracking-widest text-xs font-bold">
+                    Evento Concluso
+                </button>
+            }
+            else
+            {
+                <button type="button" onclick="handleBookingClick()" class="@buttonStyles py-3 px-10 rounded-xl transition-all uppercase tracking-widest text-xs font-bold">
+                    Riserva il tuo posto
+                </button>
+            }
         </div>
     </div>
 </div>
 
+@section Scripts {
+    <script>
+        function handleBookingClick() {
+            const isMobileUA = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            const rawPhone = "@bookingPhoneRaw";
+
+            if (isMobileUA) {
+                window.location.href = "@Html.Raw(bookingHref)";
+            } else {
+                if (rawPhone.startsWith("3")) {
+                    window.open(`https://web.whatsapp.com/send?phone=39${rawPhone}`, '_blank');
+                } else {
+                    window.location.href = `tel:+39${rawPhone}`;
+                }
+            }
+        }
+    </script>
+}

@@ -39,6 +39,7 @@ namespace Vitinerario.Controllers
             return View();
         }
 
+        [Route("Home/EventDetails/{id}")]
         public async Task<IActionResult> EventDetails(int id)
         {
             if (id == 0)
@@ -47,6 +48,7 @@ namespace Vitinerario.Controllers
             }
 
             int langId = LanguageHelper.GetCurrentLangId();
+            langId = 1;
             var eventDto = await _apiService.GetEventById(id, langId);
 
             if (eventDto == null)
@@ -60,7 +62,9 @@ namespace Vitinerario.Controllers
         public async Task<IActionResult> Events()
         {
             var events = await _apiService.GetEventsAsync();
+            
             return View(events ?? new List<EventViewModel>());
+
         }
 
         public IActionResult StyleGuide()

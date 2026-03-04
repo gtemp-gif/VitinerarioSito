@@ -7,9 +7,9 @@
 
     // Raggruppamento corretto usando la proprietà 'Date' del ViewModel
     var eventsByYear = Model
-        .GroupBy(e => e.Date.Year)
-        .OrderByDescending(g => g.Key) // Ordiniamo dall'anno più recente
-        .ToList();
+         .OrderByDescending(e => e.Date)
+         .GroupBy(e => e.Date.Year)
+         .ToList();
 }
 
 @section TailwindConfig {
@@ -63,7 +63,7 @@
 
 <main class="flex-1 w-full bg-dark-charcoal">
     <section class="relative h-[70vh] w-full overflow-hidden">
-        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC706C-bHRrX6lWXKlv9iAruIHDJRRMOJByHazE0n5Ow9bYW0Bvg3XL7zP6KxRH_mScbxW_exKvnVK7fN7OyEmIX7J-H_2AOvhH-qcKKSBC7lwag0pS2RwsYmQYlO7faHw0jBvJWBKJagQmh4zBDRu9bZgLk2uWEpLOc3Ju4YrSdJJEtv8FOnrpX12QHrtnIvIrf-k_gP_LvW9qoFpvk1V2sGdCJz67nBBczHVBxtC65hmr-S2gbWoxlPfsyTyfohnhH3wKCYjuhzk" class="absolute inset-0 w-full h-full object-cover opacity-60">
+        <img src="https://www.geordie.app:441/VitinerarioGateTest/Images/Events/event_hero.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
         <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex items-end pb-20">
             <div class="max-w-7xl mx-auto px-6 w-full">
                 <span class="text-primary text-xs uppercase tracking-[0.3em] font-black mb-4 block">Our Calendar</span>

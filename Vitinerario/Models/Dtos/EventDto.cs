@@ -16,6 +16,7 @@ namespace Vitinerario.Models.Dtos
         public int LangID { get; set; }
         public string? Subtitle { get; set; }
         public string? Coordinates { get; set; }
+        public string? HeroImage { get; set; }
         public List<EventLinkDto> Links { get; set; } = new();
         public GalleryDto? Gallery { get; set; }
         public List<ExpertDto> Experts { get; set; } = new();

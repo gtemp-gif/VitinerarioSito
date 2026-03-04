@@ -88,11 +88,19 @@
                         <img src="@item.CoverImage" alt="miniature" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Aminiature">
                     </div>
                     <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
-                        <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
+                        @* <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
                             <span>@item.Title</span>
                             <span class="w-8 h-[1px] bg-primary/30"></span>
                             <span class="text-slate-500">@item.PublishDate.ToString("MMM dd, yyyy")</span>
+                        </div> *@
+                        <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
+                            @* Modifica qui: inseriamo il testo fisso seguito dall'ID dell'oggetto *@
+                            <span>Articolo #@item.Id</span>
+
+                            <span class="w-8 h-[1px] bg-primary/30"></span>
+                            <span class="text-slate-500">@item.PublishDate.ToString("MMM dd, yyyy")</span>
                         </div>
+
                         @* 2. Passiamo l'ID dell'articolo anche nel titolo per una migliore UX *@
                         <a href="@Url.Action("Article", "Home", new { id = item.Id })">
                             <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors uppercase">

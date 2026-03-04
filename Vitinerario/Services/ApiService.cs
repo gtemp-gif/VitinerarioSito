@@ -51,11 +51,14 @@ namespace Vitinerario.Services
                 Date = e.EventDate,
                 Location = e.Location ?? string.Empty,
                 ImageUrl = e.CoverImage ?? string.Empty
-            }).ToList();
+            })
+                .OrderByDescending(e => e.Date) // AGGIUNGI QUESTO: Ordina per data decrescente alla fonte
+                .ToList();
         }
 
         public async Task<List<EventDto>> GetEventsAsync(int langId)
         {
+            langId = 1;
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
             var response = await _httpClient.GetAsync($"{url}/events?langId={langId}");
