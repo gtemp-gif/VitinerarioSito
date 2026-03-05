@@ -70,7 +70,7 @@
     </style>
 </head>
 <body class="bg-[#121212] text-white antialiased">
-    <header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 lg:px-20 py-4">
+    <header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 md:px-12 lg:px-20 py-4">
         <div class="max-w-[1440px] mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
                @*  <div class="text-primary">
@@ -93,6 +93,9 @@
                @*  <a href="@Url.Action("Partecipa", "Eventi")" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all decoration-0">
                     Inquire Now
                 </a> *@
+                <button id="mobile-menu-btn" class="md:hidden text-white flex items-center justify-center p-2 hover:text-primary transition-colors">
+                    <span class="material-icons">menu</span>
+                </button>
             </div>
         </div>
     </header>
@@ -160,12 +163,51 @@
     </div>
 </footer>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="hidden fixed inset-0 z-[60] bg-dark-charcoal/95 backdrop-blur-xl flex-col justify-center items-center">
+        <button id="close-menu-btn" class="absolute top-6 right-6 text-white p-2 hover:text-primary transition-colors">
+            <span class="material-icons text-3xl">close</span>
+        </button>
+        <nav class="flex flex-col items-center gap-8 font-refined text-xl tracking-widest uppercase text-slate-100">
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Archive")">Archive</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Events")">Events</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Producers")">Producers</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Podcast")">Podcast</a>
+        </nav>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const nav = document.getElementById('floating-nav');
             const btnDown = document.getElementById('btn-down');
             const footer = document.querySelector('footer');
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+
+            if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenuOverlay.classList.remove('hidden');
+                    mobileMenuOverlay.classList.add('flex');
+                    document.body.style.overflow = 'hidden';
+                });
+
+                closeMenuBtn.addEventListener('click', () => {
+                    mobileMenuOverlay.classList.add('hidden');
+                    mobileMenuOverlay.classList.remove('flex');
+                    document.body.style.overflow = '';
+                });
+
+                // Close when clicking a link
+                document.querySelectorAll('.mobile-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenuOverlay.classList.add('hidden');
+                        mobileMenuOverlay.classList.remove('flex');
+                        document.body.style.overflow = '';
+                    });
+                });
+            }
 
             document.addEventListener('scroll', function() {
                 const scrollY = window.scrollY;
