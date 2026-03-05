@@ -1,5 +1,5 @@
 @using Vitinerario.Models
-@model List<EventViewModel>
+@model List<Vitinerario.Models.Dtos.EventDto>
 
 @{
     Layout = "_LayoutVitinerario";
@@ -7,8 +7,8 @@
 
     // Raggruppamento corretto usando la proprietà 'Date' del ViewModel
     var eventsByYear = Model
-         .OrderByDescending(e => e.Date)
-         .GroupBy(e => e.Date.Year)
+         .OrderByDescending(e => e.EventDate)
+         .GroupBy(e => e.EventDate.Year)
          .ToList();
 }
 
@@ -99,10 +99,10 @@
                         {
                             <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl">
                                 <div class="relative aspect-[16/10] overflow-hidden">
-                                    <img src="@eventItem.ImageUrl" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                    <img src="@eventItem.CoverImage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10">
-                                        <p class="text-primary text-2xl font-black leading-none">@eventItem.Date.ToString("dd")</p>
-                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest">@eventItem.Date.ToString("MMM")</p>
+                                        <p class="text-primary text-2xl font-black leading-none">@eventItem.EventDate.ToString("dd")</p>
+                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest">@eventItem.EventDate.ToString("MMM")</p>
                                     </div>
                                 </div>
                                 <div class="p-8">

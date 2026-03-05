@@ -20,14 +20,17 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _apiService.GetEventsAsync();
+            var events = await _apiService.GetEventsAsync(LanguageHelper.GetCurrentLangId());
+            events = events?.Where(e => e.IsOnline).ToList(); // Filtra solo eventi futuri e ordina per data
             var articles = await _apiService.GetContentsByTypeAsync("blog", LanguageHelper.GetCurrentLangId());
+            articles = articles?.Where(a => a.IsPublished).ToList();
             var news = await _apiService.GetContentsByTypeAsync("news", LanguageHelper.GetCurrentLangId());
+            news = news?.Where(n => n.IsPublished).ToList();
             var podcasts = await _apiService.GetPodcastsAsync(LanguageHelper.GetCurrentLangId());
 
             // Taking top 3 for index display 
-            ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventViewModel>();
-            ViewBag.LatestArticles = articles?.Take(4).ToList() ?? new List<ContentDto>();
+            ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventDto>();
+            ViewBag.LatestArticles = articles?.Take(3).ToList() ?? new List<ContentDto>();
             ViewBag.LatestNews = news?.Take(4).ToList() ?? new List<ContentDto>();
             ViewBag.LatestPodcasts = podcasts?.Take(3).ToList() ?? new List<ContentDto>();
             return View();
@@ -37,9 +40,33 @@ namespace Vitinerario.Controllers
         {
             int langId = LanguageHelper.GetCurrentLangId();
             var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
+            articles = articles?.Where(a => a.IsPublished).ToList(); // Filtra solo gli articoli pubblicati
             ViewBag.Articles = articles?.OrderByDescending(a => a.PublishDate).ToList() ?? new List<ContentDto>();
+
             return View();
         }
+
+        //public async Task<IActionResult> Archive(int page = 1)
+        //{
+        //    int pageSize = 10;
+        //    var allArticles = await _apiService.GetContentsByTypeAsync("blog", langId); // Prendi tutti
+
+        //    int totalItems = allArticles.Count;
+        //    int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+        //    // Filtra gli articoli per la pagina corrente
+        //    var pagedArticles = allArticles
+        //        .Skip((page - 1) * pageSize)
+        //        .Take(pageSize)
+        //        .ToList();
+
+        //    ViewBag.Articles = pagedArticles;
+        //    ViewBag.CurrentPage = page;
+        //    ViewBag.TotalPages = totalPages;
+        //    ViewBag.TotalItems = totalItems;
+
+        //    return View();
+        //}
 
         [Route("Home/EventDetails/{id}")]
         public async Task<IActionResult> EventDetails(int id)
@@ -62,9 +89,9 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Events()
         {
-            var events = await _apiService.GetEventsAsync();
-            
-            return View(events ?? new List<EventViewModel>());
+            var events = await _apiService.GetEventsAsync(LanguageHelper.GetCurrentLangId());
+            events = events?.Where(e =>  e.IsOnline).ToList(); 
+            return View(events ?? new List<EventDto>());
 
         }
 

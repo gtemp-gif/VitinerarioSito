@@ -8,5 +8,6 @@ namespace Vitinerario.Models
         public DateTime Date { get; set; }
         public string Location { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
+        public string? CoverImage { get; set; }
     }
 }

@@ -51,21 +51,21 @@
         .moody-image {
             filter: sepia(20%) contrast(110%) brightness(85%);
             transition: filter 0.5s ease;
-        }
 
             .moody-image:hover {
                 filter: sepia(10%) contrast(105%) brightness(95%);
             }
 
-        .drop-cap::first-letter {
-            float: left;
-            font-size: 5rem;
-            line-height: 0.8;
-            padding-top: 0.5rem;
-            padding-right: 0.75rem;
-            color: #d31a53;
-            font-weight: 900;
-            font-family: 'Montserrat', sans-serif;
+            .drop-cap::first-letter {
+                float: left;
+                font-size: 5rem;
+                line-height: 0.8;
+                padding-top: 0.5rem;
+                padding-right: 0.75rem;
+                color: #d31a53;
+                font-weight: 900;
+                font-family: 'Montserrat', sans-serif;
+            }
         }
     </style>
 }
@@ -73,7 +73,7 @@
 <main class="flex-1">
     <section class="relative h-[90vh] w-full overflow-hidden">
         <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
-             style="background-image: url('@(string.IsNullOrEmpty(Model.CoverImage) ? "https://lh3.googleusercontent.com/aida-public/AB6AXuC9CibRg0FEJMIx_IF0wDafKtBz9Of6mJSJzt8FNPkwn68AXlU0wSzMVySgbxpkhNipWuxCx1EgfhgeL-q0HKM6YetYzVk5hvh2U4Ourjc8u9aryFv0HcnBTnDtpLq0FGBkk4sM8f5B_NisBBGCQV5XggSKUXXBvQTERI5MSk-4ClAHHSADTPyq9TI3tT5ONKkQ5xNyK_6MKs4A2azaXY6QVy7wTNtTM39-horsNDrtxez270omuM4p5LLYSLgZPvNk5jkRMkyYK00" : Model.CoverImage)');">
+             style="background-image: url('@(string.IsNullOrEmpty(Model.HeroImage) ? "https://lh3.googleusercontent.com/aida-public/AB6AXuC9CibRg0FEJMIx_IF0wDafKtBz9Of6mJSJzt8FNPkwn68AXlU0wSzMVySgbxpkhNipWuxCx1EgfhgeL-q0HKM6YetYzVk5hvh2U4Ourjc8u9aryFv0HcnBTnDtpLq0FGBkk4sM8f5B_NisBBGCQV5XggSKUXXBvQTERI5MSk-4ClAHHSADTPyq9TI3tT5ONKkQ5xNyK_6MKs4A2azaXY6QVy7wTNtTM39-horsNDrtxez270omuM4p5LLYSLgZPvNk5jkRMkyYK00" : Model.HeroImage)');">
         </div>
         <div class="absolute inset-0 premium-gradient"></div>
         <div class="absolute bottom-0 left-0 w-full p-8 md:p-20 flex flex-col items-start gap-6">
@@ -87,7 +87,7 @@
     </section>
 
     <article class="mx-auto max-w-[1200px] px-6 md:px-12 py-24 flex flex-col md:flex-row gap-16">
-      @*   <aside class="md:w-1/4 flex flex-col gap-12">
+        @*   <aside class="md:w-1/4 flex flex-col gap-12">
             <div class="space-y-4">
                 <h4 class="text-primary text-xs uppercase tracking-widest font-bold">Scritto da</h4>
                 <div class="flex items-center gap-4">
@@ -104,7 +104,7 @@
             <div class="space-y-3">
                 <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">Published</h4>
                 <p class="text-white/60 uppercase text-sm tracking-wide">@Model.PublishDate.ToString("MMM dd, yyyy")</p>
-            </div>
+                    </div>
 
             <div class="space-y-6 pt-2">
                 <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
@@ -113,7 +113,7 @@
                 <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
                     <span class="material-symbols-outlined text-base">bookmark</span> Save
                 </button>
-            </div>
+                        </div>
         </aside>
  *@
 
@@ -178,32 +178,34 @@
 
         <div class="md:w-3/4 space-y-12">
             <div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
-                @if (!string.IsNullOrEmpty(Model.Text))
+                @if (!string.IsNullOrEmpty(Model.Preview))
                 {
                     <p class="drop-cap whitespace-pre-line">
-                        @Model.Text
+                        @Html.Raw(Model.Preview)
                     </p>
                 }
             </div>
+            @if (Model.Images != null && Model.Images.Count > 0)
+            {
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
+                    <div class="md:col-span-8 h-[300px] md:h-full rounded-xl overflow-hidden group">
 
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
-                <div class="md:col-span-8 h-[300px] md:h-full rounded-xl overflow-hidden group">
-                    <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
-                         src="@Model.CoverImage" alt="Gallery 1" />
-                </div>
-                <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-[150px] md:h-full">
-                    <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                        <div class="h-full w-full bg-charcoal-light flex items-center justify-center">
-                            <span class="text-primary/20 text-4xl font-display">VIT</span>
-                        </div>
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                             src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
                     </div>
-                    <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                        <div class="h-full w-full bg-charcoal-light flex items-center justify-center">
-                            <span class="text-primary/20 text-4xl font-display">ART</span>
+                    <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-[150px] md:h-full">
+                        <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
+                            <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
+                        </div>
+                        <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
+                            <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
                         </div>
                     </div>
                 </div>
-            </div>
+            }
+
         </div>
     </article>
 

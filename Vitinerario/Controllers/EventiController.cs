@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Vitinerario.Helpers;
 using Vitinerario.Models;
 using Vitinerario.Services;
 
@@ -53,7 +54,7 @@ namespace Vitinerario.Controllers
 
         private async Task<List<SelectListItem>> GetEventiListAsync()
         {
-            var events = await _apiService.GetEventsAsync();
+            var events = await _apiService.GetEventsAsync(LanguageHelper.GetCurrentLangId());
 
             if (events == null || !events.Any())
             {
@@ -63,8 +64,8 @@ namespace Vitinerario.Controllers
 
             return events.Select(e => new SelectListItem
             {
-                Value = string.IsNullOrEmpty(e.Id) ? e.Title : e.Id,
-                Text = $"{e.Title} - {e.Date:dd MMM}"
+                Value = e.Id > 0 ? e.Title : e.Id.ToString(),//string.IsNullOrEmpty(e.Id.ToString) ? e.Title : e.Id,
+                Text = $"{e.Title} - {e.EventDate:dd MMM}"
             }).ToList();
         }
     }
