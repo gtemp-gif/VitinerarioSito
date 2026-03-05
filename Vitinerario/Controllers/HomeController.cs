@@ -22,11 +22,13 @@ namespace Vitinerario.Controllers
         {
             var events = await _apiService.GetEventsAsync();
             var articles = await _apiService.GetContentsByTypeAsync("blog", LanguageHelper.GetCurrentLangId());
+            var news = await _apiService.GetContentsByTypeAsync("news", LanguageHelper.GetCurrentLangId());
             var podcasts = await _apiService.GetPodcastsAsync(LanguageHelper.GetCurrentLangId());
 
-            // Taking top 3 for index display
+            // Taking top 3 for index display 
             ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventViewModel>();
             ViewBag.LatestArticles = articles?.Take(4).ToList() ?? new List<ContentDto>();
+            ViewBag.LatestNews = news?.Take(4).ToList() ?? new List<ContentDto>();
             ViewBag.LatestPodcasts = podcasts?.Take(3).ToList() ?? new List<ContentDto>();
             return View();
         }
