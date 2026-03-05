@@ -392,42 +392,23 @@
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOTTCmHzRwNlzT3BIpL3z_6cbO-Ehcyjo4wl7Oe_DKoSL-tVQXnePLHTThsrS2DJKsEH5u2PPem1DqyTB5RohYKF1jS9VmyGuSveK_RdLscEz4hOjagM9ERWgnZHmgn2hCHyG5Jxi6nlxeK3T2hslGdv-x6osbOIm2Q7PHJ2bLiCqI8qRn27LLm__b4ez9MNfAtL_G7OMpzc3iOaYnfr2GaLGwqGVT8bmbzt8dYHYackizObO7vClHcYRKmAk7pu3qZz9AfaEuT7A" alt="Santorini" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">Greece</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">Assyrtiko by the Aegean</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
-            </div>
-        </div>
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5261RDnC4KJ5u1ki-BswDksQjgPfV8aB0Vswpd2StrqPqr2G6ZU24lIxQhTm94Y8849SecU9OwaRmeDjFalIno-fooAQf8Lty1IrFm1G5QbyKDZorXKAlXD9OBFWlfmaj2P0sfRJJ_FL3mVHtH8waM4rVNELYmkem-t7TqTkRf73uSBiHzoIlIjX-Yd4TvOynwMzeCsXy03U5-inRRbvt0ut5JqNsFoWKcwxFdMRZSTALgCN6mdZEqZm8FOwxkTzvoWUxLmeG45k" alt="Napa Valley" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">California</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">The New Guard of Napa</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
-            </div>
-        </div>
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpB1_95NyIt_VuG471B7gKbIfWI9t96bJbMsAyIJFamTpHX52slnFOXKTET8OSVdiFI-88VxsZemrjOnj8omqVP-N97Kl06u3wfceH8KYvaVLfc1Bbr8oqXOpWOps3EzsWz5YiVVmZXo7sqtIshKKGR6u_Rx2cfaTPk5ZGtVCGTYnpXPSUE3Us_bq7jKaKp0Z-WwMMU5YJysTZ9Zud8ICS28G_Bl-gW0sCPsMIUPqCEUjbk8eIoIYRJw1BPC5RzUyA7IqFQvXllag" alt="Bordeaux" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">France</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">Château Chronicles: Bordeaux</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
-            </div>
-        </div>
+        @if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.EventViewModel>)ViewBag.LatestEvents).Any())
+        {
+            @foreach (var eventItem in (List<Vitinerario.Models.EventViewModel>)ViewBag.LatestEvents)
+            {
+                <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
+                    <img src="@eventItem.ImageUrl" alt="@eventItem.Title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
+                        <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">@eventItem.Location</span>
+                        <h5 class="text-white text-3xl font-black mb-6 leading-none">@eventItem.Title</h5>
+                        <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })"
+                           class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
+                            Explore Journal
+                        </a>
+                    </div>
+                </div>
+            }
+        }
     </div>
 </section>
 
