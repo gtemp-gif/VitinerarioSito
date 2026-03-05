@@ -58,7 +58,6 @@ namespace Vitinerario.Services
 
         public async Task<List<EventDto>> GetEventsAsync(int langId)
         {
-            langId = 1;
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
             var response = await _httpClient.GetAsync($"{url}/events?langId={langId}");

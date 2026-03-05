@@ -48,7 +48,6 @@ namespace Vitinerario.Controllers
             }
 
             int langId = LanguageHelper.GetCurrentLangId();
-            langId = 1;
             var eventDto = await _apiService.GetEventById(id, langId);
 
             if (eventDto == null)
