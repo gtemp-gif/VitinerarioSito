@@ -5,7 +5,7 @@ namespace Vitinerario.Services
 {
     public interface IApiService
     {
-        Task<List<EventViewModel>> GetEventsAsync();
+        //Task<List<EventViewModel>> GetEventsAsync();
         Task<List<EventDto>> GetEventsAsync(int langId);
         Task<List<ContentDto>> GetContentsByTypeAsync(string type, int langId);
         Task<List<ContentDto>> GetPodcastsAsync(int langId);

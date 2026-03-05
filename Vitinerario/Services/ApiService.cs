@@ -39,22 +39,22 @@ namespace Vitinerario.Services
                 new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
 
-        public async Task<List<EventViewModel>> GetEventsAsync()
-        {
-            int langId = LanguageHelper.GetCurrentLangId();
-            var dtos = await GetEventsAsync(langId);
-            return dtos.Select(e => new EventViewModel
-            {
-                Id = e.Id.ToString(),
-                Title = e.Title,
-                Description = e.Description,
-                Date = e.EventDate,
-                Location = e.Location ?? string.Empty,
-                ImageUrl = e.CoverImage ?? string.Empty
-            })
-                .OrderByDescending(e => e.Date) // AGGIUNGI QUESTO: Ordina per data decrescente alla fonte
-                .ToList();
-        }
+        //public async Task<List<EventViewModel>> GetEventsAsync()
+        //{
+        //    int langId = LanguageHelper.GetCurrentLangId();
+        //    var dtos = await GetEventsAsync(langId);
+        //    return dtos.Select(e => new EventViewModel
+        //    {
+        //        Id = e.Id.ToString(),
+        //        Title = e.Title,
+        //        Description = e.Description,
+        //        Date = e.EventDate,
+        //        Location = e.Location ?? string.Empty,
+        //        ImageUrl = e.CoverImage ?? string.Empty
+        //    })
+        //        .OrderByDescending(e => e.Date) // AGGIUNGI QUESTO: Ordina per data decrescente alla fonte
+        //        .ToList();
+        //}
 
         public async Task<List<EventDto>> GetEventsAsync(int langId)
         {
@@ -120,7 +120,7 @@ namespace Vitinerario.Services
 
             var content = await response.Content.ReadAsStringAsync();
             var contents = JsonSerializer.Deserialize<ContentDto>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-
+            
             return contents ?? new ContentDto();
         }
 

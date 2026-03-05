@@ -2,7 +2,13 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Archive";
-    var articles = ViewBag.Articles ?? new List<ContentDto>();
+
+    // Recupero dati e logica paginazione
+    var articles = ViewBag.Articles as List<ContentDto> ?? new List<ContentDto>();
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    int totalItems = ViewBag.TotalItems ?? 0;
+    int pageSize = 10;
 }
 
 @section TailwindConfig {
@@ -13,19 +19,20 @@
                 extend: {
                     colors: {
                         "primary": "#d11a51",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#121212",
+                        "dark-charcoal": "#121212",
+                        "charcoal-light": "#1e1e1e",
                     },
                     fontFamily: {
-                        "display": ["Noto Serif", "serif"],
-                        "sans": ["Noto Sans", "sans-serif"]
+                        // Uniformiamo Montserrat come nella Index
+                        "body": ["Roboto", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "lovelo": ["Montserrat", "sans-serif"]
                     },
-                    borderRadius: {
-                        "DEFAULT": "0.25rem",
-                        "lg": "0.5rem",
-                        "xl": "0.75rem",
-                        "full": "9999px"
-                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
+                    }
+                    
                 },
             },
         }
@@ -33,182 +40,128 @@
 }
 
 @section Styles {
-    <style>
-        body {
-            background-color: #121212;
-            color: #f8f6f6;
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                @@apply font-body bg-dark-charcoal text-white/90 antialiased overflow-x-hidden;
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-brand {
+            @@apply font-display tracking-architectural uppercase;
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to top, #121212 5%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0.1) 100%);
         }
     </style>
-} 
-
-
+}
 
 <main class="w-full">
-    <!-- Hero Section -->
-    <section class="relative w-full h-[70vh] flex items-end overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(to top, #121212 5%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0.1) 100%), url('https://lh3.googleusercontent.com/aida-public/AB6AXuCBt1whjBBlv6YNYSAshVFkte5cMRy653vOPG3NEkXMlKGLbF-NpFiDrgNUuIH3ob5tAj-XUoicr47gUW9dNAU_U1MSfL32Ip9DDEpCEEUx3ODS0jWVDKq08T3KEbSMCNVEWXYIQcBVXLwlc6TAeGAUHlfXZNoyo2iEK5omeep0iBiFEEt9qoO1r6ecHuTT4adFsoJcTzDo-PiV6XYSApiVGd5IK6Qap0yGQBtOOk3nrs-wxMW8BZ-J9Pyzn2ka7OZqoVV0bAHHYaE');" data-alt="Expansive scenic vineyard landscape at sunset"></div>
-        <div class="relative max-w-[1200px] mx-auto px-6 md:px-20 pb-16 w-full">
-            <div class="max-w-2xl space-y-4">
-                <h2 class="text-5xl md:text-7xl font-black leading-tight tracking-tight italic">The Soul of the Vineyard</h2>
-                <p class="text-lg md:text-xl text-slate-300 font-light max-w-lg leading-relaxed font-sans">
-                    Exploring the deep-rooted traditions and modern innovations of world-class winemaking across continents.
-                </p>
-                @* <div class="pt-4">
-                    <a href="@Url.Action("Article")" class="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg font-bold text-sm tracking-widest uppercase transition-all transform hover:-translate-y-1 inline-block">
-                        Read Featured Story
-                    </a>
-                </div> *@
+    <section class="relative w-full h-[60vh] md:h-[70vh] flex items-end overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Articles/hero.png');"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 md:px-12 pb-16 w-full text-white">
+            <div class="max-w-3xl space-y-6">
+                <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">The Soul <br> of the Vineyard</h1>
             </div>
         </div>
     </section>
-    <!-- Category Filters -->
-    <section class="max-w-[1200px] mx-auto px-6 md:px-20 py-12">
-        @* <div class="flex flex-wrap items-center gap-4 border-b border-white/10 pb-8">
-            <span class="text-slate-500 font-sans uppercase text-xs tracking-widest mr-4">Filter by:</span>
-            <button class="px-6 py-2 rounded-full border border-primary bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest transition-colors">All Articles</button>
-            <button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 text-slate-400 hover:text-slate-100 text-xs font-bold uppercase tracking-widest transition-colors">Wine</button>
-            <button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 text-slate-400 hover:text-slate-100 text-xs font-bold uppercase tracking-widest transition-colors">Culture</button>
-            <button class="px-6 py-2 rounded-full border border-white/10 hover:border-primary/50 text-slate-400 hover:text-slate-100 text-xs font-bold uppercase tracking-widest transition-colors">Travel</button>
-        </div> *@
-    </section> 
-    <!-- Article List -->
-    <section class="max-w-[1200px] mx-auto px-6 md:px-20 space-y-24 pb-32">
 
-        @if (articles != null && articles.Count > 0)
+    <section class="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        <div class="h-px w-full bg-white/10"></div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 md:px-12 space-y-24 pb-32">
+        @if (articles != null && articles.Any())
         {
+            // Calcolo del numero di partenza per il contatore inverso (es: Articolo #33)
+            int articleCounter = totalItems - ((currentPage - 1) * pageSize);
+
             @foreach (var item in articles)
             {
-                // 1. Logica per la sottostringa: prendiamo i primi 150 caratteri o meno se il testo è più corto
                 var previewText = !string.IsNullOrEmpty(item.Text) && item.Text.Length > 150
                 ? item.Text.Substring(0, 150) + "..."
                 : item.Text;
 
                 <article class="flex flex-col md:flex-row gap-12 group">
-                    <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
-                        <img src="@item.CoverImage" alt="miniature" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Aminiature">
+                    <div class="w-full md:w-1/2 overflow-hidden rounded-xl aspect-[16/10] bg-charcoal-light">
+                        <img src="@item.CoverImage" alt="@item.Title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                     </div>
-                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
-                        @* <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
-                            <span>@item.Title</span>
-                            <span class="w-8 h-[1px] bg-primary/30"></span>
-                            <span class="text-slate-500">@item.PublishDate.ToString("MMM dd, yyyy")</span>
-                        </div> *@
-                        <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
-                            @* Modifica qui: inseriamo il testo fisso seguito dall'ID dell'oggetto *@
-                            <span>Articolo #@item.Id</span>
 
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-6">
+                        <div class="flex items-center gap-4 text-primary text-xs font-bold tracking-[0.2em] uppercase">
+                            <span>Articolo #@articleCounter</span>
                             <span class="w-8 h-[1px] bg-primary/30"></span>
-                            <span class="text-slate-500">@item.PublishDate.ToString("MMM dd, yyyy")</span>
+                            <span class="text-white/40">@item.PublishDate.ToString("MMM dd, yyyy")</span>
                         </div>
 
-                        @* 2. Passiamo l'ID dell'articolo anche nel titolo per una migliore UX *@
                         <a href="@Url.Action("Article", "Home", new { id = item.Id })">
-                            <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
+                            <h3 class="text-3xl md:text-5xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
                                 @item.Title
                             </h3>
                         </a>
-                        <p class="text-slate-400 font-sans leading-relaxed text-base">
-                            @previewText
+
+                        <p class="text-white/60 leading-relaxed text-lg line-clamp-3">
+                            @Html.Raw(previewText)
                         </p>
-                        @* 2. Passaggio dell'ID dell'articolo nell'URL *@
-                        <a href="@Url.Action("Article", "Home", new { id = item.Id })" class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform">
+
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })"
+                           class="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all">
                             Read More
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
                 </article>
+
+                articleCounter--;
             }
         }
         else
         {
-            <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
-                Nessun Articolo Disponibile
-            </h3>
-            
+            <div class="py-20 text-center">
+                <h3 class="text-3xl font-black uppercase text-white/20">Nessun Articolo Disponibile</h3>
+            </div>
         }
-        <!-- Article 1 -->
-      @*   <article class="flex flex-col md:flex-row gap-12 group">
-            <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqsLLkGDqJIyUOdwRXL9SX2B2VoFXzaCL_6tkkhnViblUsIvao8gp4doybd935W0ZcZgz3-5xWDeoljAU6XOsCuvI6DaaaOm0jZ7CUnVn4JnNddCblT9VBFOv2mfOmHizc6I_ek7ScpJ-Jai0WRXxWUMdpb70QcCgIySn03Jj5OBfGHX0PEU3b3_q0PVLocjmjrj7jYj0zG-3rSaK8FLpCdgwS1ns5JWlBzmlNKNwR_e5gPnW1IwUVtfwJV8MnxU8ihwGGBEt_uk" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Ancient stone wine cellar with wooden barrels in Tuscany">
-            </div>
-            <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
-                <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
-                    <span>Travel</span>
-                    <span class="w-8 h-[1px] bg-primary/30"></span>
-                    <span class="text-slate-500">October 12, 2024</span>
-                </div>
-                <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors">Hidden Cellars of Tuscany</h3>
-                <p class="text-slate-400 font-sans leading-relaxed text-base">
-                    A journey through the underground vaults that hold Italy's liquid gold. Discover the families guarding centuries of tradition beneath the rolling hills of Chianti.
-                </p>
-                <a href="@Url.Action("Article")" class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform">
-                    Read More
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            </div>
-        </article>
-        <!-- Article 2 -->
-        <article class="flex flex-col md:flex-row-reverse gap-12 group">
-            <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWhsMyGk51xm01ujwGMdHB_sPc0cOtDUfs-pvUSrLRLWJZujvmKbArQ1Cw_OCxczxFLqll3cnAfCPcb7srENTct0uBogi5KayEnd9VCMdSkVs47kTMFs0w3_CGtFH7IEaQ3UfJqr_qTC4MV9BjmeAiwUT-QFfAhyNppVZHTivCvZUXbZ-Hv0PDWRbjzsc_CPAnkA_ZnNL2-BqHUyNlwmtUr1CDTgWZghtoDjQI4L7k8HUchbMNuPwkf6jmoCGbuK0m3Tw5N-OfudA" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close up of wine being poured into a crystal decanter">
-            </div>
-            <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
-                <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
-                    <span>Culture</span>
-                    <span class="w-8 h-[1px] bg-primary/30"></span>
-                    <span class="text-slate-500">September 28, 2024</span>
-                </div>
-                <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors">The Art of the Decanter</h3>
-                <p class="text-slate-400 font-sans leading-relaxed text-base">
-                    More than just glassware, the decanter is the stage where wine performs its final transformation. We explore the physics and aesthetics of aeration.
-                </p>
-                <a href="#" class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform">
-                    Read More
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            </div>
-        </article>
-        <!-- Article 3 -->
-        <article class="flex flex-col md:flex-row gap-12 group">
-            <div class="w-full md:w-1/2 overflow-hidden rounded-lg aspect-[16/10]">
-                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNUe-q0W2RlNYcN22Oj7ZidNjCsI663SyGP9w_fsT-RyrGaHRiPA_UgHRFhq8AlrnOuPuP1yhPOHMkZGPxVHuEdHBpMy-l6boW3Dbt6AmqIKCbEs4bGC5NC9ZReNl8QaSjauthwV0W049q3V5BJG_NGBpmpodXWCZRngl0Kz73zZacCK2JFzQUMT84STKQ7Id6zXL3K0__ByW_T_fvGtNBonU3Vn8-JOjWX0euPDVgDvSkzxVkI_EVc2GomELb1wdoEG2BfNt5ofg" alt="" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Hands holding fresh organic grapes in a sunlit vineyard">
-            </div>
-            <div class="w-full md:w-1/2 flex flex-col justify-center space-y-5">
-                <div class="flex items-center gap-4 text-primary font-sans text-xs font-bold tracking-[0.2em] uppercase">
-                    <span>Wine</span>
-                    <span class="w-8 h-[1px] bg-primary/30"></span>
-                    <span class="text-slate-500">September 15, 2024</span>
-                </div>
-                <h3 class="text-3xl md:text-4xl font-black leading-tight group-hover:text-primary transition-colors">Sustainable Harvests in 2024</h3>
-                <p class="text-slate-400 font-sans leading-relaxed text-base">
-                    How climate shift is forcing a revolution in organic farming and what it means for the flavor profile of your favorite vintages this year.
-                </p>
-                <a href="#" class="inline-flex items-center gap-2 text-primary font-bold uppercase text-sm tracking-widest hover:translate-x-2 transition-transform">
-                    Read More
-                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                </a>
-            </div>
-        </article>
-    </section> *@
-    <!-- Pagination -->
-    <section class="max-w-[1200px] mx-auto px-6 md:px-20 pb-24">
-        <div class="flex items-center justify-center gap-8 border-t border-white/10 pt-16">
-            <button class="flex items-center gap-2 text-slate-500 hover:text-white transition-colors uppercase text-xs font-bold tracking-[0.2em] disabled:opacity-30" disabled>
-                <span class="material-symbols-outlined">west</span>
-                Prev
-            </button>
-            <div class="flex items-center gap-6">
-                <span class="text-primary font-bold">01</span>
-                <span class="text-slate-500 hover:text-white cursor-pointer transition-colors">02</span>
-                <span class="text-slate-500 hover:text-white cursor-pointer transition-colors">03</span>
-                <span class="text-slate-500">...</span>
-                <span class="text-slate-500 hover:text-white cursor-pointer transition-colors">12</span>
-            </div>
-            <button class="flex items-center gap-2 text-slate-100 hover:text-primary transition-colors uppercase text-xs font-bold tracking-[0.2em]">
-                Next
-                <span class="material-symbols-outlined">east</span>
-            </button>
-        </div>
     </section>
-</main>
 
+    @if (totalPages > 1)
+    {
+        <section class="max-w-7xl mx-auto px-6 md:px-12 pb-32">
+            <div class="flex items-center justify-center gap-12 border-t border-white/10 pt-16">
+
+                <a href="@(currentPage > 1 ? Url.Action("Archive", new { page = currentPage - 1 }) : "#")"
+                   class="flex items-center gap-3 transition-colors uppercase text-[10px] font-black tracking-widest @(currentPage == 1 ? "text-white/10 pointer-events-none" : "text-white/40 hover:text-primary")">
+                    <span class="material-symbols-outlined text-sm">west</span> Prev
+                </a>
+
+                <div class="flex items-center gap-8">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        if (i == currentPage)
+                        {
+                            <span class="text-primary font-black text-lg border-b-2 border-primary pb-1">@i.ToString("D2")</span>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Archive", new { page = i })"
+                               class="text-white/30 hover:text-white transition-colors font-bold">
+                                @i.ToString("D2")
+                            </a>
+                        }
+                    }
+                </div>
+
+                <a href="@(currentPage<totalPages? Url.Action("Archive", new { page = currentPage + 1 }) : "#")"
+                   class="flex items-center gap-3 transition-colors uppercase text-[10px] font-black tracking-widest @(currentPage >= totalPages ? "text-white/10 pointer-events-none" : "text-white hover:text-primary")">
+                    Next <span class="material-symbols-outlined text-sm">east</span>
+                </a>
+            </div>
+        </section>
+    }
+</main>

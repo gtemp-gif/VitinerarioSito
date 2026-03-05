@@ -1,6 +1,6 @@
 @{
     Layout = "_LayoutVitinerario";
-    ViewData["Title"] = "Premium Wine, Culture & Travel Magazine";
+    ViewData["Title"] = "Vitinerario";
 }
 
 @section TailwindConfig {
@@ -113,31 +113,7 @@
     </style>
 }
 
-@* <nav class="sticky top-0 z-50 w-full bg-dark-charcoal/90 backdrop-blur-md border-b border-white/5">
-    <div class="max-w-7xl mx-auto px-6 md:px-12 h-20 flex items-center justify-between">
-        <div class="flex items-center space-x-10">
-            <button class="text-white hover:text-primary transition-colors">
-                <span class="material-icons">menu</span>
-            </button>
-            <div class="hidden md:flex space-x-8 text-[11px] uppercase tracking-widest-plus font-bold">
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">Archive</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">Events</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">Podcast</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("StyleGuide")">Style Guide</a>
-            </div>
-        </div>
-        <a class="nav-brand text-2xl font-black tracking-tighter text-primary" href="/">VITINERARIO</a>
-        <div class="flex items-center space-x-6">
-            <button class="hover:text-primary transition-colors">
-                <span class="material-icons">search</span>
-            </button>
-            <button class="hidden md:block bg-primary text-white px-6 py-2.5 text-[10px] uppercase tracking-widest font-bold hover:bg-opacity-90 transition-all">
-                Subscribe
-            </button>
-        </div>
-    </div>
-</nav> *@
+
 
 <section class="relative h-[92vh] w-full overflow-hidden">
     <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBIK3r1moCGug_I9omdSxO7bwEX3KznEah68A8ijr-C1oEQFmRKiMeCuoEQOauwLw0gAkZe8o9qDw09Tsy2QAIX-p-HVWOmAU1Pd00Ai8UpiUmm4zxQUh4ZdsrZ-G3sMYFu35KIM_xabj6TTSAKa_JkZIpo4rC60ejah3RDxz10Ov1S7xGB5muX3IcVTuIlsuYY_35BtfmMEe0qj656rA-Yw6oJQK48pbj8HPKfmEYiThWQrzw25j-ZfeBFoNrp92cGTUnNWV5tMQ" alt="Vineyard at Sunset" class="absolute inset-0 w-full h-full object-cover">
@@ -145,8 +121,8 @@
         <div class="max-w-7xl mx-auto px-6 md:px-12 w-full text-white">
             <div class="max-w-4xl">
                 @* <span class="inline-block px-4 py-1.5 bg-primary text-[10px] uppercase tracking-widest-plus font-black mb-8">Featured Story</span> *@
-                <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">The Art of the <br>Harvest.</h1>
-                <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">An intimate journey through the golden hours of the Chianti Classico region.</p>
+                <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">Lasciati ispirare <br>dai tuoi sensi</h1>
+                @* <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">An intimate journey through the golden hours of the Chianti Classico region.</p> *@
                 @*  <a href="@Url.Action("Article")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
                     Read Feature
                     <span class="material-icons ml-3 group-hover:translate-x-2 transition-transform">arrow_forward</span>
@@ -186,9 +162,7 @@
             <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Real Time</span>
             <h2 class="text-5xl font-black">News</h2>
         </div>
-        <a href="#" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
-            Global Feed <span class="material-icons text-sm ml-2">rss_feed</span>
-        </a>
+  
     </div>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         @if (ViewBag.LatestNews != null && ((List<Vitinerario.Models.Dtos.ContentDto>)ViewBag.LatestNews).Any())
@@ -205,6 +179,45 @@
                     <a href="@Url.Action("Article", "Home", new { id = newsItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
                         <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
                     </a>
+                    @if (newsItem.Links != null && newsItem.Links.Count > 0)
+                    {
+                    @if (newsItem.CategoryId == 1 || newsItem.CategoryId == 2)
+                    {                   
+                            
+                        
+                        var link = newsItem.Links[0];
+                        <a href="@Url.Action("Article", "Home", new { id = link })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
+                        </a>
+                        <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
+                            <a href="@Url.Action("Article", "Home", new { id = link })"
+                               class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-icons text-primary text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    }
+                    else if (newsItem.CategoryId == 3 || newsItem.CategoryId == 4)
+                    {
+                        var link = newsItem.Links[0];
+                        <a href="@link" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
+                        </a>
+                        <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
+                        <div class="mt-auto flex items-center justify-between">
+                            <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
+                            <a href="@link" 
+                               class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                <span class="material-icons text-primary text-sm">arrow_forward</span>
+                            </a>
+                        </div>
+                    }
+        }
+                   @*  <a href="@Url.Action("Article", "Home", new { id = newsItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
+                        <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
+                    </a> *@
+
                     <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
                     <div class="mt-auto flex items-center justify-between">
                         <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
@@ -248,6 +261,8 @@
     </div>
 </section>
 
+
+<!-- Articoli -->
 <main class="max-w-7xl mx-auto px-6 md:px-12 py-32">
     <div class="flex items-end justify-between mb-20 border-b border-white/10 pb-8">
         <div>
@@ -291,7 +306,6 @@
                         <span class="mx-4 text-primary opacity-50">/</span>
                         <span>@firstArticle.PublishDate.ToString("dd MMM yyyy")</span>
                     </div>
-
                 </div>
             </div>
 
@@ -313,21 +327,20 @@
         }
     </div>
 </main>
+
+<!-- APP -->
 <section class="bg-charcoal-light py-32 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
-
             <div class="order-2 md:order-1 relative">
-
-                <div class="relative z-10 w-full max-w-md mx-auto aspect-[9/19] rounded-[3rem] border-8 border-dark-charcoal bg-black app-mockup-shadow">
-
+                @* Mockup dello Smartphone con l'immagine dell'App *@
+                <div class="relative z-10 w-full max-w-md mx-auto aspect-[9/19] rounded-[3rem] border-8 border-dark-charcoal bg-black app-mockup-shadow overflow-hidden">
+                    <img src="/Assets/img/Vitinerario App.png" alt="Vitinerario App Interface" class="w-full h-full object-cover">
 
                     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-[90%] bg-primary/20 backdrop-blur-lg rounded-2xl p-4 border border-primary/30 flex items-center gap-4 z-30 shadow-2xl">
-
                         <div class="bg-primary/20 p-2 rounded-lg flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-primary text-2xl">wine_bar</span>
                         </div>
-
                         <div class="flex flex-col min-w-0">
                             <h6 class="text-[11px] font-black uppercase tracking-widest text-white leading-none mb-1 truncate">Vitinerario</h6>
                             <p class="text-[9px] text-white/70 leading-tight font-light">Il tuo sommelier virtuale sempre con te!</p>
@@ -369,7 +382,7 @@
     </div>
 </section>
 
-
+<!-- Citazione -->
 <section class="bg-charcoal-light py-40 border-y border-white/5 my-12">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <span class="material-symbols-outlined text-primary text-6xl mb-12 opacity-50">format_quote</span>
@@ -381,55 +394,53 @@
     </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-6 md:px-12 py-32">
-    <div class="flex items-end justify-between mb-20">
+<!-- Eventi -->
+
+<section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
+    <div class="flex items-end justify-between mb-16">
         <div>
             <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Destinations</span>
             <h2 class="text-5xl font-black uppercase">Eventi</h2>
         </div>
-        <a href="@Url.Action("Events")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
+        <a href="@Url.Action("Events", "Home")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center text-right">
             Guarda tutti gli eventi <span class="material-icons text-sm ml-2">add</span>
         </a>
     </div>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOTTCmHzRwNlzT3BIpL3z_6cbO-Ehcyjo4wl7Oe_DKoSL-tVQXnePLHTThsrS2DJKsEH5u2PPem1DqyTB5RohYKF1jS9VmyGuSveK_RdLscEz4hOjagM9ERWgnZHmgn2hCHyG5Jxi6nlxeK3T2hslGdv-x6osbOIm2Q7PHJ2bLiCqI8qRn27LLm__b4ez9MNfAtL_G7OMpzc3iOaYnfr2GaLGwqGVT8bmbzt8dYHYackizObO7vClHcYRKmAk7pu3qZz9AfaEuT7A" alt="Santorini" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">Greece</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">Assyrtiko by the Aegean</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
+        @if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents).Any())
+        {
+            @foreach (var evt in (List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents)
+            {
+                <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal rounded-xl">
+                    @* Immagine di copertina dinamica *@
+                    <img src="@evt.CoverImage" alt="@evt.Title" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
+                        @* Luogo dell'evento (es: MILANO, ITALY) *@
+                        <span class="text-primary text-[10px] uppercase font-black mb-3 tracking-[0.2em]">@evt.Location</span>
+
+                        @* Titolo dell'evento *@
+                        <h5 class="text-white text-3xl font-black mb-6 leading-none uppercase">@evt.Title</h5>
+
+                        @* Link al dettaglio evento *@
+                        <a href="@Url.Action("EventDetails", "Home", new { id = evt.Id })"
+                           class="text-white text-[10px] uppercase font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">
+                            Explore Journal
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-span-full py-10">
+                <p class="text-white/30 italic text-center font-body">Nessun evento disponibile in questo momento.</p>
             </div>
-        </div>
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5261RDnC4KJ5u1ki-BswDksQjgPfV8aB0Vswpd2StrqPqr2G6ZU24lIxQhTm94Y8849SecU9OwaRmeDjFalIno-fooAQf8Lty1IrFm1G5QbyKDZorXKAlXD9OBFWlfmaj2P0sfRJJ_FL3mVHtH8waM4rVNELYmkem-t7TqTkRf73uSBiHzoIlIjX-Yd4TvOynwMzeCsXy03U5-inRRbvt0ut5JqNsFoWKcwxFdMRZSTALgCN6mdZEqZm8FOwxkTzvoWUxLmeG45k" alt="Napa Valley" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">California</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">The New Guard of Napa</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
-            </div>
-        </div>
-        <div class="group relative aspect-[3/4] overflow-hidden bg-dark-charcoal">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpB1_95NyIt_VuG471B7gKbIfWI9t96bJbMsAyIJFamTpHX52slnFOXKTET8OSVdiFI-88VxsZemrjOnj8omqVP-N97Kl06u3wfceH8KYvaVLfc1Bbr8oqXOpWOps3EzsWz5YiVVmZXo7sqtIshKKGR6u_Rx2cfaTPk5ZGtVCGTYnpXPSUE3Us_bq7jKaKp0Z-WwMMU5YJysTZ9Zud8ICS28G_Bl-gW0sCPsMIUPqCEUjbk8eIoIYRJw1BPC5RzUyA7IqFQvXllag" alt="Bordeaux" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all duration-1000">
-            <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
-                <span class="text-primary text-[10px] uppercase tracking-widest-plus mb-3 font-black">France</span>
-                <h5 class="text-white text-3xl font-black mb-6 leading-none">Château Chronicles: Bordeaux</h5>
-                @* <button class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">Explore Journal</button> *@
-                <a href="@Url.Action("EventDetails")"
-                   class="text-white text-[10px] uppercase tracking-widest-plus font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all flex items-center gap-2 hover:gap-4">
-                    Explore Journal
-                </a>
-            </div>
-        </div>
+        }
     </div>
 </section>
+
 
 <section class="relative w-full h-auto md:h-[600px] py-16 md:py-0 overflow-hidden group">
 
@@ -498,15 +509,15 @@
             </a>
         </div>
         <div class="md:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            @if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.EventViewModel>)ViewBag.LatestEvents).Any())
+            @if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents).Any())
             {
-                @foreach (var eventItem in (List<Vitinerario.Models.EventViewModel>)ViewBag.LatestEvents)
+                @foreach (var eventItem in (List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents)
                 {
                     <div class="event-card">
                         <div class="flex items-start gap-6 mb-4">
                             <div class="text-center">
-                                <span class="block text-3xl font-black text-primary leading-none">@eventItem.Date.ToString("dd")</span>
-                                <span class="text-[10px] uppercase tracking-widest font-bold text-white/40">@eventItem.Date.ToString("MMM")</span>
+                                <span class="block text-3xl font-black text-primary leading-none">@eventItem.EventDate.ToString("dd")</span>
+                                <span class="text-[10px] uppercase tracking-widest font-bold text-white/40">@eventItem.EventDate.ToString("MMM")</span>
                             </div>
                             <div class="flex-1">
                                 <h4 class="font-lovelo text-xl font-bold text-white mb-2 leading-tight">@eventItem.Title</h4>
