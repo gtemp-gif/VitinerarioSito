@@ -1,6 +1,7 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 }
 
 @section TailwindConfig {
@@ -403,7 +404,7 @@
             <h2 class="text-5xl font-black uppercase">Eventi</h2>
         </div>
         <a href="@Url.Action("Events", "Home")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center text-right">
-            Guarda tutti gli eventi <span class="material-icons text-sm ml-2">add</span>
+            @(langId == 2 ? "Guarda tutti gli eventi" : "View all events") <span class="material-icons text-sm ml-2">add</span>
         </a>
     </div>
 

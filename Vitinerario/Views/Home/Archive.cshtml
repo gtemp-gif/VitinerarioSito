@@ -2,6 +2,7 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Archive";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 
     // Recupero dati e logica paginazione
     var articles = ViewBag.Articles as List<ContentDto> ?? new List<ContentDto>();
@@ -113,7 +114,7 @@
 
                         <a href="@Url.Action("Article", "Home", new { id = item.Id })"
                            class="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all">
-                            Read More
+                            @(langId == 2 ? "Leggi di più" : "Read More")
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
@@ -125,7 +126,7 @@
         else
         {
             <div class="py-20 text-center">
-                <h3 class="text-3xl font-black uppercase text-white/20">Nessun Articolo Disponibile</h3>
+                <h3 class="text-3xl font-black uppercase text-white/20">@(langId == 2 ? "Nessun articolo disponibile" : "No articles available")</h3>
             </div>
         }
     </section>

@@ -4,6 +4,7 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Events";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 
     // Raggruppamento corretto usando la proprietà 'Date' del ViewModel
     var eventsByYear = Model
@@ -112,7 +113,7 @@
                                         @eventItem.Location
                                     </div>
                                     <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-block text-primary text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
-                                        View Details
+                                        @(langId == 2 ? "Vedi Dettagli" : "View Details")
                                     </a>
                                 </div>
                             </div>

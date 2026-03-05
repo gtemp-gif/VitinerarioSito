@@ -3,6 +3,7 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = $"Vitinerario | {Model?.Title ?? "Article"}";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 }
 
 @section TailwindConfig {
@@ -120,7 +121,7 @@
         <aside class="md:w-1/4 flex flex-col gap-12">
             @* Sezione Autore Dinamica *@
             <div class="space-y-4">
-                <h4 class="text-primary text-xs uppercase tracking-widest font-bold">Scritto da</h4>
+                <h4 class="text-primary text-xs uppercase tracking-widest font-bold">@(langId == 2 ? "Scritto da" : "Written by")</h4>
 
                 @if (Model.Authors != null && Model.Authors.Any())
                 {
@@ -159,7 +160,7 @@
 
             @* Sezione Data di Pubblicazione *@
             <div class="space-y-3">
-                <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">Published</h4>
+                <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">@(langId == 2 ? "Pubblicato" : "Published")</h4>
                 <p class="text-white/60 uppercase text-sm tracking-wide">@Model.PublishDate.ToString("MMM dd, yyyy")</p>
             </div>
 
@@ -168,10 +169,10 @@
                 <button type="button"
                         onclick="handleShare()"
                         class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-                    <span class="material-symbols-outlined text-base">share</span> Share
+                    <span class="material-symbols-outlined text-base">share</span> @(langId == 2 ? "Condividi" : "Share")
                 </button>
                 <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-                    <span class="material-symbols-outlined text-base">bookmark</span> Save
+                    <span class="material-symbols-outlined text-base">bookmark</span> @(langId == 2 ? "Salva" : "Save")
                 </button>
             </div>
         </aside>
@@ -217,7 +218,7 @@
                     <p class="text-slate-500 mt-2 italic font-body">Continua l'esplorazione</p>
                 </div>
                 <a class="text-primary font-bold flex items-center gap-2 group" href="@Url.Action("Archive")">
-                    View All <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    @(langId == 2 ? "Guarda Tutti" : "View All") <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>
 
