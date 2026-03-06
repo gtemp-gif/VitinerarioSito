@@ -1,7 +1,40 @@
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Options;
+using System.Globalization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddLocalization(o => o.ResourcesPath = "Resources");
+builder.Services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+                new CultureInfo("en-US"),
+                new CultureInfo("it-IT")
+            };
+    options.DefaultRequestCulture = new RequestCulture("it-IT", "it-IT");
+
+    // You must explicitly state which cultures your application supports.
+    // These are the cultures the app supports for formatting 
+    // numbers, dates, etc.
+
+    options.SupportedCultures = supportedCultures;
+
+    // These are the cultures the app supports for UI strings, 
+    // i.e. we have localized resources for.
+    // Ordine dei provider (IMPORTANTE!)
+    options.RequestCultureProviders = new List<IRequestCultureProvider>
+    {
+        new QueryStringRequestCultureProvider(), // ?culture=en-US
+        new CookieRequestCultureProvider(),      // cookie salvato dopo scelta lingua
+        new AcceptLanguageHeaderRequestCultureProvider() // fallback browser
+    };
+    options.SupportedUICultures = supportedCultures;
+});
 builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor(); // Aggiunto per LanguageHelper
 
@@ -38,6 +71,23 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+// Configura la localizzazione all'avvio
+var supportedCultures = new[] { "en", "it-IT" };
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+// Aggiungi un provider personalizzato per leggere il TUO cookie "UserLanguage"
+localizationOptions.RequestCultureProviders.Insert(0, new CustomRequestCultureProvider(context =>
+{
+    var cookie = context.Request.Cookies["UserLanguage"];
+    var culture = (cookie == "2") ? "it-IT" : "en";
+    return Task.FromResult(new ProviderCultureResult(culture));
+}));
+
+app.UseRequestLocalization(localizationOptions);
 
 app.UseHttpsRedirection();
 app.UseRouting();

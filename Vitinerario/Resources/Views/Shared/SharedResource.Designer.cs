@@ -19,7 +19,7 @@ namespace Vitinerario.Resources.Views.Shared {
     // tramite uno strumento quale ResGen o Visual Studio.
     // Per aggiungere o rimuovere un membro, modificare il file con estensione ResX ed eseguire nuovamente ResGen
     // con l'opzione /str oppure ricompilare il progetto VS.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SharedResource {
@@ -66,6 +66,15 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string Articles {
             get {
                 return ResourceManager.GetString("Articles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function..
+        /// </summary>
+        public static string PodcastDescription {
+            get {
+                return ResourceManager.GetString("PodcastDescription", resourceCulture);
             }
         }
     }

@@ -94,8 +94,8 @@ namespace Vitinerario.Services
         {
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
-            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"{url}/contents/type/{type}");
+            var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
+           // var response = await _httpClient.GetAsync($"{url}/contents/type/{type}");
             if (!response.IsSuccessStatusCode)
             {
                 return new List<ContentDto>();
@@ -111,8 +111,8 @@ namespace Vitinerario.Services
         {
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
-            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"{url}/contents/{id}");
+            var response = await _httpClient.GetAsync($"contents/{id}?langId={langId}");
+            //var response = await _httpClient.GetAsync($"{url}/contents/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return new ContentDto();

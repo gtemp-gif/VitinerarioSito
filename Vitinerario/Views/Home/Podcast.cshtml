@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario | The Podcast Archive";
@@ -109,7 +113,8 @@
         </div>
         @* <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">The Archive</h1> *@
         <p class="text-lg text-stone-grey leading-relaxed max-w-2xl mx-auto">
-            An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function.
+            @Localizer[SharedResource.PodcastDescription]
+
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
             <!-- YouTube -->
@@ -136,7 +141,7 @@
     </section>
 
     <!-- Filter Bar -->
-    <div class="flex items-center justify-between border-b border-[#e6d0d7] dark:border-[#3d242b] mb-12">
+   @*  <div class="flex items-center justify-between border-b border-[#e6d0d7] dark:border-[#3d242b] mb-12">
         <div class="flex gap-10">
             <button class="border-b-2 border-primary pb-4 text-[10px] font-black uppercase tracking-widest text-white">All Episodes</button>
             <button class="text-[#964f65] hover:text-primary pb-4 text-sm font-bold transition-colors">Season 01</button>
@@ -147,9 +152,9 @@
             Showing 12 Episodes
         </div>
     </div>
-
+ *@
     <!-- Episode Row 01 -->
-    <section class="mb-24 group">
+  @*   <section class="mb-24 group">
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center gap-3">
                 <span class="text-primary font-bold text-sm tracking-widest">EPISODE 08</span>
@@ -231,9 +236,9 @@
             </div>
         </div>
     </section>
-
+ *@
     <!-- Episode Row 02 -->
-    <section class="mb-24 group">
+   @*  <section class="mb-24 group">
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center gap-3">
                 <span class="text-primary font-bold text-sm tracking-widest">EPISODE 07</span>
@@ -309,9 +314,9 @@
             </div>
         </div>
     </section>
-
+ *@
     <!-- Newsletter Footer Component -->
-    <footer class="mt-32 pt-20 border-t border-[#e6d0d7] dark:border-[#3d242b]">
+  @*   <footer class="mt-32 pt-20 border-t border-[#e6d0d7] dark:border-[#3d242b]">
         <div class="grid md:grid-cols-2 gap-16 items-center bg-[#1E1E1E] p-12 lg:p-20">
             <div>
                 <h2 class="text-4xl font-bold mb-6 text-white">Stay within the narrative.</h2>
@@ -329,7 +334,7 @@
                 <p class="mt-4 text-[10px] text-[#964f65] uppercase tracking-[0.2em] font-bold">Privacy ensured. Quarterly releases.</p>
             </div>
         </div>
-    @*     <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
+      <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
             <div class="flex items-center gap-3">
                 <div class="text-primary size-6">
                     <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -344,6 +349,6 @@
                 <a href="#" class="hover:text-primary transition-colors">Spotify</a>
             </div>
             <p class="text-xs text-[#964f65]">© 2024 Vitinerario Studio. All rights reserved.</p>
-        </div> *@
-    </footer>
+        </div> 
+    </footer> *@
 </main>

@@ -120,4 +120,7 @@
   <data name="Articles" xml:space="preserve">
     <value>Articoli</value>
   </data>
+  <data name="PodcastDescription" xml:space="preserve">
+    <value>Una raccolta curata di dialoghi architettonici, narrazioni sensoriali ed esplorazione di forma e funzione.</value>
+  </data>
 </root>
