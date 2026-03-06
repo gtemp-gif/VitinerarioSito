@@ -61,6 +61,33 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Accept.
+        /// </summary>
+        public static string Accept {
+            get {
+                return ResourceManager.GetString("Accept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Article.
+        /// </summary>
+        public static string Article {
+            get {
+                return ResourceManager.GetString("Article", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Articles.
         /// </summary>
         public static string Articles {
@@ -70,11 +97,322 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a “There is no absolute wine, &lt;br&gt; 
+        ///Every wine evolves with its place, with time, and with the people who share it.”.
+        /// </summary>
+        public static string BlockquoteHome {
+            get {
+                return ResourceManager.GetString("BlockquoteHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Discover.
+        /// </summary>
+        public static string BtnDiscover {
+            get {
+                return ResourceManager.GetString("BtnDiscover", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Discover More.
+        /// </summary>
+        public static string BtnDiscoverMore {
+            get {
+                return ResourceManager.GetString("BtnDiscoverMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Join Us.
+        /// </summary>
+        public static string BtnJoinUs {
+            get {
+                return ResourceManager.GetString("BtnJoinUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Click Here.
+        /// </summary>
+        public static string ClickHere {
+            get {
+                return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a ContactUs.
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a This site uses cookies, including third parties, for its operation. To know more
+        /// .
+        /// </summary>
+        public static string CookieBannerInfo {
+            get {
+                return ResourceManager.GetString("CookieBannerInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a By closing this banner or continuing browsing in any other way, you consent to the use of cookies..
+        /// </summary>
+        public static string CookieBannerWarning {
+            get {
+                return ResourceManager.GetString("CookieBannerWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Date and Time.
+        /// </summary>
+        public static string DateTime {
+            get {
+                return ResourceManager.GetString("DateTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Your virtual sommelier always with you.
+        /// </summary>
+        public static string DescriptioAppHome {
+            get {
+                return ResourceManager.GetString("DescriptioAppHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Event finished.
+        /// </summary>
+        public static string EventFinished {
+            get {
+                return ResourceManager.GetString("EventFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Events.
+        /// </summary>
+        public static string Events {
+            get {
+                return ResourceManager.GetString("Events", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Listen all episodes.
+        /// </summary>
+        public static string ListenAllEpisodes {
+            get {
+                return ResourceManager.GetString("ListenAllEpisodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Podcast.
+        /// </summary>
+        public static string Podcast {
+            get {
+                return ResourceManager.GetString("Podcast", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function..
         /// </summary>
         public static string PodcastDescription {
             get {
                 return ResourceManager.GetString("PodcastDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a  &lt;b&gt; COOKIE &lt;/b&gt;&lt;br /&gt; &lt;br /&gt;
+        ///            WHAT COOKIES ARE&lt;br /&gt; &lt;br /&gt;
+        ///            A &quot;cookie&quot; is a text file saved on the user&apos;s computer when he accesses a website with the aim of providing information every time the user returns to the same site. It is a sort of reminder of the visited internet page. With the cookie, the web server sends information to the user&apos;s browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.) stored on the latter&apos;s computer, and will be re-read and updated every time [stringa troncata]&quot;;.
+        /// </summary>
+        public static string PolicyCookies {
+            get {
+                return ResourceManager.GetString("PolicyCookies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a            Like most websites, this site may collect some information while browsing, such as:
+        ///         Cookies and user navigation data:
+        ///            - Internet Protocol (IP) address; 
+        ///            - type of browser and device parameters used to connect to the site;
+        ///            - name of the Internet Service Provider (ISP); &lt;br /&gt;
+        ///            - date and time of visit; &lt;br /&gt;
+        ///            - information on the pages visited within the site and time spent on each page, &lt;br /&gt;
+        ///            - web page of ori [stringa troncata]&quot;;.
+        /// </summary>
+        public static string PolicyData {
+            get {
+                return ResourceManager.GetString("PolicyData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a  This information is intended to inform the user about the methods of processing personal data concerning him.
+        ///            In compliance with the principles of protection of personal data established by the GDPR 2016/679 Regulation and the in force national legislation, this site respects and protects the privacy of visitors and users.
+        ///            &lt;br /&gt;
+        ///            This site makes use of third party services in order to improve the use of the site, third parties that may collect user data and then use t [stringa troncata]&quot;;.
+        /// </summary>
+        public static string PolicyIntro {
+            get {
+                return ResourceManager.GetString("PolicyIntro", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a PRIVACY POLICY.
+        /// </summary>
+        public static string PrivacyDataTitle {
+            get {
+                return ResourceManager.GetString("PrivacyDataTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a PRIVACY POLICY.
+        /// </summary>
+        public static string PrivacyPolicyTitle {
+            get {
+                return ResourceManager.GetString("PrivacyPolicyTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Privacy policy and Cookie Policy.
+        /// </summary>
+        public static string PrivacySubTitle {
+            get {
+                return ResourceManager.GetString("PrivacySubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Read all articles.
+        /// </summary>
+        public static string ReadAllArticles {
+            get {
+                return ResourceManager.GetString("ReadAllArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a ReadMore.
+        /// </summary>
+        public static string ReadMore {
+            get {
+                return ResourceManager.GetString("ReadMore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Reservation.
+        /// </summary>
+        public static string Reservation {
+            get {
+                return ResourceManager.GetString("Reservation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Reserve your seat.
+        /// </summary>
+        public static string ReserveYourSeat {
+            get {
+                return ResourceManager.GetString("ReserveYourSeat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Take part in unique experiences with producers, chefs, and food artisans..
+        /// </summary>
+        public static string SubtitleCommunity {
+            get {
+                return ResourceManager.GetString("SubtitleCommunity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a For editorial inquiries, partnership opportunities, or event requests, our team is at your service..
+        /// </summary>
+        public static string SubtitleContactUs {
+            get {
+                return ResourceManager.GetString("SubtitleContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Share your story. Host a Vitinerario event..
+        /// </summary>
+        public static string SubtitleForProducers {
+            get {
+                return ResourceManager.GetString("SubtitleForProducers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Terms &amp; Privacy Policy.
+        /// </summary>
+        public static string Terms {
+            get {
+                return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a For lovers of authentic experiences.
+        /// </summary>
+        public static string TitleCommunity {
+            get {
+                return ResourceManager.GetString("TitleCommunity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a FOR THE &lt;br&gt;PRODUCERS.
+        /// </summary>
+        public static string TitleForTheProducers {
+            get {
+                return ResourceManager.GetString("TitleForTheProducers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Get inspired &lt;br&gt;by your senses.
+        /// </summary>
+        public static string TitleHeroHome {
+            get {
+                return ResourceManager.GetString("TitleHeroHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a View all events.
+        /// </summary>
+        public static string ViewAllEvents {
+            get {
+                return ResourceManager.GetString("ViewAllEvents", resourceCulture);
             }
         }
     }

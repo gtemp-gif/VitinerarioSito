@@ -103,39 +103,41 @@
             </div>
         </div>
     </header> *@
+    @* style=" background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Podcast/p_hero2.png');" *@
+    <section class="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden mb-12">
 
-    <!-- Hero Section -->
-    <section class="mb-20 text-center max-w-3xl mx-auto">
-        @* <p class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4">A Sensory Journey</p> *@
-        <div class="max-w-7xl mx-auto px-6 w-full">
+        @* 1. Immagine di Sfondo (Ricordati di cambiare l'URL con l'immagine dedicata al podcast) *@
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Podcast/p_hero1.png');"></div>
+
+        @* 2. Gradiente Scuro *@
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        @* 3. Contenuto Centrato sopra lo sfondo *@
+        <div class="relative z-10 max-w-4xl mx-auto px-6 w-full text-center text-white mt-12">
+
             <p class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4">A Sensory Journey</p>
-            <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">The Voice of Wine</h1>
-        </div>
-        @* <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">The Archive</h1> *@
-        <p class="text-lg text-stone-grey leading-relaxed max-w-2xl mx-auto">
-            @Localizer[SharedResource.PodcastDescription]
+            <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none mb-6">The Voice of Wine</h1>
 
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
-            <!-- YouTube -->
-            <button type="button"
-                    onclick="window.open('https://www.youtube.com/%40vitinerario', '_blank')"
-                    class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3">
+            @* Ho cambiato 'text-stone-grey' in 'text-white/80' per garantire la leggibilità sull'immagine scura *@
+            <p class="text-lg text-white/80 leading-relaxed max-w-2xl mx-auto mb-10">
+                @Localizer[SharedResource.PodcastDescription]
+            </p>
 
-                <span class="material-symbols-outlined text-sm">play_circle</span>
-                Watch on YouTube
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button type="button"
+                        onclick="window.open('https://www.youtube.com/%40vitinerario', '_blank')"
+                        class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-transform hover:-translate-y-1">
+                    <span class="material-symbols-outlined text-sm">play_circle</span>
+                    Watch on YouTube
+                </button>
 
-            </button>
-
-            <!-- Spotify -->
-            <button type="button"
-                    onclick="window.open('https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX', '_blank')"
-                    class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-colors">
-
-                <span class="material-symbols-outlined text-sm">headset</span>
-                Listen on Spotify
-
-            </button>
+                <button type="button"
+                        onclick="window.open('https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX', '_blank')"
+                        class="border border-primary text-primary hover:bg-primary/20 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-all hover:-translate-y-1 bg-black/30 backdrop-blur-sm">
+                    <span class="material-symbols-outlined text-sm">headset</span>
+                    Listen on Spotify
+                </button>
+            </div>
 
         </div>
     </section>

@@ -1,3 +1,8 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario";
@@ -122,7 +127,7 @@
         <div class="max-w-7xl mx-auto px-6 md:px-12 w-full text-white">
             <div class="max-w-4xl">
                 @* <span class="inline-block px-4 py-1.5 bg-primary text-[10px] uppercase tracking-widest-plus font-black mb-8">Featured Story</span> *@
-                <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">Lasciati ispirare <br>dai tuoi sensi</h1>
+                <h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">@Localizer[SharedResource.TitleHeroHome] </h1>
                 @* <p class="text-xl md:text-2xl font-light mb-10 text-white/80 max-w-2xl">An intimate journey through the golden hours of the Chianti Classico region.</p> *@
                 @*  <a href="@Url.Action("Article")" class="bg-primary hover:bg-opacity-90 text-white px-12 py-5 text-xs uppercase tracking-widest-plus font-bold flex items-center group transition-all w-fit">
                     Read Feature
@@ -133,10 +138,9 @@
     </div>
 </section>
 
-<section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
+@* <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
-        @* <span class="text-[9px] uppercase tracking-widest-plus font-black text-white/30">Official Partners</span> *@
 
     </div>
     <div class="flex overflow-hidden whitespace-nowrap">
@@ -156,89 +160,11 @@
         </div>
     </div>
 </section>
-@* 
+ *@
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
     <div class="flex items-end justify-between mb-16">
         <div>
-            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Real Time</span>
             <h2 class="text-5xl font-black">News</h2>
-        </div>
-  
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-        @if (ViewBag.LatestNews != null && ((List<Vitinerario.Models.Dtos.ContentDto>)ViewBag.LatestNews).Any())
-        {
-            @foreach (var newsItem in (List<Vitinerario.Models.Dtos.ContentDto>)ViewBag.LatestNews)
-            {
-                <article class="group cursor-pointer flex flex-col">
-                    <div class="relative aspect-[16/10] overflow-hidden mb-6">
-                        <img src="@newsItem.CoverImage" alt="@newsItem.Title" class="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700">
-                        <div class="absolute top-4 left-4">
-                            <span class="bg-primary text-white text-[9px] px-3 py-1 font-black uppercase tracking-widest">News</span>
-                        </div>
-                    </div>
-                    <a href="@Url.Action("Article", "Home", new { id = newsItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                        <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
-                    </a>
-                    @if (newsItem.Links != null && newsItem.Links.Count > 0)
-                    {
-                    @if (newsItem.CategoryId == 1 || newsItem.CategoryId == 2)
-                    {                   
-                            
-                        
-                        var link = newsItem.Links[0];
-                        <a href="@Url.Action("Article", "Home", new { id = link })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
-                        </a>
-                        <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
-                        <div class="mt-auto flex items-center justify-between">
-                            <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
-                            <a href="@Url.Action("Article", "Home", new { id = link })"
-                               class="opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="material-icons text-primary text-sm">arrow_forward</span>
-                            </a>
-                        </div>
-                    }
-                    else if (newsItem.CategoryId == 3 || newsItem.CategoryId == 4)
-                    {
-                        var link = newsItem.Links[0];
-                        <a href="@link" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                            <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
-                        </a>
-                        <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
-                        <div class="mt-auto flex items-center justify-between">
-                            <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
-                            <a href="@link" 
-                               class="opacity-0 group-hover:opacity-100 transition-opacity">
-                                <span class="material-icons text-primary text-sm">arrow_forward</span>
-                            </a>
-                        </div>
-                    }
-        }
-                   @*  <a href="@Url.Action("Article", "Home", new { id = newsItem.Id })" class="flex items-center gap-2 text-primary font-bold text-xs tracking-[0.15em] hover:gap-4 transition-all uppercase">
-                        <h4 class="font-lovelo text-xl font-bold mb-3 leading-tight group-hover:text-primary transition-colors uppercase">@newsItem.Title</h4>
-                    </a> *@
-
-                   @*  <p class="font-body text-sm text-white/50 leading-relaxed mb-4 line-clamp-2">@Html.Raw(newsItem.Text)</p>
-                    <div class="mt-auto flex items-center justify-between">
-                        <span class="text-[9px] font-bold text-white/30 uppercase tracking-widest">@newsItem.PublishDate.ToString("dd MMM yyyy")</span>
-                        <a href="@Url.Action("Article", "Home", new { id = newsItem.Id })"
-                           class="opacity-0 group-hover:opacity-100 transition-opacity">
-                            <span class="material-icons text-primary text-sm">arrow_forward</span>
-                        </a>
-                    </div>
-                </article>
-            }
-        }
-    </div>
-</section> *@
-
-
-<section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
-    <div class="flex items-end justify-between mb-16">
-        <div>
-            
-            <h2 class="text-5xl font-black uppercase font-display italic tracking-tighter">News</h2>
         </div>
     </div>
 
@@ -309,10 +235,13 @@
                         </span>
 
                         @* Bottone finale *@
+                       
                         <a href="@finalUrl"
                            target="@(newsItem.CategoryId >= 3 ? "_blank" : "_self")"
                            class="z-20 flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
-                            Leggi
+
+                            @Localizer[SharedResource.BtnDiscover]
+
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
@@ -330,9 +259,9 @@
             </div>
             <div class="split-pane-content max-w-md">
                 <span class="text-amber-gold text-xs uppercase tracking-[0.3em] font-bold mb-6 block">Partnerships</span>
-                <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">FOR THE <br>PRODUCERS</h2>
-                <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">Showcase your heritage to a global audience of dedicated connoisseurs.</p>
-                <a href="@Url.Action("Producers")" class="border-2 border-amber-gold text-amber-gold hover:bg-amber-gold hover:text-black px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">Collaborate</a>
+                <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">@Localizer[SharedResource.TitleForTheProducers]</h2>
+                <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">@Localizer[SharedResource.SubtitleForProducers]</p>
+                @* <a href="@Url.Action("Producers")" class="border-2 border-amber-gold text-amber-gold hover:bg-amber-gold hover:text-black px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">@Localizer[SharedResource.BtnDiscoverMore]</a> *@
             </div>
         </div>
         <!-- Wine Lovers Side -->
@@ -342,9 +271,9 @@
             </div>
             <div class="split-pane-content max-w-md">
                 <span class="text-primary text-xs uppercase tracking-[0.3em] font-bold mb-6 block">Community</span>
-                <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">FOR THE <br>WINE LOVERS</h2>
-                <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">Access exclusive vintages, travel journals, and private member events.</p>
-                <a href="@Url.Action("Partecipa", "Eventi")" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">Join Circle</a>
+                <h2 class="text-4xl md:text-6xl font-black text-white mb-8 leading-tight font-display">@Localizer[SharedResource.TitleCommunity]</h2>
+                <p class="text-white/60 text-sm md:text-base mb-10 font-light leading-relaxed">@Localizer[SharedResource.SubtitleCommunity]</p>
+                @* <a href="@Url.Action("Partecipa", "Eventi")" class="border-2 border-primary text-primary hover:bg-primary hover:text-white px-10 py-4 text-xs font-black uppercase tracking-widest-plus transition-all">@Localizer[SharedResource.BtnJoinUs]</a> *@
             </div>
         </div>
     </div>
@@ -355,11 +284,11 @@
 <main class="max-w-7xl mx-auto px-6 md:px-12 py-32">
     <div class="flex items-end justify-between mb-20 border-b border-white/10 pb-8">
         <div>
-            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Curated</span>
-            <h2 class="text-5xl font-black">Articoli</h2>
+            @* <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Curated</span> *@
+            <h2 class="text-5xl font-black">@Localizer[SharedResource.Articles]</h2>
         </div>
         <a href="@Url.Action("Archive")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
-            Leggi tutti gli articoli <span class="material-icons text-sm ml-2">add</span>
+            @Localizer[SharedResource.ReadAllArticles] <span class="material-icons text-sm ml-2">add</span>
         </a>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-16">
@@ -432,7 +361,7 @@
                         </div>
                         <div class="flex flex-col min-w-0">
                             <h6 class="text-[11px] font-black uppercase tracking-widest text-white leading-none mb-1 truncate">Vitinerario</h6>
-                            <p class="text-[9px] text-white/70 leading-tight font-light">Il tuo sommelier virtuale sempre con te!</p>
+                            <p class="text-[9px] text-white/70 leading-tight font-light">@Localizer[SharedResource.DescriptioAppHome]</p>
                         </div>
                     </div>
                 </div>
@@ -446,7 +375,14 @@
                     <span class="text-primary text-xs uppercase tracking-widest font-bold block mb-4">Digital Experience</span>
                     <h2 class="text-5xl md:text-6xl font-black uppercase leading-[1.1] text-white">Vitineraio <br>APP</h2>
                     <p class="text-white/50 text-xl font-light leading-relaxed mt-6 max-w-lg">
-                        Il tuo Sommelier personale a portata di mano. Grazie all'Intelligenza Artificiale, avrai risposte immediate su abbinamenti, cantine e curiosità enologiche. Tutto ciò che ti serve per esplorare il mondo del vino, proprio in tasca.
+                        @if (langId == 2)
+                        {
+                            @:Il tuo Sommelier personale a portata di mano. Grazie all'Intelligenza Artificiale, avrai risposte immediate su abbinamenti, cantine e curiosità enologiche. Tutto ciò che ti serve per esplorare il mondo del vino, proprio in tasca.
+                        }
+                        else
+                        {
+                            @:Your personal Sommelier at your fingertips. Thanks to Artificial Intelligence, you'll get immediate answers on pairings, wineries, and wine curiosities. Everything you need to explore the world of wine, right in your pocket.
+                        }
                     </p>
                 </div>
 
@@ -472,27 +408,35 @@
 </section>
 
 <!-- Citazione -->
-<section class="bg-charcoal-light py-40 border-y border-white/5 my-12">
+
+<section class="bg-charcoal-light py-32 border-y border-white/5 my-12">
     <div class="max-w-4xl mx-auto px-6 text-center">
-        <span class="material-symbols-outlined text-primary text-6xl mb-12 opacity-50">format_quote</span>
-        <blockquote class="text-4xl md:text-5xl font-black leading-[1.1] mb-12 uppercase tracking-tight">
-            "Wine is the only artwork you can drink, a liquid memory of the earth and the sun."
+        @* Icona leggermente più piccola per non sovrastare il testo *@
+        <span class="material-symbols-outlined text-primary text-4xl mb-8 opacity-40">format_quote</span>
+
+        @* Rimosso uppercase e font-black. Aggiunto font-serif e italic *@
+        <blockquote class="text-3xl md:text-4xl font-serif italic font-light leading-relaxed text-white/90 mb-10">
+            @Localizer[SharedResource.BlockquoteHome]
         </blockquote>
-        <div class="h-px w-16 bg-primary mx-auto mb-8"></div>
-        <cite class="text-[11px] uppercase tracking-widest-plus font-bold text-white/40">— Lucien Giraud, Cellar Master</cite>
+
+        <div class="h-px w-12 bg-primary mx-auto mb-6"></div>
+
+        @* L'autore rimane tecnico e maiuscolo per creare un bellissimo contrasto con il corsivo *@
+        <cite class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 not-italic">Luigi Veronelli</cite>
     </div>
 </section>
 
 <!-- Eventi -->
 
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
-    <div class="flex items-end justify-between mb-16">
+    <div class="flex items-end justify-between mb-20 border-b border-white/10 pb-8">
         <div>
-            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Destinations</span>
-            <h2 class="text-5xl font-black uppercase">Eventi</h2>
+            @* <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Destinations</span> *@
+            <h2 class="text-5xl font-black uppercase">@Localizer[SharedResource.Events]</h2>
         </div>
         <a href="@Url.Action("Events", "Home")" class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center text-right">
-            @(langId == 2 ? "Guarda tutti gli eventi" : "View all events") <span class="material-icons text-sm ml-2">add</span>
+            @Localizer[SharedResource.ViewAllEvents]</span>
+            <span class="material-icons text-sm ml-2">add</span>
         </a>
     </div>
 
@@ -507,15 +451,16 @@
 
                     <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex flex-col justify-end p-10">
                         @* Luogo dell'evento (es: MILANO, ITALY) *@
-                        <span class="text-primary text-[10px] uppercase font-black mb-3 tracking-[0.2em]">@evt.Location</span>
-
+                        <span class="text-white drop-shadow-md text-[10px] uppercase font-black mb-3 tracking-[0.2em]">
+                            @evt.Location
+                        </span>
                         @* Titolo dell'evento *@
                         <h5 class="text-white text-3xl font-black mb-6 leading-none uppercase">@evt.Title</h5>
 
                         @* Link al dettaglio evento *@
                         <a href="@Url.Action("EventDetails", "Home", new { id = evt.Id })"
                            class="text-white text-[10px] uppercase font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary transition-all">
-                            Explore Journal
+                            @Localizer[SharedResource.BtnDiscoverMore]
                         </a>
                     </div>
                 </div>
@@ -532,26 +477,31 @@
 
 
 <section class="relative w-full h-auto md:h-[600px] py-16 md:py-0 overflow-hidden group">
-
-    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB5Q3Ptc1BtwQFrM0-EWSbVRWDi0_VtmRwdkWtRaQJJeF3D7dbwUVl12XZmHuJX4_uqu1od5RCAs_hCCSlJ7hCdJzgp3O92BVEmsDst4b8JO80MMZmNXD9YOBvY2GBzxAS9OJ-lwSEGbWlp9eRjPRQEmBlt1W8xN2ggRXxHmw_lfSpmd_J3P5A11vOpm3tjMdS8qWp2tKbZPovITr-uCDU_If-KeK13SsM9Z6Pf1l50YbgElhfSLvqkx2qYKV6BFWNSv-9SPCO3gA" alt="Recording Studio environment" class="absolute inset-0 w-full h-full object-cover scale-105">
+    <img src="https://www.geordie.app:441/VitinerarioGateTest/Images/Podcast/p_hero1.png""
+         alt="Recording Studio environment" class="absolute inset-0 w-full h-full object-cover scale-105">
     <div class="absolute inset-0 podcast-gradient"></div>
+
     <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 h-full flex flex-col justify-center items-start">
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 w-full gap-4 md:gap-0">
 
-            <span class="text-primary text-xs uppercase tracking-widest-plus font-bold">
-                The Audio Experience
-            </span>
+        @* CONTENITORE HEADER: Titolo e Link sulla stessa linea *@
+        <div class="flex flex-row items-end justify-between mb-8 w-full  border-white/10 ">
 
-            <a href="@Url.Action("Podcast")"
-               class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center">
-                Ascolta tutte le puntate
+            @* Titolo Podcast *@
+            <h2 class="text-5xl md:text-7xl font-black font-lovelo text-white leading-none">
+                Podcast
+            </h2>
+
+            @* Link "Ascolta tutti" *@
+            <a href="@Url.Action("Podcast", "Home")"
+               class="text-[11px] uppercase tracking-widest-plus font-bold text-white/50 hover:text-primary transition-colors flex items-center pb-2">
+                @Localizer[SharedResource.ListenAllEpisodes]
                 <span class="material-icons text-sm ml-2">add</span>
             </a>
 
         </div>
-        <div class="max-w-2xl">
 
-            <h2 class="text-5xl md:text-7xl font-black font-lovelo text-white leading-none mb-6">Podcast</h2>
+        @* CONTENUTO PODCAST *@
+        <div class="max-w-2xl">
             @if (ViewBag.LatestPodcasts != null && ((List<Vitinerario.Models.Dtos.ContentDto>)ViewBag.LatestPodcasts).Any())
             {
                 var latestPodcast = ((List<Vitinerario.Models.Dtos.ContentDto>)ViewBag.LatestPodcasts).FirstOrDefault();
@@ -566,40 +516,28 @@
             else
             {
                 <p class="font-body text-xl text-white/70 leading-relaxed mb-10 max-w-lg">
-                    Join our editors as they uncover the narratives hidden within the world's finest vineyards, speaking with cellar masters and visionary growers from across the globe.
+                    @if (langId == 2)
+                    {
+                        @:I protagonisti del mondo enogastronomico si raccontano: produttori di vino, esperti di olio evo e maestri del food condividono le loro storie, passioni e ispirazioni.
+                    }
+                    else
+                    {
+                        @:The leaders of the food and wine world tell their stories: winemakers, extra virgin olive oil experts, and culinary masters share their journeys, passions, and inspirations.
+                    }
                 </p>
             }
-           @*  <div class="flex flex-wrap gap-6">
-                <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX" class="inline-flex items-center gap-3 bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
-                    <span class="material-icons text-xl">podcasts</span>
-                    Listen on Spotify
-                </a>
-                <a href="https://www.youtube.com/%40vitinerario" class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
-                    <span class="material-icons text-xl">play_circle_filled</span>
-                    Watch on YouTube
-                </a>
-            </div> *@
 
+            @* BOTTONI SPOTIFY / YOUTUBE *@
             <div class="flex flex-wrap gap-6">
-                @* Bottone Spotify *@
-                <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="inline-flex items-center gap-3 bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
+                <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
                     <span class="material-icons text-xl">podcasts</span>
                     Listen on Spotify
                 </a>
-
-                @* Bottone YouTube *@
-                <a href="https://www.youtube.com/%40vitinerario"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
+                <a href="https://www.youtube.com/%40vitinerario" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
                     <span class="material-icons text-xl">play_circle_filled</span>
                     Watch on YouTube
                 </a>
             </div>
-
         </div>
     </div>
 </section>
@@ -647,19 +585,19 @@
  *@
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
     <div class="flex flex-col justify-center">
-        <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">Concierge</span>
-        <h2 class="text-5xl font-black uppercase mb-8 leading-[1.1]">Reach Out to <br>Our Editors</h2>
+        @* <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">Concierge</span> *@
+        <h2 class="text-5xl font-black uppercase mb-8 leading-[1.1]">@Localizer[SharedResource.ContactUs]</h2>
         <p class="text-white/50 text-lg font-light leading-relaxed max-w-md">
-            For editorial inquiries, partnership opportunities, or private tasting events, our team is at your service.
+            @Localizer[SharedResource.SubtitleContactUs]
         </p>
         <div class="mt-12 space-y-4">
-            <div class="flex items-center space-x-4 text-white/60">
+            @* <div class="flex items-center space-x-4 text-white/60">
                 <span class="material-symbols-outlined text-primary">location_on</span>
                 <span class="text-xs uppercase tracking-widest font-bold">Paris • London • Napa Valley</span>
-            </div>
+            </div> *@
             <div class="flex items-center space-x-4 text-white/60">
                 <span class="material-symbols-outlined text-primary">mail</span>
-                <span class="text-xs uppercase tracking-widest font-bold">concierge@vitinerario.com</span>
+                <span class="text-xs uppercase tracking-widest font-bold">info@vitinerario.com</span>
             </div>
         </div>
     </div>
@@ -667,13 +605,13 @@
         <form class="space-y-8">
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Full Name</label>
-                <input type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="John Doe">
+                <input type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Name">
             </div>
             <div class="group relative">
-                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email Address</label>
+                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email </label>
                 <input type="email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="email@address.com">
             </div>
-            <div class="group relative">
+            @* <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Inquiry Type</label>
                 <select class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all text-white/60">
                     <option class="bg-dark-charcoal">Editorial</option>
@@ -681,7 +619,7 @@
                     <option class="bg-dark-charcoal">Advertising</option>
                     <option class="bg-dark-charcoal">General Concierge</option>
                 </select>
-            </div>
+            </div> *@
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Message</label>
                 <textarea rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none" placeholder="Your message here..."></textarea>
@@ -693,7 +631,7 @@
     </div>
 </section>
 
-<section class="bg-charcoal-light py-32 border-t border-white/5">
+@* <section class="bg-charcoal-light py-32 border-t border-white/5">
     <div class="max-w-4xl mx-auto px-6 text-center">
         <h2 class="text-4xl font-black mb-6 uppercase tracking-tight">Join the Vitinerario Circle</h2>
         <p class="text-white/50 mb-12 text-lg font-light max-w-2xl mx-auto">Receive our weekly curated digest of wine culture, travel itineraries, and exclusive vintage releases.</p>
@@ -703,4 +641,4 @@
         </form>
         <p class="text-[9px] text-white/30 mt-8 uppercase tracking-widest-plus">Premium Editorial. No Spam. Unsubscribe at any time.</p>
     </div>
-</section>
+</section> *@

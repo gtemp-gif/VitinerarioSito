@@ -123,4 +123,183 @@
   <data name="PodcastDescription" xml:space="preserve">
     <value>Una raccolta curata di dialoghi architettonici, narrazioni sensoriali ed esplorazione di forma e funzione.</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Eventi</value>
+  </data>
+  <data name="Podcast" xml:space="preserve">
+    <value>Podcast</value>
+  </data>
+  <data name="TitleHeroHome" xml:space="preserve">
+    <value>Lasciati ispirare &lt;br&gt;dai tuoi sensi</value>
+  </data>
+  <data name="BtnDiscover" xml:space="preserve">
+    <value>Scopri</value>
+  </data>
+  <data name="TitleForTheProducers" xml:space="preserve">
+    <value>PER I &lt;br&gt;PRODUTTORI</value>
+  </data>
+  <data name="SubtitleForProducers" xml:space="preserve">
+    <value>Condividi la tua storia. Ospita un evento Vitinerario.</value>
+  </data>
+  <data name="BtnDiscoverMore" xml:space="preserve">
+    <value>Scopri di più</value>
+  </data>
+  <data name="BtnJoinUs" xml:space="preserve">
+    <value>Unisciti a noi</value>
+  </data>
+  <data name="TitleCommunity" xml:space="preserve">
+    <value>Per chi ama le esperienze autentiche</value>
+  </data>
+  <data name="SubtitleCommunity" xml:space="preserve">
+    <value>Partecipa a esperienze uniche con produttori, chef e artigiani del gusto.</value>
+  </data>
+  <data name="ReadAllArticles" xml:space="preserve">
+    <value>Leggi tutti gli articoli</value>
+  </data>
+  <data name="ViewAllEvents" xml:space="preserve">
+    <value>Guarda tutti gli eventi</value>
+  </data>
+  <data name="ListenAllEpisodes" xml:space="preserve">
+    <value>Ascolta tutti gli episodi</value>
+  </data>
+  <data name="DescriptioAppHome" xml:space="preserve">
+    <value>Il tuo sommelier virtuale sempre con te</value>
+  </data>
+  <data name="BlockquoteHome" xml:space="preserve">
+    <value>“Non esiste un vino assoluto, &lt;br&gt;
+Ogni vino vive e cambia con il luogo,
+con il tempo e con le persone che lo condividono.”</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contattaci</value>
+  </data>
+  <data name="SubtitleContactUs" xml:space="preserve">
+    <value>Per richieste editoriali, collaborazioni o eventi, il nostro team è a tua disposizione.</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Articolo</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>Leggi di più</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>Tutti</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Costo</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Data e Ora</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Prenotazione</value>
+  </data>
+  <data name="EventFinished" xml:space="preserve">
+    <value>Evento concluso</value>
+  </data>
+  <data name="ReserveYourSeat" xml:space="preserve">
+    <value>Riserva il tuo posto</value>
+  </data>
+  <data name="CookieBannerInfo" xml:space="preserve">
+    <value>Questo sito utilizza cookie, anche di terze parti, per il proprio funzionamento. Per saperne di più</value>
+  </data>
+  <data name="CookieBannerWarning" xml:space="preserve">
+    <value>Chiudendo questo banner o proseguendo la navigazione in altra maniera, acconsenti all’uso dei cookie.</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accetto</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Clicca qui</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Termini e Informativa sulla Privacy</value>
+  </data>
+  <data name="PolicyCookies" xml:space="preserve">
+    <value>Può accadere anche che una pagina web contenga cookie provenienti da altri siti e contenuti in vari elementi ospitati sulla pagina stessa, come ad esempio banner pubblicitari, immagini, video, mappe o specifici link a pagine web di altri domini che risiedono su server diversi da quello sul quale si trova la pagina richiesta. In altre parole, questi cookie sono impostati direttamente da gestori di siti web o server diversi da questo sito web. Parliamo, in questi casi, dei cosiddetti cookie terze parti, che di solito sono utilizzati a fini di profilazione. L'utilizzo di questi cookie necessita dell'acquisizione preventiva del libero consenso informato dell'utente.&lt;br /&gt;&lt;br /&gt;
+            TIPOLOGIE DI COOKIE UTILIZZATI DAL NOSTRO SITO&lt;br /&gt;&lt;br /&gt;
+            Le funzioni principali dei cookies installati su questo sito sono tecniche, vengono utilizzate per migliorare costantemente il Servizio, per l'autenticazione, per fini statistici, come il conteggio delle visite al sito. L'utilizzo di cookies è dunque strettamente finalizzato a facilitare le funzioni del server durante la navigazione del Servizio.
+            Per migliorare il sito web e comprendere quali parti o elementi siano maggiormente apprezzati dagli utenti, sono utilizzati come strumento di analisi anonima e aggregata, i cookie di terza parte di Google Analytics. Questi cookie non sono strumenti di nostra titolarità, per maggiori informazioni, pertanto, è possibile consultare l'informativa fornita da Google.&lt;br /&gt;&lt;br /&gt;
+            GESTIONE DEI COOKIE&lt;br /&gt;&lt;br /&gt;
+            L'utente può gestire le proprie preferenze relative ai cookie attraverso le funzionalità presenti nei comuni browser che consentono di cancellare/rimuovere i cookie (tutti o alcuni) o di cambiare le impostazioni del browser stesso in modo da bloccare l'invio dei cookie o di limitarlo a siti specifici (rispetto ad altri).
+            Pertanto è possibile negare l'utilizzo dei cookie, seguendo la procedura di disabilitazione prevista dal proprio browser.
+            Per avere informazioni sui cookie archiviati sul proprio terminale e disattivarli singolarmente si rinvia al link: &lt;a  style=" color: black !important ;" href="https://www.youronlinechoices.com/it/le-tue-scelte" target="_blank"&gt;www.youronlinechoices.com/it/le-tue-scelte&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
+            La presente privacy policy può subire modifiche nel tempo – anche connesse all'eventuale entrata in vigore di nuove normative di settore, all'aggiornamento o erogazione di nuovi servizi ovvero ad intervenute innovazioni tecnologiche – per cui l'utente/visitatore è invitato a consultare periodicamente questa pagina.</value>
+  </data>
+  <data name="PolicyData" xml:space="preserve">
+    <value> TIPOLOGIA DI DATI TRATTATI&lt;br /&gt;&lt;br /&gt;
+            Come la maggior parte dei siti web, il presente sito può raccogliere alcune informazioni durante la navigazione, quali:&lt;br /&gt;
+            Cookie e dati di navigazione dell'utente:&lt;br /&gt;
+            - indirizzo Internet Protocol (IP);&lt;br /&gt;
+            - tipo di browser e parametri del dispositivo usato per connettersi al sito;&lt;br /&gt;
+            - nome dell'Internet service provider (ISP);&lt;br /&gt;
+            - data e orario di visita;&lt;br /&gt;
+            - informazioni sulle pagine visitate all'interno del sito e tempo di permanenza su ogni pagina,&lt;br /&gt;
+            - pagina web di provenienza del visitatore (referral) e di uscita;&lt;br /&gt;
+            - nazione di provenienza;&lt;br /&gt;
+            - eventualmente il numero di click.&lt;br /&gt;&lt;br /&gt;
+            Dati volontariamente forniti dal visitatore:&lt;br /&gt;
+            - rientrano in questa categoria i dati personali forniti dal visitatore attraverso il sito, ad esempio scrivendo ad un indirizzo di posta elettronica.&lt;br /&gt;&lt;br /&gt;
+            FINALITÀ DEL TRATTAMENTO&lt;br /&gt;&lt;br /&gt;
+            Fornire il bene e/o il servizio richiesto dall’utente, gestire i contratti perfezionati dall’utente, espletare i relativi adempimenti amministrativi, contabili, fiscali e legali, nonché evadere le richieste inoltrate dall'utente.
+            I trattamenti posti in essere per queste finalità sono necessari per l’adempimento di obblighi contrattuali e non necessitano di uno specifico consenso da parte dell’interessato.&lt;br /&gt;&lt;br /&gt;
+            Rilevare la sua esperienza d’uso delle nostre piattaforme, dei prodotti e servizi che offriamo e assicurare il corretto funzionamento delle pagine web e dei loro contenuti.
+            Tali dati sono raccolti in forma esclusivamente aggregata e anonima al fine di verificare il corretto funzionamento del sito. Nessuna di queste informazioni è correlata alla persona fisica-Utente del sito, e non ne consentono in alcun modo l'identificazione;
+            I trattamenti posti in essere per queste finalità si basano sul legittimo interesse del Titolare.&lt;br /&gt;&lt;br /&gt;
+            Garantire la sicurezza dell'applicazione (filtri antispam, firewall, rilevazione virus), i dati registrati automaticamente possono eventualmente comprendere anche dati personali come l'indirizzo IP, che potrebbe essere utilizzato, conformemente alle leggi vigenti in materia, al fine di bloccare tentativi di danneggiamento al sito medesimo o di recare danno ad altri utenti, o comunque attività dannose o costituenti reato.
+            Tali dati non sono mai utilizzati per l'identificazione o la profilazione dell'utente, né incrociati con altri dati, né forniti a terzi, ma utilizzati solo a fini di tutela del sito e dei suoi utenti;
+            I trattamenti posti in essere per queste finalità si basano su un legittimo interesse del Titolare.&lt;br /&gt;&lt;br /&gt;
+            UTILIZZO INFORMAZIONI&lt;br /&gt;&lt;br /&gt;
+            I dati raccolti dal sito durante il suo funzionamento sono utilizzati esclusivamente per le finalità sopra indicate e conservati per il tempo strettamente necessario a svolgere le attività precisate. In ogni caso i dati personali rilevati dal sito non saranno forniti mai a terzi, per nessuna ragione, a meno che non si tratti di legittima richiesta da parte dell'autorità giudiziaria e nei soli casi previsti dalla legge.&lt;br /&gt;&lt;br /&gt;
+            MODALITÀ DEL TRATTAMENTO DI DATI&lt;br /&gt;&lt;br /&gt;
+            Il trattamento dei dati personali viene effettuato prevalentemente utilizzando procedure e supporti elettronici (DB, piattaforme di CRM, ecc.) per il tempo strettamente necessario a conseguire gli scopi per i quali i dati sono stati raccolti e, comunque, in conformità ai principi di liceità, correttezza, non eccedenza e pertinenza previsti dalla vigente normativa privacy.&lt;br /&gt;&lt;br /&gt;
+            TRASFERIMENTO DI DATI IN PAESI EXTRA UE&lt;br /&gt;&lt;br /&gt;
+            Il presente sito potrebbe condividere alcuni dei dati raccolti con servizi localizzati al di fuori dell'area dell'Unione Europea tramite i social plugin (es. Facebook, Microsoft, Google) e il servizio di Google Analytics. Il trasferimento è autorizzato in base a specifiche decisioni dell'Unione Europea e del Garante per la tutela dei dati personali, in particolare la decisione 1250/2016 (Privacy Shield), per cui non occorre ulteriore consenso. Le aziende sopra menzionate garantiscono la propria adesione al Privacy Shield.&lt;br /&gt;&lt;br /&gt;
+            PLUG IN SOCIAL&lt;br /&gt;&lt;br /&gt;
+            I social plug-in sono speciali strumenti che permettono di incorporare le funzionalità del social network direttamente all’interno del sito web (ad es. la funzione "mi piace" di Facebook). Tutti i social plug-in presenti nel sito sono contrassegnati dal rispettivo logo di proprietà della piattaforma di social network (ad es. Facebook, Google, Twitter, Linkedin).
+            Quando si visita una pagina del nostro sito e si interagisce con il plug-in (ad es. cliccando il pulsante "Mi piace") o si decide di lasciare un commento, le corrispondenti informazioni vengono trasmesse dal browser direttamente alla piattaforma di social network e da questo memorizzate. Per informazioni sulle finalità, il tipo e le modalità di raccolta, elaborazione, utilizzo e conservazione dei dati personali da parte della piattaforma di social network, nonché per le modalità attraverso cui esercitare i propri diritti, si prega di consultare la politica privacy adottata dal singolo social network.&lt;br /&gt;&lt;br /&gt;
+            MISURE DI SICUREZZA&lt;br /&gt;&lt;br /&gt;
+            Il presente sito e i nostri software trattano i dati degli utenti in maniera lecita e corretta, adottando le opportune misure di sicurezza volte ad impedire accessi non autorizzati, divulgazione, modifica o distruzione non autorizzata dei dati. Viene inoltre utilizzato il Secure Sockets Layer (SSL), che cripta le informazioni in transito.
+            Il trattamento viene effettuato mediante strumenti informatici e/o telematici, con modalità organizzative e con logiche strettamente correlate alle finalità indicate.&lt;br /&gt;&lt;br /&gt;
+            NOSTRI SOFTWARE E COMUNICAZIONE DEI DATI&lt;br /&gt;&lt;br /&gt;
+            Per alcuni nostri software operiamo in collaborazione con società che si occupano di logistica (es. corrieri come GLS, DHL etc.). Per principio a queste società è permesso elaborare i dati personali solamente sotto particolari condizioni e su nostro incarico o per incarico dei nostri clienti. Per la consegna degli ordini tali aziende possono ricevere da noi i seguenti dati per l’esecuzione del loro rispettivo incarico:&lt;br /&gt;
+            - nome;&lt;br /&gt;
+            - indirizzo di consegna;&lt;br /&gt;
+            - numero di telefono;&lt;br /&gt;
+            - eventualmente l’indirizzo email (se il corriere volesse informare tramite email dell’orario e della data presunta di consegna)&lt;br /&gt;
+            I nostri software cancellano i dati personali dopo 30 giorni dal loro utilizzo per gli scopi di cui sopra.&lt;br /&gt;
+            Si informa che, ai sensi dell’articolo 7, paragrafo 3 del GDPR ove applicabile, l’Interessato potrà in qualsiasi momento revocare il consenso al trattamento dei dati. La revoca del consenso non pregiudica la liceità del trattamento basato sul consenso rilasciato prima della revoca.&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+            DIRITTI DELL’UTENTE&lt;br /&gt;&lt;br /&gt;
+            Ai sensi del Regolamento europeo 679/2016 (GDPR) e della normativa nazionale in vigore, l'interessato può, secondo le modalità e nei limiti previsti dalla vigente normativa, esercitare i seguenti diritti:&lt;br /&gt;&lt;br /&gt;
+            - richiedere la conferma dell'esistenza di dati personali che lo riguardano (diritto di accesso dell’interessato,  art. 15 del Regolamento 679/2016);&lt;br /&gt;
+            - conoscerne l'origine;&lt;br /&gt;
+            - riceverne comunicazione intelligibile;&lt;br /&gt;
+            - avere informazioni circa la logica, le modalità e le finalità del trattamento;&lt;br /&gt;
+            - richiederne l'aggiornamento, la rettifica, l'integrazione, la cancellazione, la trasformazione in forma anonima, il blocco dei dati trattati in violazione di legge, ivi compresi quelli non più necessari al perseguimento degli scopi per i quali sono stati raccolti (diritto di rettifica e cancellazione – artt. 16 e 17 del Regolamento 679/2016);&lt;br /&gt;
+            - diritto di limitazione e/o di opposizione al trattamento dei dati che lo riguardano (art. 18 del Regolamento 679/2016);&lt;br /&gt;
+            - diritto di revoca;&lt;br /&gt;
+            - diritto alla portabilità dei dati (art. 20 del Regolamento 679/2016);&lt;br /&gt;
+            - nei casi di trattamento basato su consenso, ricevere i propri dati forniti al titolare, in forma strutturata e leggibile da un elaboratore di dati e in un formato comunemente usato da un dispositivo elettronico;&lt;br /&gt;
+            - il diritto di presentare un reclamo all’Autorità di controllo (diritto di accesso dell’interessato – art. 15 del Regolamento 679/2016).&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;</value>
+  </data>
+  <data name="PolicyIntro" xml:space="preserve">
+    <value>La presente Informativa ha lo scopo di informare l’utente circa le modalità di trattamento dei dati personali che lo riguardano.
+            Nel rispetto dei principi di protezione dei dati personali stabiliti dal Regolamento GDPR 2016/679 e della normativa nazionale in vigore il presente sito rispetta e tutela la riservatezza dei visitatori e degli utenti.&lt;br /&gt;
+            Il presente sito fa uso di servizi di terze parti al fine di migliorare l'utilizzo del sito, terze parti che potrebbero raccogliere dati degli utenti e poi usarli per inviare annunci pubblicitari personalizzati su altri siti. Tuttavia il presente sito pone in essere ogni sforzo possibile per tutelare la privacy degli utenti e minimizzare la raccolta dei dati personali.&lt;br /&gt;&lt;br /&gt;
+            TITOLARE DEL TRATTAMENTO DEI DATI &lt;br /&gt;&lt;br /&gt;
+            &lt;b&gt;
+                Graldev S.a.s di Chiera Luigi&lt;br /&gt;
+                Via Macchia San Luca, 34 - 85100 Potenza (IT)&lt;br /&gt;
+                P.Iva 01986670766
+            &lt;/b&gt; &lt;br /&gt;&lt;br /&gt;</value>
+  </data>
+  <data name="PrivacyDataTitle" xml:space="preserve">
+    <value> TIPOLOGIA DI DATI TRATTATI</value>
+  </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>INFORMATIVA PRIVACY</value>
+  </data>
+  <data name="PrivacySubTitle" xml:space="preserve">
+    <value>Informativa su Privacy e Cookie</value>
+  </data>
 </root>

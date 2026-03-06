@@ -123,4 +123,195 @@
   <data name="PodcastDescription" xml:space="preserve">
     <value>An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function.</value>
   </data>
+  <data name="Events" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="Podcast" xml:space="preserve">
+    <value>Podcast</value>
+  </data>
+  <data name="TitleHeroHome" xml:space="preserve">
+    <value>Get inspired &lt;br&gt;by your senses</value>
+  </data>
+  <data name="BtnDiscover" xml:space="preserve">
+    <value>Discover</value>
+  </data>
+  <data name="TitleForTheProducers" xml:space="preserve">
+    <value>FOR THE &lt;br&gt;PRODUCERS</value>
+  </data>
+  <data name="SubtitleForProducers" xml:space="preserve">
+    <value>Share your story. Host a Vitinerario event.</value>
+  </data>
+  <data name="BtnDiscoverMore" xml:space="preserve">
+    <value>Discover More</value>
+  </data>
+  <data name="BtnJoinUs" xml:space="preserve">
+    <value>Join Us</value>
+  </data>
+  <data name="TitleCommunity" xml:space="preserve">
+    <value>For lovers of authentic experiences</value>
+  </data>
+  <data name="SubtitleCommunity" xml:space="preserve">
+    <value>Take part in unique experiences with producers, chefs, and food artisans.</value>
+  </data>
+  <data name="ReadAllArticles" xml:space="preserve">
+    <value>Read all articles</value>
+  </data>
+  <data name="ViewAllEvents" xml:space="preserve">
+    <value>View all events</value>
+  </data>
+  <data name="ListenAllEpisodes" xml:space="preserve">
+    <value>Listen all episodes</value>
+  </data>
+  <data name="DescriptioAppHome" xml:space="preserve">
+    <value>Your virtual sommelier always with you</value>
+  </data>
+  <data name="BlockquoteHome" xml:space="preserve">
+    <value>“There is no absolute wine, &lt;br&gt; 
+Every wine evolves with its place, with time, and with the people who share it.”</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>ContactUs</value>
+  </data>
+  <data name="SubtitleContactUs" xml:space="preserve">
+    <value>For editorial inquiries, partnership opportunities, or event requests, our team is at your service.</value>
+  </data>
+  <data name="Article" xml:space="preserve">
+    <value>Article</value>
+  </data>
+  <data name="ReadMore" xml:space="preserve">
+    <value>ReadMore</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="DateTime" xml:space="preserve">
+    <value>Date and Time</value>
+  </data>
+  <data name="Reservation" xml:space="preserve">
+    <value>Reservation</value>
+  </data>
+  <data name="EventFinished" xml:space="preserve">
+    <value>Event finished</value>
+  </data>
+  <data name="ReserveYourSeat" xml:space="preserve">
+    <value>Reserve your seat</value>
+  </data>
+  <data name="CookieBannerInfo" xml:space="preserve">
+    <value>This site uses cookies, including third parties, for its operation. To know more
+ </value>
+  </data>
+  <data name="CookieBannerWarning" xml:space="preserve">
+    <value>By closing this banner or continuing browsing in any other way, you consent to the use of cookies.</value>
+  </data>
+  <data name="Accept" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="ClickHere" xml:space="preserve">
+    <value>Click Here</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Terms &amp; Privacy Policy</value>
+  </data>
+  <data name="PolicyCookies" xml:space="preserve">
+    <value> &lt;b&gt; COOKIE &lt;/b&gt;&lt;br /&gt; &lt;br /&gt;
+            WHAT COOKIES ARE&lt;br /&gt; &lt;br /&gt;
+            A "cookie" is a text file saved on the user's computer when he accesses a website with the aim of providing information every time the user returns to the same site. It is a sort of reminder of the visited internet page. With the cookie, the web server sends information to the user's browser (Internet Explorer, Mozilla Firefox, Google Chrome, etc.) stored on the latter's computer, and will be re-read and updated every time the user returns to the site. This way the website can automatically adapt to the user. While browsing, the user may also receive cookies from different sites on his terminal ("third party" cookies), set directly by the managers of said websites and used for the purposes and in the manner defined by them.
+            Depending on their duration, they are divided into session cookies (i.e. those temporary and automatically deleted from the terminal at the end of the browsing session, by closing the browser) and persistent cookies (i.e. those that remain stored on the terminal until their expiration or cancellation. by the user).&lt;br /&gt; &lt;br /&gt;
+            Based on the function and purpose of use, cookies can be divided into technical cookies and profiling cookies.&lt;br /&gt; &lt;br /&gt;
+            TECHNICAL COOKIES&lt;br /&gt; &lt;br /&gt;
+            Some cookies are used to perform computer authentication, session monitoring and storage of specific information about users who access a web page. These so-called technical cookies are often useful to allow you to browse a website and use all its features. Technical cookies are those whose use does not require the user's consent.
+            The analytics cookies also belong to this category. These are cookies that collect information about the use that a user makes of a website and that allow to improve its functioning. For example, the analytics cookies show which pages are most frequently visited, allow you to check which are the recurring patterns of use of a website and help to understand every difficulty that the user encounters in use.&lt;br /&gt; &lt;br /&gt;
+            PROFILING AND MARKETING COOKIES&lt;br /&gt; &lt;br /&gt;
+            Other cookies can instead be used to monitor and profile users while browsing, study their movements and habits of web consultation or consumption (what they buy, what they read, etc.), also for the purpose of sending advertising of targeted services and customized. In this case we speak of profiling cookies. The use of these cookies requires the prior acquisition of the user's free informed consent pursuant to art. 7 of EU Regulation 2016/679 and the national legislation in force.&lt;br /&gt; &lt;br /&gt;
+            THIRD PARTY COOKIES&lt;br /&gt; &lt;br /&gt;
+            It may also happen that a web page contains cookies from other sites and contained in various elements hosted on the page itself, such as advertising banners, images, videos, maps or specific links to web pages of other domains that reside on servers other than that on which the requested page is located. In other words, these cookies are set directly by website managers or servers other than this website. In these cases, we are talking about so-called third-party cookies, which are usually used for profiling purposes. The use of these cookies requires the prior acquisition of the user's free informed consent.&lt;br /&gt; &lt;br /&gt;
+            TYPES OF COOKIES USED BY OUR SITE&lt;br /&gt; &lt;br /&gt;
+            The main functions of the cookies installed on this site are technical, they are used to constantly improve the Service, for authentication, for statistical purposes, such as counting visits to the site. The use of cookies is therefore strictly aimed at facilitating the functions of the server while browsing the Service.
+            To improve the website and understand which parts or elements are most appreciated by users, third-party cookies from Google Analytics are used as an anonymous and aggregate analysis tool. These cookies are not tools owned by us, for more information, therefore, you can consult the information provided by Google.&lt;br /&gt; &lt;br /&gt;
+            MANAGEMENT OF COOKIES&lt;br /&gt; &lt;br /&gt;
+            The user can manage their cookie preferences through the features present in common browsers that allow you to delete / remove cookies (all or some) or to change the settings of the browser itself in order to block the sending of cookies or limit it to specific sites (as opposed to others).
+            Therefore it is possible to deny the use of cookies, following the disabling procedure provided by your browser.
+            For information on the cookies stored on your terminal and deactivating them individually, please refer to the link:  &lt;a style=" color: black !important ;" href="https://www.youronlinechoices.com/uk/your-ad-choices" target="_blank"&gt; www.youronlinechoices.com/uk/your-ad-choices &lt;/a&gt;&lt;br /&gt;&lt;br /&gt;
+            This privacy policy may undergo changes over time - also related to the possible entry into force of new sector regulations, to the updating or provision of new services or to technological innovations - for which the user / visitor is invited to consult periodically This Page.</value>
+  </data>
+  <data name="PolicyData" xml:space="preserve">
+    <value>           Like most websites, this site may collect some information while browsing, such as:
+         Cookies and user navigation data:
+            - Internet Protocol (IP) address; 
+            - type of browser and device parameters used to connect to the site;
+            - name of the Internet Service Provider (ISP); &lt;br /&gt;
+            - date and time of visit; &lt;br /&gt;
+            - information on the pages visited within the site and time spent on each page, &lt;br /&gt;
+            - web page of origin of the visitor (referral) and exit; &lt;br /&gt;
+            - Country of origin; &lt;br /&gt;
+            - possibly the number of clicks. &lt;br /&gt;
+            &lt;br /&gt;
+            Data voluntarily provided by the visitor: &lt;br /&gt;
+            - this category includes the personal data provided by the visitor through the site, for example by writing to an e-mail address.&lt;br /&gt; &lt;br /&gt;
+            PURPOSE OF THE TREATMENT&lt;br /&gt; &lt;br /&gt;
+            Provide the good and / or service requested by the user, manage the contracts perfected by the user, carry out the related administrative, accounting, tax and legal obligations, as well as fulfill the requests made by the user.
+            The treatments put in place for these purposes are necessary for the fulfillment of contractual obligations and do not require specific consent from the interested party.&lt;br /&gt; &lt;br /&gt;
+            Detect your experience of use of our platforms, products and services we offer and ensure the proper functioning of the web pages and their contents.
+            These data are collected in an exclusively aggregated and anonymous form in order to verify the correct functioning of the site. None of this information is related to the natural person-User of the site, and does not allow identification in any way;
+            The treatments put in place for these purposes are based on the legitimate interest of the Data Controller.&lt;br /&gt; &lt;br /&gt;
+            To guarantee the security of the application (spam filters, firewalls, virus detection), the automatically recorded data may possibly also include personal data such as the IP address, which could be used, in accordance with the laws in force on the subject, in order to block attempts to damage to the site itself or to cause damage to other users, or in any case harmful activities or constituting a crime.
+            These data are never used for the identification or profiling of the user, nor crossed with other data, nor provided to third parties, but used only for the purpose of protecting the site and its users;
+            The treatments put in place for these purposes are based on a legitimate interest of the Data Controller.&lt;br /&gt; &lt;br /&gt;
+            USE OF INFORMATION&lt;br /&gt; &lt;br /&gt;
+            The data collected by the site during its operation are used exclusively for the purposes indicated above and kept for the time strictly necessary to carry out the specified activities. In any case, the personal data collected by the site will never be provided to third parties, for any reason, unless it is a legitimate request by the judicial authority and only in the cases provided for by law.&lt;br /&gt; &lt;br /&gt;
+            METHOD OF DATA PROCESSING&lt;br /&gt; &lt;br /&gt;
+            The processing of personal data is carried out mainly using electronic procedures and supports (DB, CRM platforms, etc.) for the time strictly necessary to achieve the purposes for which the data were collected and, in any case, in compliance with the principles of lawfulness. , fairness, non-excess and pertinence provided for by current privacy legislation.&lt;br /&gt; &lt;br /&gt;
+            TRANSFER OF DATA TO NON-EU COUNTRIES&lt;br /&gt; &lt;br /&gt;
+            This site may share some of the data collected with services located outside the European Union area through social plugins (eg Facebook, Microsoft, Google) and the Google Analytics service. The transfer is authorized on the basis of specific decisions of the European Union and the Guarantor for the protection of personal data, in particular the decision 1250/2016 (Privacy Shield), for which no further consent is required. The companies mentioned above guarantee their adherence to the Privacy Shield.&lt;br /&gt; &lt;br /&gt;
+            PLUG IN SOCIAL&lt;br /&gt; &lt;br /&gt;
+            Social plug-ins are special tools that allow you to incorporate the features of the social network directly into the website (eg the "like" function of Facebook). All social plug-ins on the site are marked with the respective logo owned by the social network platform (eg Facebook, Google, Twitter, Linkedin).
+            When you visit a page of our site and interact with the plug-in (eg by clicking the "Like" button) or decide to leave a comment, the corresponding information is transmitted from the browser directly to the social network platform and stored therefrom. For information on the purposes, type and methods of collection, processing, use and storage of personal data by the social network platform, as well as for the methods by which to exercise their rights, please consult the privacy policy adopted by the individual. social network.&lt;br /&gt; &lt;br /&gt;
+            SECURITY MEASURES&lt;br /&gt; &lt;br /&gt;
+            This site and our software process users' data in a lawful and correct manner, adopting the appropriate security measures to prevent unauthorized access, disclosure, modification or unauthorized destruction of data. It also uses Secure Sockets Layer (SSL), which encrypts information in transit.
+            The processing is carried out using IT and / or telematic tools, with organizational methods and with logic strictly related to the purposes indicated.&lt;br /&gt; &lt;br /&gt;
+            OUR SOFTWARE AND DATA COMMUNICATION&lt;br /&gt; &lt;br /&gt;
+            For some of our software we work in collaboration with companies that deal with logistics (eg couriers such as GLS, DHL etc.). In principle, these companies are only allowed to process personal data under special conditions and on our behalf or on behalf of our customers. For the delivery of orders, these companies could receive the following data from us for the execution of their respective assignment: &lt;br /&gt;
+            - name; &lt;br /&gt;
+            - delivery address; &lt;br /&gt;
+            - telephone number; &lt;br /&gt;
+            - possibly the email address (if the courier wishes to inform by email of the estimated delivery time and date) &lt;br /&gt;
+            Our software deletes personal data after 30 days of their use for the above purposes. &lt;br /&gt;
+            We inform you that, pursuant to Article 7, paragraph 3 of the GDPR where applicable, the interested party may at any time withdraw consent to the processing of data. The withdrawal of consent does not affect the lawfulness of the processing based on the consent issued before the withdrawal. &lt;br /&gt;&lt;br /&gt; &lt;br /&gt;
+            USER RIGHTS&lt;br /&gt; &lt;br /&gt;
+            Pursuant to the European Regulation 679/2016 (GDPR) and the national legislation in force, the interested party may, according to the methods and within the limits established by current legislation, exercise the following rights:&lt;br /&gt; &lt;br /&gt;
+            - request confirmation of the existence of personal data concerning him (right of access of the interested party, Article 15 of Regulation 679/2016); &lt;br /&gt;
+            - know its origin; &lt;br /&gt;
+            - receive intelligible communication; &lt;br /&gt;
+            - have information about the logic, methods and purposes of the processing; &lt;br /&gt;
+            - request the updating, rectification, integration, cancellation, transformation into anonymous form, blocking of data processed in violation of the law, including those no longer necessary for the pursuit of the purposes for which they were collected (right of rectification and cancellation - articles 16 and 17 of Regulation 679/2016); &lt;br /&gt;
+            - right of limitation and / or opposition to the processing of data concerning him (Article 18 of Regulation 679/2016); &lt;br /&gt;
+            - right of revocation; &lt;br /&gt;
+            - right to data portability (Article 20 of Regulation 679/2016); &lt;br /&gt;
+            - in cases of consent-based processing, receive their data provided to the owner, in a structured and readable form by a data processor and in a format commonly used by an electronic device; &lt;br /&gt;
+            - the right to lodge a complaint with the Supervisory Authority (right of access by the interested party - Article 15 of Regulation 679/2016). &lt;br /&gt;&lt;br /&gt; &lt;br /&gt; &lt;br /&gt;</value>
+  </data>
+  <data name="PolicyIntro" xml:space="preserve">
+    <value> This information is intended to inform the user about the methods of processing personal data concerning him.
+            In compliance with the principles of protection of personal data established by the GDPR 2016/679 Regulation and the in force national legislation, this site respects and protects the privacy of visitors and users.
+            &lt;br /&gt;
+            This site makes use of third party services in order to improve the use of the site, third parties that may collect user data and then use them to send personalized advertisements on other sites. However, this site makes every possible effort to protect the privacy of users and minimize the collection of personal data.&lt;br /&gt; &lt;br /&gt;
+            DATA CONTROLLER&lt;br /&gt; &lt;br /&gt;
+            &lt;b&gt;
+                Graldev S.a.s di Chiera Luigi &lt;br /&gt;
+                Via Macchia San Luca, 34- 85100 Potenza (IT) &lt;br /&gt;
+                VAT number 01986670766
+            &lt;/b&gt;&lt;br /&gt; &lt;br /&gt;</value>
+  </data>
+  <data name="PrivacyDataTitle" xml:space="preserve">
+    <value>PRIVACY POLICY</value>
+  </data>
+  <data name="PrivacyPolicyTitle" xml:space="preserve">
+    <value>PRIVACY POLICY</value>
+  </data>
+  <data name="PrivacySubTitle" xml:space="preserve">
+    <value>Privacy policy and Cookie Policy</value>
+  </data>
 </root>

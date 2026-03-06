@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+@{
+        string? urlPolicy = Url.ActionLink("CookiePolicy", "Home");
+ }
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Vitinerario</title>
+    <link rel="icon" type="image/png" href="~/Assets/img/favicon.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +26,8 @@
 
     <!-- Custom Fonts -->
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
+    <link href="~/css/site.css" rel="stylesheet">
+    
 
     <!-- Page Specific Config -->
     @await RenderSectionAsync("TailwindConfig", required: false)
@@ -83,48 +92,7 @@
 
 
 
-  @*   <style>
-        /* Floating Nav & Scroll Btn (Native CSS to be safe) */
-        #floating-nav {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            z-index: 1040;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
-        }
-        #floating-nav.visible {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .scroll-btn {
-            background-color: #d31a53;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 3rem;
-            height: 3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-            transition: transform 0.2s;
-        }
-        .scroll-btn:hover {
-            transform: scale(1.1);
-        }
-        @@media (max-width: 768px) {
-             #floating-nav {
-                bottom: 5rem;
-                right: 1rem;
-             }
-        }
-    </style> *@
+
 </head>
 <body class="bg-[#121212] text-white antialiased">
     @{
@@ -144,10 +112,10 @@
                 </a>
             </div>
             <nav class="hidden md:flex items-center gap-12 font-refined text-xs tracking-widest uppercase text-slate-100">
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">Articoli</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">Eventi</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">@Localizer[SharedResource.Articles]</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">@Localizer[SharedResource.Events]</a>
                 @* <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a> *@
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">Podcast</a>
+                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">@Localizer[SharedResource.Podcast]</a>
             </nav>
             <div class="flex items-center gap-6">
                 <!-- Language Switcher -->
@@ -183,7 +151,30 @@
         </button>
     </div>
 
-    @await RenderSectionAsync("Scripts", required: false)
+  
+
+    <div class="cookies-banner-container" role="region" aria-label="Cookies banner">
+        <div id="cookieBannerDesktop" class="cookies-banner" role="alert">
+            <div class="cookies-banner__icon" role="img" aria-label="Cookie icon" style="padding: 10px; align-items:center;margin-left: 10px;">
+                <img src="https://img.icons8.com/offices/100/000000/cookies.png" alt="" aria-hidden="true" style="width:45px;" />
+            </div>
+            <div class="cookies-banner__info-text" style="padding: 10px;margin-right: 10px;">
+
+                <div style="padding: 10px;" font face="Arial, Helvetica, sans-serif">
+                    @Localizer[SharedResource.CookieBannerInfo] <a id="view-policy" href="/Home/CookiePolicy"> @Localizer[SharedResource.ClickHere]</a>
+                    <br />
+                    @Localizer[SharedResource.CookieBannerWarning]
+
+                </div>
+            </div>
+            <div class="cookies-banner__accept-btn" style="padding: 10px;">
+                <button role="button" aria-label="Accept cookies">@Localizer[SharedResource.Accept]</button>
+            </div>
+        </div>
+    </div>
+   
+
+
 
     <footer class="bg-dark-charcoal border-t border-white/5 py-24">
     <div class="max-w-7xl mx-auto px-6">
@@ -193,11 +184,11 @@
                     <a class="nav-brand block mb-8" href="/">
                         <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-10 w-auto">
                     </a>
-                <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">
+               @*  <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">
                     The definitive guide for the modern connoisseur of fine wine, culture, and slow travel.
-                </p>
+                </p> *@
             </div>
-            <div>
+            @* <div>
                 <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Discover</h6>
                 <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
                     <li><a href="#" class="hover:text-primary transition-colors">Wine Region Guides</a></li>
@@ -222,12 +213,12 @@
                     <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">facebook</span></a>
                     <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">alternate_email</span></a>
                 </div>
-            </div>
+            </div> *@
         </div>
         <div class="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 text-[9px] uppercase tracking-widest-plus font-black text-white/20">
-                <p>© 2026 Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
+                <p>© @DateTime.Now.Year Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
             <div class="flex space-x-10 mt-6 md:mt-0">
-                <a href="#" class="hover:text-primary">Privacy Policy</a>
+                <a href="@Url.Action("CookiePolicy")" class="hover:text-primary">Privacy Policy</a>
                 <a href="@Url.Action("Terms")" class="hover:text-primary">Terms of Service</a>
                 <a href="#" class="hover:text-primary">Cookies</a>
             </div>
@@ -235,18 +226,6 @@
     </div>
 </footer>
 
-    <!-- Mobile Menu Overlay -->
- @*    <div id="mobile-menu-overlay" class="hidden fixed inset-0 z-[60] bg-dark-charcoal/95 backdrop-blur-xl flex-col justify-center items-center">
-        <button id="close-menu-btn" class="absolute top-6 right-6 text-white p-2 hover:text-primary transition-colors">
-            <span class="material-icons text-3xl">close</span>
-        </button>
-        <nav class="flex flex-col items-center gap-8 font-refined text-xl tracking-widest uppercase text-slate-100">
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Archive")">Archive</a>
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Events")">Events</a>
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Producers")">Producers</a>
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Podcast")">Podcast</a>
-        </nav>
-    </div> *@
 
     <div id="mobile-menu-overlay" class="hidden fixed inset-0 z-[2000] bg-dark-charcoal/98 backdrop-blur-2xl flex-col justify-center items-center">
 
@@ -256,23 +235,23 @@
         </button>
 
         <nav class="flex flex-col items-center gap-10 font-display text-2xl tracking-[0.2em] uppercase text-white">
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Archive")">Articoli</a>
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Events")">Events</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Archive")">@Localizer[SharedResource.Articles]</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Events")">@Localizer[SharedResource.Events]</a>
            @*  <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Producers")">Producers</a> *@
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Podcast")">Podcast</a>
+            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Podcast")">@Localizer[SharedResource.Podcast]</a>
         </nav>
     </div>
-
+    @await RenderSectionAsync("Scripts", required: false)
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+              document.addEventListener('DOMContentLoaded', function() {
             const nav = document.getElementById('floating-nav');
             const btnDown = document.getElementById('btn-down');
             const footer = document.querySelector('footer');
-
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const closeMenuBtn = document.getElementById('close-menu-btn');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
+            // [IL TUO CODICE PER IL MENU MOBILE E LO SCROLL RIMANE UGUALE...]
             if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
                 mobileMenuBtn.addEventListener('click', () => {
                     mobileMenuOverlay.classList.remove('hidden');
@@ -286,7 +265,6 @@
                     document.body.style.overflow = '';
                 });
 
-                // Close when clicking a link
                 document.querySelectorAll('.mobile-link').forEach(link => {
                     link.addEventListener('click', () => {
                         mobileMenuOverlay.classList.add('hidden');
@@ -298,15 +276,9 @@
 
             document.addEventListener('scroll', function() {
                 const scrollY = window.scrollY;
+                if (scrollY > 300) { nav.classList.add('visible'); }
+                else { nav.classList.remove('visible'); }
 
-                // Show after 300px
-                if (scrollY > 300) {
-                    nav.classList.add('visible');
-                } else {
-                    nav.classList.remove('visible');
-                }
-
-                // Hide down button at footer
                 if (footer) {
                     const footerRect = footer.getBoundingClientRect();
                     if (footerRect.top < window.innerHeight) {
@@ -316,7 +288,63 @@
                     }
                 }
             });
+
+            // --- NUOVO CODICE COOKIE BANNER (VANILLA JS) ---
+            handleCookiesBanner();
         });
+
+        function handleCookiesBanner() {
+            const cookiesBanner = document.querySelector(".cookies-banner-container");
+            if (!cookiesBanner) return;
+
+            const acceptedCookies = getCookie("accepted_cookies");
+
+            if (!acceptedCookies) {
+                // Se non accettati, mostriamo il banner
+                cookiesBanner.style.display = "block"; // o 'flex' se usi flexbox nel CSS
+
+                const acceptBtn = cookiesBanner.querySelector(".cookies-banner__accept-btn button");
+                if (acceptBtn) {
+                    acceptBtn.addEventListener("click", function () {
+                        // Imposta il cookie per 365 giorni (di solito 20 giorni sono pochi per la legge europea)
+                        setCookie("accepted_cookies", "true", 365);
+
+                        // Animazione di uscita
+                        cookiesBanner.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+                        cookiesBanner.style.transform = "translateY(100%)";
+                        cookiesBanner.style.opacity = "0";
+
+                        // Rimuove l'elemento dopo l'animazione
+                        setTimeout(() => cookiesBanner.remove(), 500);
+                    });
+                }
+            } else {
+                // Se già accettati, rimuovi subito il banner dal DOM
+                cookiesBanner.remove();
+            }
+
+            // Funzioni helper interne
+            function setCookie(name, value, days) {
+                let expires = "";
+                if (days) {
+                    const date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function getCookie(name) {
+                const nameEQ = name + "=";
+                const ca = document.cookie.split(';');
+                for(let i=0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+                }
+                return null;
+            }
+        }
     </script>
 </body>
 </html>

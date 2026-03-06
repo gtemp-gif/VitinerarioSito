@@ -197,5 +197,11 @@ namespace Vitinerario.Controllers
         {
             return View();
         }
+
+
+        public IActionResult CookiePolicy()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,14 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
+<div class="main-content">
+    <h2>@Localizer[SharedResource.PrivacySubTitle]</h2><br />
+    <p>
+        <b>@Localizer[SharedResource.PrivacyPolicyTitle]</b> <br /><br />
+        @Html.Raw(Localizer[SharedResource.PolicyIntro].Value)
+        @Html.Raw(Localizer[SharedResource.PolicyData].Value)
+        @Html.Raw(Localizer[SharedResource.PolicyCookies].Value)
+    </p>
+
+</div>
