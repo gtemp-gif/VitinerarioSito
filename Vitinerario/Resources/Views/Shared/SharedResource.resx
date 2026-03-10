@@ -314,4 +314,10 @@ Every wine evolves with its place, with time, and with the people who share it.â
   <data name="PrivacySubTitle" xml:space="preserve">
     <value>Privacy policy and Cookie Policy</value>
   </data>
+  <data name="HeroArchive" xml:space="preserve">
+    <value>Tales of lives, lands, and passions</value>
+  </data>
+  <data name="HeroEvents" xml:space="preserve">
+    <value>Exclusive Events &amp; Experiences</value>
+  </data>
 </root>

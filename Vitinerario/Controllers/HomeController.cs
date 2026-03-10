@@ -28,7 +28,9 @@ namespace Vitinerario.Controllers
             var news = await _apiService.GetContentsByTypeAsync("news", langId);
             news = news?.Where(n => n.IsPublished).ToList();
             var podcasts = await _apiService.GetPodcastsAsync(langId);
-
+            // Recupero i partner e filtro solo quelli attivi (IsActive == true)
+            var partners = await _apiService.GetPartnersAsync();
+            ViewBag.Partners = partners?.Where(p => p.IsActive).ToList() ?? new List<PartnerDto>();
             // Taking top 3 for index display 
             ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventDto>();
             ViewBag.LatestArticles = articles?.Take(3).ToList() ?? new List<ContentDto>();

@@ -143,17 +143,18 @@
     </div>
 </section>
 
+<!-- Gallery -->
 <main class="container mx-auto px-12 py-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
         <div class="lg:col-span-7">
             <div class="mb-16">
-                @* <h2 class="text-4xl font-bold mb-8 text-white">The Narrative</h2> *@
+                <!-- <h2 class="text-4xl font-bold mb-8 text-white">The Narrative</h2> -->
                 <div class="prose prose-invert max-w-none text-lg leading-relaxed text-stone-400 space-y-6">
                     @Html.Raw(Model.Description)
                 </div>
             </div>
 
-            @if (Model.Gallery?.Photos != null && Model.Gallery.Photos.Any())
+         @*    @if (Model.Gallery?.Photos != null && Model.Gallery.Photos.Any())
             {
                 <div class="mb-16">
                     <h3 class="text-2xl font-bold mb-8 text-white flex items-center">
@@ -171,7 +172,29 @@
                 </div>
             }
         </div>
+ *@
+            @if (Model.Gallery?.Photos != null && Model.Gallery.Photos.Any())
+            {
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold mb-8 text-white flex items-center">
+                        <span class="w-8 h-px bg-primary mr-4"></span>
+                        Gallery
+                    </h3>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        @foreach (var photo in Model.Gallery.Photos)
+                        {
+                            <div class="relative aspect-square group cursor-zoom-in">
 
+                                @* L'ingrandimento è ridotto a scale-[1.25] per evitare il taglio ai lati *@
+                                <img src="@photo.ImageUrl"
+                                     alt="@photo.Caption"
+                                     class="relative z-10 w-full h-full object-cover rounded-xl border border-stone-800 transition-all duration-500 origin-center group-hover:scale-[1.5] group-hover:z-50 group-hover:shadow-[0_0_50px_rgba(0,0,0,0.9)]" />
+
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
         <div class="lg:col-span-5">
             @if (Model.Experts != null && Model.Experts.Any())
             {
@@ -192,7 +215,8 @@
             }
         </div>
     </div>
-</main>
+</main> 
+
 
 <div class="fixed bottom-0 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
     <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4 flex items-center space-x-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">

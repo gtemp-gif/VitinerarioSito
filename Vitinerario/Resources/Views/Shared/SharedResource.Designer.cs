@@ -207,6 +207,24 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Tales of lives, lands, and passions.
+        /// </summary>
+        public static string HeroArchive {
+            get {
+                return ResourceManager.GetString("HeroArchive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Exclusive Events &amp; Experiences.
+        /// </summary>
+        public static string HeroEvents {
+            get {
+                return ResourceManager.GetString("HeroEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Listen all episodes.
         /// </summary>
         public static string ListenAllEpisodes {

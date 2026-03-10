@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Models.Dtos
 @using Vitinerario.Resources.Views.Shared
 @inject IViewLocalizer Localizer
 
@@ -7,6 +8,7 @@
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario";
     int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
+    var partners = ViewBag.Partners as List<PartnerDto> ?? new List<PartnerDto>();
 }
 
 @section TailwindConfig {
@@ -138,29 +140,34 @@
     </div>
 </section>
 
-@* <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
+<section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
+    </div>
 
-    </div>
-    <div class="flex overflow-hidden whitespace-nowrap">
-        <div class="flex animate-scroll items-center gap-24">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDm5LAP89WOybw9odvHUYlGqJygMQCjl9pCzg6yoxVsJZXXnyPvochiWiZGyVvabZx_-dOKUBpY5tQ7TOAJjeCLl5KA6qByaQW2Gz4j8w0HtGvA3ocIJ_mPyfQ_0_alFyqWLGUyR6aNO9xF9Vhf9wCCDCJOxfC1YKQswbGACT7NFteFsZRlHYh_YGdAbHkgsrMcgNAhtGSOu078eR0Ni3E9MOKjt7nP_mSl0fKlwrmtcaOGFHeOxBlDIxI6CIduDlKmBoui7JsyMbE" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwe9k89a5fztA2z20uUftkku6rcIKG76ZGi87gN8ypGVVOS33sOk6E20SJUgluz7nEphgQ9DTb2KXQyDaCtSpwZeXPR3Z-4DuZfHUuSnQH_nbMGSQNUXTX_k16kRaHy6-sYFrVRJwATcuS_GNenBnB2IzzmFsT1ZdlPT_uxWjzKi_Cv8Of3GVRUGtu57r65YPgDMvZxel7153b4-W6sx_Oox3k8dnmMnWSESYqZ7TKyCtT2NlGjek3_kEob_E7eKYmZ4CVlKzHXwQ" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ-wKB89H28ykX3Rblx1-e7jdqKncJNBwZm0XeEtfUW7DDbP209u-q1AGy4ICsMJssiIQLKqOCa9J6fwA0qH00HbylUxMfxeeRJrqrnnYpSmmP16ITsC50O9mLua9jMO8C5gyb5H88ly3pggvQWBNfrdOR_wQ716JDIYGSguco_4sG9mYIJcFXPP07T1vV9DGRfDCAlms1Fu_1n5VSyVMcaTg6Z7nIiqYkwOAiPwPSCmR7mttrQBUB_kRMKYft3RBiu4_cVPUJPz4" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-ODUaZyWPDIawzKjd0l_0pHYXN7-bywCtYa9DVT4XNobN_eAtboK6D4kusvIHC0RIP2Glsc2uper4K5RgfAi6HN4z9Ra_xraWyYauquYAOgVcZGLYfqBknshCi1zoChL6CulItfmv4C-ESmEjDrOfgebPhaCD7d5eK_uQ14NQW-BArPAbm_TGj6plFkVmUtTmqlmReU1CecQGi8jZSTzuxEgykILU8DBXafrUb6W1vezJc7_GOeTq3eR_i8an6D-p4HzpEL9eadk" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbW_HnrKm1gEZlREfsxMG-ZVRvqduBGT9bMXYR243zz_amihj9BUOWu3h7sbawNQzW068sSbp5p2_pMhogsyl3ErV0m1worhwcilEgZsELjTdOLGNJFwR25pO6bRauXwvBgR6Vgr_z9RANMDEzi9G3_49qJ--r0UklC173NLuGDseB2cv-f_lpHappjvUuw-Ujdzt4ABQ9owNLb31LBY0AyRae3Ydpa29u47J7iRKSC728mvg59a5Hd6F4-J6dFzEF053MGFo4J3o" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi9GQCUMCDMXRWU7lEkFSh5sqyfROwHRN6iNrYXfj18kysH8NNOAW_ri3Pqd1AqP0iZTB8RZ7VjA8wXL5pZhRfOk-Hl9YHD0xcZlygn9YzxgpOkfJg2ppzj7DHH-DAmoHoAfof8zApO9q1gB27AYpXozDVUS3sueKs9gDpwbi6WGXkNMFxo_HVWSt9ehLV5a3gg20SQ6_lgQrPtjDouLmGdo4EpnKp-YKMOywWKpBaWtK3Wn_5aWpdLCHCazBo2nCFv6ILFmYJalY" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBMQGzRpLvz6IAO8m4eXrrX5q0KJghyNCklphsqaF2zeB5ZsBWzNP5M-oX36ciFWoIV_ycA3QzugU_C4OU6OhV8d-zVmkKZsnHqAN8hNecd7MkEg1CnU1Jos8enBRx0CGGbW4RfjODN7o_USb4AYVr7IQamfMUxv0-Yo6syVnR8RdVgabTqylut7Fxt4s7eoZHoYvu_Xfm-TaY80KaIGjfm08HS-J91ilUiv0YK5ZY97PI3y4rGjp7m0XZYDMTDaIwbc1hFiu3m_k" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCkJlr7go0oCR5vowHfoPmOvmkqf86bQXAu-thOCsYi2Bg9Ib61g9a1EUuqvqf7mI-SORlPxPvBd__GGjrZr-ayKXYJxnIz_bQ7OYlMilegx6HE9yDWgrPpOq5jchULXrgXx7pfFm1ZlON0daOlrbzvsZpM-oOsF1oJkqUyQspmXGWoNC6VL5o_FDdXIV8Qd_ZyrFD7D-vUrL6boCz-ccGH-SyeWzmUbzM_j6DduwrWaWdOqcnduD4pbjfy-Yq9_b4NZk1ml_HcyeI" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB5Q3Ptc1BtwQFrM0-EWSbVRWDi0_VtmRwdkWtRaQJJeF3D7dbwUVl12XZmHuJX4_uqu1od5RCAs_hCCSlJ7hCdJzgp3O92BVEmsDst4b8JO80MMZmNXD9YOBvY2GBzxAS9OJ-lwSEGbWlp9eRjPRQEmBlt1W8xN2ggRXxHmw_lfSpmd_J3P5A11vOpm3tjMdS8qWp2tKbZPovITr-uCDU_If-KeK13SsM9Z6Pf1l50YbgElhfSLvqkx2qYKV6BFWNSv-9SPCO3gA" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA77AhqkicFKzeMTfO5WgLe9nsyyFAxZvwY7r1iLhIyI5vYUnJf4aL-n9jmTYe2N88fqIfz4MQJgGTTwW6AIt102hrDgaq1i5exdBAz-028jM9b8L7-tcnz7yojq3qVj5ONTf_dr1BuWRVRo-R1-Xsv2whc2MK1jrw0YMfrPhhdQtuT4s66m0zzLoA1XsS1JcNsY5IuDsKRWe30f-_x26MPTYpLYmhDkxgKsY2tcoRuoWdviNnNcMe_P0SmrqohpOdhVkkLjlySsPQ" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVTdsim19I3Yv-ippV-VK70KInsj3DN6_MxTGzMx5LMIb_eLQawI7l_dSYFF1ISAAzY7bHz_0olkHVgYTTC3K3ZIsRclOGmFgQCL4EGttv3f4AMd8NNVFyMVOVxFCtL_uCqkHKmDj4Livk-Ril84K8IfhKa8WV0x2FoxBS_Drg_C7BCewm4_wxAkIP1laL1O74PJAWXnfbdlSQcIBsip61vlwi0A5_U6H5wNlRrpiSY1LXZlXWe-LFGn5R18mZxAAhXOF_IVok8_0" alt="Partner" class="h-10 w-auto partner-logo">
-            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0rWnxo0eEFBPImjFTxUOcAagNuOPMX7z7s4hhOvcbm2QOAK5F-PlCBs3o0immHd4KDXZB2B5febVT7RcJKyMvsgZe5MgsWefi33rV0JAdZrH8k1E33w0SeF8jIpvWB6xfA7M5twF3IlH3NNd1ayu5qbKtRUXNG77JFw_doGSNgY3i68RLyl8l3akS_LkJ_rW6oN8hcbBOYZ45YKcxX9Mkd_pVUPqDuXFgfoTjxbUuf1dA1ASIN9mfDbpKIdEUoATfmuSQnGbdosg" alt="Partner" class="h-10 w-auto partner-logo">
+    @if (partners.Any())
+    {
+        <div class="flex overflow-hidden whitespace-nowrap">
+            @* Aggiunto un pochino di padding verticale per far respirare i loghi *@
+            <div class="flex animate-scroll items-center gap-24 py-4">
+                @foreach (var partner in partners)
+                {
+                    if (!string.IsNullOrEmpty(partner.LinkUrl))
+                    {
+                        @* Rimosso "partner-logo" per evitare filtri CSS nascosti nel tuo site.css *@
+                        <a href="@partner.LinkUrl" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition-transform duration-300">
+                            <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description" class="h-14 md:h-16 w-auto object-contain">
+                        </a>
+                    }
+                    else
+                    {
+                        <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description" class="h-14 md:h-16 w-auto object-contain">
+                    }
+                }
+            </div>
         </div>
-    </div>
+    }
 </section>
- *@
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
     <div class="flex items-end justify-between mb-16">
         <div>
@@ -303,7 +310,7 @@
                     <div class="absolute inset-0 ring-1 ring-inset ring-white/10"></div>
                 </div>
                 <div class="space-y-6">
-                    <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">@firstArticle.ContentType</span>
+                    <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black"> @Localizer[SharedResource.Article]</span>
                     <a href="@Url.Action("Article", "Home", new { id = firstArticle.Id })" class="block">
                         <h3 class="text-4xl md:text-5xl font-black group-hover:text-primary transition-colors leading-tight">
                             @firstArticle.Title
@@ -335,7 +342,7 @@
                             <img src="@article.CoverImage" alt="@article.Title" class="w-full h-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all duration-1000 group-hover:scale-105">
                             <div class="absolute inset-0 ring-1 ring-inset ring-white/10"></div>
                         </div>
-                        <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">@article.ContentType</span>
+                        <span class="text-primary text-[10px] uppercase tracking-widest-plus font-black">@Localizer[SharedResource.Article]</span>
                         <a href="@Url.Action("Article", "Home", new { id = article.Id })" class="block">
                             <h4 class="text-xl font-bold mt-4 group-hover:text-primary transition-colors leading-snug">@article.Title</h4>
                         </a>
@@ -353,8 +360,16 @@
             <div class="order-2 md:order-1 relative">
                 @* Mockup dello Smartphone con l'immagine dell'App *@
                 <div class="relative z-10 w-full max-w-md mx-auto aspect-[9/19] rounded-[3rem] border-8 border-dark-charcoal bg-black app-mockup-shadow overflow-hidden">
-                    <img src="/Assets/img/Vitinerario App.png" alt="Vitinerario App Interface" class="w-full h-full object-cover">
 
+                    @* Corretto: aggiunti muted, playsinline, loop e il tag di chiusura esplicito *@
+                    <video src="/Assets/video/loader_app.mp4"
+                           autoplay
+                           muted
+                           loop
+                           playsinline
+                           class="w-full h-full object-cover object-top">
+                    </video>
+                    @* Ora questo div si posizionerà perfettamente sopra il video grazie allo z-30 e all'absolute *@
                     <div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-[90%] bg-primary/20 backdrop-blur-lg rounded-2xl p-4 border border-primary/30 flex items-center gap-4 z-30 shadow-2xl">
                         <div class="bg-primary/20 p-2 rounded-lg flex items-center justify-center shrink-0">
                             <span class="material-symbols-outlined text-primary text-2xl">wine_bar</span>
@@ -364,6 +379,7 @@
                             <p class="text-[9px] text-white/70 leading-tight font-light">@Localizer[SharedResource.DescriptioAppHome]</p>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="absolute -top-10 -left-10 w-64 h-64 bg-primary/10 rounded-full blur-[100px] z-0"></div>
@@ -597,7 +613,7 @@
             </div> *@
             <div class="flex items-center space-x-4 text-white/60">
                 <span class="material-symbols-outlined text-primary">mail</span>
-                <span class="text-xs uppercase tracking-widest font-bold">info@vitinerario.com</span>
+                <span class="text-xs uppercase tracking-widest font-bold">info@vitinerario.it</span>
             </div>
         </div>
     </div>

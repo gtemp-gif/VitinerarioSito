@@ -302,4 +302,10 @@ con il tempo e con le persone che lo condividono.”</value>
   <data name="PrivacySubTitle" xml:space="preserve">
     <value>Informativa su Privacy e Cookie</value>
   </data>
+  <data name="HeroArchive" xml:space="preserve">
+    <value>Storie di vite, terre e passioni</value>
+  </data>
+  <data name="HeroEvents" xml:space="preserve">
+    <value>Eventi ed Esperienze Esclusive</value>
+  </data>
 </root>
