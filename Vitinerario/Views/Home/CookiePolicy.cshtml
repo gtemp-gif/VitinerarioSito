@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+﻿@* @using Microsoft.AspNetCore.Mvc.Localization
 @using Vitinerario.Resources.Views.Shared
 @inject IViewLocalizer Localizer
 
@@ -11,4 +11,187 @@
         @Html.Raw(Localizer[SharedResource.PolicyCookies].Value)
     </p>
 
-</div>
+</div> *@
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
+@{
+    ViewData["Title"] = Localizer[SharedResource.PrivacyPolicyTitle];
+    Layout = "_LayoutVitinerario";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"],
+                        "lovelo": ["Montserrat", "sans-serif"],
+                        "body": ["Roboto", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style>
+        .lovelo-heading {
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-weight: 900;
+        }
+
+        .progress-bar {
+            height: 2px;
+            background: #d11a51;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 30%;
+            z-index: 100;
+        }
+
+        .editorial-line {
+            height: 1px;
+            background: linear-gradient(to right, #d11a51, transparent);
+        }
+    </style>
+}
+
+<main class="flex-1 max-w-7xl mx-auto w-full px-6 md:px-16 pt-24 pb-32">
+
+    <div class="border-b border-white/10 pb-12 mb-16">
+        <span class="text-primary text-xs uppercase tracking-widest font-bold block mb-4">
+            @Localizer[SharedResource.PrivacySubTitle]
+        </span>
+        <h1 class="lovelo-heading text-5xl md:text-7xl text-white tracking-tighter">
+            @Localizer[SharedResource.PrivacyPolicyTitle]
+        </h1>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
+
+        <aside class="lg:col-span-3 hidden lg:block">
+            <div class="sticky top-40 flex flex-col gap-8">
+                <h4 class="lovelo-heading text-xs text-slate-500">
+                    Indice Cookie
+                </h4>
+
+                <nav class="flex flex-col gap-4">
+                    <a href="#intro" class="text-primary text-sm flex items-center gap-3 font-medium transition-colors">
+                        <span class="text-[10px] lovelo-heading">01</span> Introduzione
+                    </a>
+                    <a href="#data" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                        <span class="text-[10px] lovelo-heading">02</span> Dati Raccolti
+                    </a>
+                    <a href="#cookies" class="text-slate-400 hover:text-white text-sm flex items-center gap-3 transition-colors">
+                        <span class="text-[10px] lovelo-heading">03</span> Politica sui Cookie
+                    </a>
+                </nav>
+
+                <div class="mt-12 p-6 border border-white/5 bg-white/[0.02] rounded-lg">
+                    <p class="text-xs text-slate-500 leading-relaxed italic">
+                        Ultimo aggiornamento: <span class="text-slate-300">11 marzo 2026</span>
+                    </p>
+                </div>
+            </div>
+        </aside>
+
+        <div class="lg:col-span-8 lg:col-start-5 space-y-32">
+
+            <section id="intro" class="scroll-mt-32">
+                <div class="flex items-start gap-8 mb-8">
+                    <span class="lovelo-heading text-4xl text-primary opacity-50">01</span>
+                    <h2 class="lovelo-heading text-3xl text-white pt-2">Introduzione</h2>
+                </div>
+
+                <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light prose prose-invert max-w-none">
+                    @Html.Raw(Localizer[SharedResource.PolicyIntro].Value)
+                </div>
+            </section>
+
+            <section id="data" class="scroll-mt-32">
+                <div class="flex items-start gap-8 mb-8">
+                    <span class="lovelo-heading text-4xl text-primary opacity-50">02</span>
+                    <h2 class="lovelo-heading text-3xl text-white pt-2">Dati Raccolti</h2>
+                </div>
+
+                <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light prose prose-invert max-w-none">
+                    @Html.Raw(Localizer[SharedResource.PolicyData].Value)
+                </div>
+            </section>
+
+            <section id="cookies" class="scroll-mt-32">
+                <div class="flex items-start gap-8 mb-8">
+                    <span class="lovelo-heading text-4xl text-primary opacity-50">03</span>
+                    <h2 class="lovelo-heading text-3xl text-white pt-2">Politica sui Cookie</h2>
+                </div>
+
+                <div class="space-y-6 text-slate-300 text-lg leading-[1.8] font-light prose prose-invert max-w-none">
+                    @Html.Raw(Localizer[SharedResource.PolicyCookies].Value)
+                </div>
+            </section>
+
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('aside nav a');
+
+            function setActiveLink(targetId) {
+                navLinks.forEach(link => {
+                    if (link.getAttribute('href') === `#${targetId}`) {
+                        link.classList.remove('text-slate-400', 'hover:text-white');
+                        link.classList.add('text-primary');
+                    } else {
+                        link.classList.remove('text-primary');
+                        link.classList.add('text-slate-400', 'hover:text-white');
+                    }
+                });
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href').substring(1);
+                    setActiveLink(targetId);
+                });
+            });
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-10% 0px -40% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const currentId = entry.target.getAttribute('id');
+                        setActiveLink(currentId);
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+}

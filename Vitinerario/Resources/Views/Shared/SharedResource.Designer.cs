@@ -390,11 +390,29 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a  We are committed to protecting your privacy and ensuring your data is handled with care and transparency..
+        /// </summary>
+        public static string SubtitleHeroTermCondition {
+            get {
+                return ResourceManager.GetString("SubtitleHeroTermCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Terms &amp; Privacy Policy.
         /// </summary>
         public static string Terms {
             get {
                 return ResourceManager.GetString("Terms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Terms and Conditions.
+        /// </summary>
+        public static string TermsAndCondition {
+            get {
+                return ResourceManager.GetString("TermsAndCondition", resourceCulture);
             }
         }
         

@@ -176,7 +176,7 @@ namespace Vitinerario.Controllers
 
             return View(article);
         }
-
+        [Route("privacy-policy")]
         public IActionResult Terms()
         {
             return View();

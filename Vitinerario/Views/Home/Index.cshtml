@@ -67,7 +67,7 @@
         }
 
         .animate-scroll {
-            animation: scroll 40s linear infinite;
+            animation: scroll 120s linear infinite;
         }
 
         .partner-logo {
@@ -139,7 +139,7 @@
         </div>
     </div>
 </section>
-
+<!-- Official Partners -->
 <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
@@ -147,27 +147,39 @@
 
     @if (partners.Any())
     {
-        <div class="flex overflow-hidden whitespace-nowrap">
-            @* Aggiunto un pochino di padding verticale per far respirare i loghi *@
-            <div class="flex animate-scroll items-center gap-24 py-4">
-                @foreach (var partner in partners)
+        <div class="flex overflow-hidden">
+            @* Ridotto il gap tra i loghi da gap-24 a gap-12 *@
+            <div class="flex animate-scroll items-center gap-12 md:gap-16 py-4 w-max">
+
+                @for (int i = 0; i < 2; i++)
                 {
-                    if (!string.IsNullOrEmpty(partner.LinkUrl))
+                    @foreach (var partner in partners)
                     {
-                        @* Rimosso "partner-logo" per evitare filtri CSS nascosti nel tuo site.css *@
-                        <a href="@partner.LinkUrl" target="_blank" rel="noopener noreferrer" class="hover:scale-110 transition-transform duration-300">
-                            <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description" class="h-14 md:h-16 w-auto object-contain">
-                        </a>
-                    }
-                    else
-                    {
-                        <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description" class="h-14 md:h-16 w-auto object-contain">
+                        if (!string.IsNullOrEmpty(partner.LinkUrl))
+                        {
+                            @* Dimensioni rimpicciolite drasticamente per un look più premium *@
+                            <a href="@partner.LinkUrl" target="_blank" rel="noopener noreferrer"
+                               class="w-24 h-12 md:w-36 md:h-16 flex items-center justify-center shrink-0 hover:scale-110 transition-transform duration-300">
+                                <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description"
+                                     class="max-w-full max-h-full object-contain">
+                            </a>
+                        }
+                        else
+                        {
+                            <div class="w-24 h-12 md:w-36 md:h-16 flex items-center justify-center shrink-0">
+                                <img src="@partner.ImageUrl" alt="@partner.Description" title="@partner.Description"
+                                     class="max-w-full max-h-full object-contain">
+                            </div>
+                        }
                     }
                 }
+
             </div>
         </div>
     }
 </section>
+
+<!-- News -->
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
     <div class="flex items-end justify-between mb-16">
         <div>
@@ -247,7 +259,7 @@
                            target="@(newsItem.CategoryId >= 3 ? "_blank" : "_self")"
                            class="z-20 flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all">
 
-                            @Localizer[SharedResource.BtnDiscover]
+                            @Localizer[SharedResource.BtnDiscoverMore]
 
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>

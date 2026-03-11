@@ -73,7 +73,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 // Configura la localizzazione all'avvio
-var supportedCultures = new[] { "en", "it-IT" };
+var supportedCultures = new[] { "it-IT" ,"en" };
 var localizationOptions = new RequestLocalizationOptions()
     .SetDefaultCulture(supportedCultures[0])
     .AddSupportedCultures(supportedCultures)

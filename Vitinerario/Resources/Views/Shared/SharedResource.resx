@@ -320,4 +320,10 @@ Every wine evolves with its place, with time, and with the people who share it.â
   <data name="HeroEvents" xml:space="preserve">
     <value>Exclusive Events &amp; Experiences</value>
   </data>
+  <data name="TermsAndCondition" xml:space="preserve">
+    <value>Terms and Conditions</value>
+  </data>
+  <data name="SubtitleHeroTermCondition" xml:space="preserve">
+    <value> We are committed to protecting your privacy and ensuring your data is handled with care and transparency.</value>
+  </data>
 </root>

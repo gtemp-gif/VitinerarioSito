@@ -308,4 +308,10 @@ con il tempo e con le persone che lo condividono.”</value>
   <data name="HeroEvents" xml:space="preserve">
     <value>Eventi ed Esperienze Esclusive</value>
   </data>
+  <data name="TermsAndCondition" xml:space="preserve">
+    <value>Termini e Condizioni</value>
+  </data>
+  <data name="SubtitleHeroTermCondition" xml:space="preserve">
+    <value>Ci impegniamo a proteggere la tua privacy e a garantire che i tuoi dati siano trattati con cura e trasparenza.</value>
+  </data>
 </root>

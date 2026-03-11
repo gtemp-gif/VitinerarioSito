@@ -20,5 +20,6 @@ namespace Vitinerario.Models.Dtos
         public List<EventLinkDto> Links { get; set; } = new();
         public GalleryDto? Gallery { get; set; }
         public List<ExpertDto> Experts { get; set; } = new();
+        public List<ExpertDto> Authors { get; set; } = new();
     }
 }

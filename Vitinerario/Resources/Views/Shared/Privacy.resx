@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Privacy Policy</value>
+  </data>
+  <data name="Directory" xml:space="preserve">
+    <value>Directory</value>
+  </data>
+  <data name="Nav_Intro" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="Nav_DataCollected" xml:space="preserve">
+    <value>Data collected</value>
+  </data>
+  <data name="Nav_UseOfData" xml:space="preserve">
+    <value>Use of data</value>
+  </data>
+  <data name="Nav_ThirdParties" xml:space="preserve">
+    <value>Third-party services</value>
+  </data>
+  <data name="Nav_RightsSecurity" xml:space="preserve">
+    <value>Rights and security</value>
+  </data>
+  <data name="Nav_ChangesContact" xml:space="preserve">
+    <value>Changes and contact</value>
+  </data>
+  <data name="Sidebar_LastUpdatedLabel" xml:space="preserve">
+    <value>Last updated:</value>
+  </data>
+  <data name="LastUpdated" xml:space="preserve">
+    <value>March 11, 2026</value>
+  </data>
+  <data name="Intro_Title" xml:space="preserve">
+    <value>Introduction</value>
+  </data>
+  <data name="Intro_P1" xml:space="preserve">
+    <value>This Privacy Policy explains how Vitinerario collects, uses, shares, and protects the personal data of users who access the mobile app and related services.</value>
+  </data>
+  <data name="Intro_P2" xml:space="preserve">
+    <value>Use of the app may involve the processing of certain technical and usage information necessary to operate the service, improve the user experience, measure performance, and, where applicable, display advertising.</value>
+  </data>
+  <data name="Intro_P3" xml:space="preserve">
+    <value>By using Vitinerario, the user acknowledges this notice. Where required by applicable law, processing subject to consent will only take place after such consent has been validly provided.</value>
+  </data>
+  <data name="Data_Title" xml:space="preserve">
+    <value>Data collected</value>
+  </data>
+  <data name="Data_P1" xml:space="preserve">
+    <value>While using the app, we may collect, directly or through third-party providers integrated into the application, certain categories of personal and technical data.</value>
+  </data>
+  <data name="Data_Item1" xml:space="preserve">
+    <value>Technical device information such as model, operating system, language, app version, and general device parameters.</value>
+  </data>
+  <data name="Data_Item2" xml:space="preserve">
+    <value>IP address, online identifiers, and device identifiers, including advertising IDs where used for advertising or analytics purposes.</value>
+  </data>
+  <data name="Data_Item3" xml:space="preserve">
+    <value>Usage and interaction data, such as screens viewed, time spent in the app, in-app events, and interactions with content or features.</value>
+  </data>
+  <data name="Data_Item4" xml:space="preserve">
+    <value>Diagnostic data, crash logs, performance information, and data related to the proper functioning of the application.</value>
+  </data>
+  <data name="Data_Item5" xml:space="preserve">
+    <value>Any information voluntarily provided by the user through contact requests or communications sent to the developer.</value>
+  </data>
+  <data name="Data_P2" xml:space="preserve">
+    <value>The data actually processed may vary depending on the app configuration, device settings, the user’s Google account settings, consent choices, and enabled services.</value>
+  </data>
+  <data name="Usage_Title" xml:space="preserve">
+    <value>Use of data</value>
+  </data>
+  <data name="Usage_Box_Title" xml:space="preserve">
+    <value>Why we process this data</value>
+  </data>
+  <data name="Usage_Box_Text" xml:space="preserve">
+    <value>Data is processed solely for purposes related to providing the service, security, analytics, app improvement, and, where applicable, advertising management.</value>
+  </data>
+  <data name="Usage_P1" xml:space="preserve">
+    <value>In particular, data may be used to provide app features, monitor stability and performance, analyze service usage, prevent abuse or malfunction, and improve the overall quality of the user experience.</value>
+  </data>
+  <data name="Usage_P2" xml:space="preserve">
+    <value>If AdMob ads are displayed, some data may also be processed for ad delivery, measurement, and optimization, in accordance with the user’s choices and applicable law.</value>
+  </data>
+  <data name="ThirdParty_Title" xml:space="preserve">
+    <value>Third-party services</value>
+  </data>
+  <data name="ThirdParty_P1" xml:space="preserve">
+    <value>The application integrates third-party services that may process data on their own behalf or on behalf of the controller, in accordance with their respective terms and privacy notices.</value>
+  </data>
+  <data name="ThirdParty_P2" xml:space="preserve">
+    <value>These providers may process data such as IP address, device identifiers, diagnostic information, usage statistics, interactions with content, and information required to provide their services.</value>
+  </data>
+  <data name="ThirdParty_Box_Title" xml:space="preserve">
+    <value>Services currently used</value>
+  </data>
+  <data name="ThirdParty_Item1" xml:space="preserve">
+    <value>Firebase: infrastructure, technical analytics, possible crash reporting, and related services.</value>
+  </data>
+  <data name="ThirdParty_Item2" xml:space="preserve">
+    <value>Google Analytics for Firebase: collection of events and aggregated statistics regarding app usage.</value>
+  </data>
+  <data name="ThirdParty_Item3" xml:space="preserve">
+    <value>Google AdMob: display and measurement of ads, including possible management of personalized or non-personalized advertising.</value>
+  </data>
+  <data name="ThirdParty_P3" xml:space="preserve">
+    <value>For more details about processing carried out by these providers, users should also consult the privacy notices published by the respective providers.</value>
+  </data>
+  <data name="Rights_Title" xml:space="preserve">
+    <value>Rights and security</value>
+  </data>
+  <data name="Rights_P1" xml:space="preserve">
+    <value>We adopt reasonable technical and organizational measures to protect data against unauthorized access, loss, disclosure, alteration, or destruction. However, no method of transmission or electronic storage can be considered completely secure.</value>
+  </data>
+  <data name="Rights_Item1" xml:space="preserve">
+    <value>Where applicable, users may request information about processed data, as well as access, rectification, erasure, or restriction of processing.</value>
+  </data>
+  <data name="Rights_Item2" xml:space="preserve">
+    <value>Users may object to processing based on legitimate interest, where provided by law.</value>
+  </data>
+  <data name="Rights_Item3" xml:space="preserve">
+    <value>Users may manage certain preferences directly through their device, their Google account, or any consent tools displayed in the app.</value>
+  </data>
+  <data name="Rights_Item4" xml:space="preserve">
+    <value>Where required by applicable law, users may withdraw previously given consent at any time, without affecting the lawfulness of processing carried out before withdrawal.</value>
+  </data>
+  <data name="Rights_P2" xml:space="preserve">
+    <value>Where data is processed by third-party providers such as Google, Firebase, or AdMob, part of the information may be retained and processed according to their own policies and retention periods.</value>
+  </data>
+  <data name="Changes_Title" xml:space="preserve">
+    <value>Changes to this Privacy Policy and contact</value>
+  </data>
+  <data name="Changes_P1" xml:space="preserve">
+    <value>We reserve the right to update or modify this Privacy Policy from time to time in order to reflect legal, technical, or organizational changes, as well as the evolution of the services provided.</value>
+  </data>
+  <data name="Changes_P2" xml:space="preserve">
+    <value>The most current version will always be published on this page together with the latest update date. Where material changes occur, we may adopt additional notice measures where required by applicable law.</value>
+  </data>
+  <data name="Contact_Title" xml:space="preserve">
+    <value>Questions about privacy?</value>
+  </data>
+  <data name="Contact_Text" xml:space="preserve">
+    <value>For information about the processing of personal data or to exercise your rights, you can contact us at</value>
+  </data>
+</root>
