@@ -11,11 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="MailKit" Version="4.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="MailHelper">
-      <HintPath>wwwroot\dll\MailHelper.dll</HintPath>
+      <HintPath>..\VitinerarioSito\Vitinerario\wwwroot\dll\MailHelper.dll</HintPath>
     </Reference>
     <Reference Include="MailKit">
-      <HintPath>wwwroot\dll\MailKit.dll</HintPath>
+      <HintPath>..\VitinerarioSito\Vitinerario\wwwroot\dll\MailKit.dll</HintPath>
     </Reference>
   </ItemGroup>
 
@@ -30,6 +34,18 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>SharedResource.resx</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\dll\MailHelper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\dll\MailKit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\dll\MimeKit.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

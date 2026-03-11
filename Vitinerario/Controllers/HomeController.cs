@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Vitinerario.Models;
-using Vitinerario.Services;
-using Vitinerario.Helpers;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.IO;
+using Vitinerario.Helpers;
+using Vitinerario.Models;
 using Vitinerario.Models.Dtos;
+using Vitinerario.Models.Settings;
+using Vitinerario.Services;
 
 namespace Vitinerario.Controllers
 {
@@ -12,12 +14,18 @@ namespace Vitinerario.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly IApiService _apiService;
         private readonly IEmailService _emailService;
-
-        public HomeController(IWebHostEnvironment env, IApiService apiService, IEmailService emailService)
+        private readonly MailSettings _mailsettings;
+        private readonly IConfiguration _configuration;
+        public MailHelper.MailHelper _mailHelper { get; set; }
+        public HomeController(IWebHostEnvironment env, IApiService apiService, IEmailService emailService, IConfiguration configuration)
         {
             _env = env;
             _apiService = apiService;
             _emailService = emailService;
+            _configuration = configuration;
+            _mailsettings = configuration.GetSection("MailSettings").Get<MailSettings>();
+
+          
         }
 
         public async Task<IActionResult> Index()
@@ -220,7 +228,7 @@ namespace Vitinerario.Controllers
 
             try
             {
-                bool isSuccess = await _emailService.SendContactEmailAsync(model);
+                bool isSuccess =  await _emailService.SendContactEmailAsync(model); //SendEmail(model.Email ,model.Message );
 
                 if (isSuccess)
                 {
@@ -238,5 +246,49 @@ namespace Vitinerario.Controllers
 
             return RedirectToAction("Index", "Home", null, "contact-section");
         }
+
+        [HttpPost]
+
+        public bool SendEmail(string email, string request)
+
+        {
+
+            if (string.IsNullOrEmpty(email))
+
+            {
+                return false;//Json(new { success = false, message = "Email is required." });
+
+            }
+
+            try
+            {
+                MailSettings mail = _mailsettings;
+                _mailHelper = new MailHelper.MailHelper
+                {
+                    FromEmail = mail.Mail,
+                    FromEmailPwd = mail.Password,
+                    Host = mail.Host,
+                    Port = mail.Port,
+                    EnableSSL = false,
+                    SenderName = mail.SenderName
+                };
+
+                request = "Nuova richiesta utente da " + email + "  <br> <br> " + request;
+
+                _mailHelper.SendEmail(mail.Mail, "Nuova richiesta utente", request);
+
+                return true; //Json(new { success = true, message = "Email sent successfully." });
+
+            }
+            catch (Exception ex)
+
+            {
+
+                return false;//Json(new { success = false, message = $"Error: {ex.Message}" });
+
+            }
+
+        }
+
     }
 }
