@@ -611,7 +611,7 @@
     </div>
 </section>
  *@
-<section class="max-w-7xl mx-auto px-6 md:px-12 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
+<section id="contact-section" class="max-w-7xl mx-auto px-6 md:px-12 py-32 grid grid-cols-1 md:grid-cols-2 gap-24">
     <div class="flex flex-col justify-center">
         @* <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-4">Concierge</span> *@
         <h2 class="text-5xl font-black uppercase mb-8 leading-[1.1]">@Localizer[SharedResource.ContactUs]</h2>
@@ -629,15 +629,28 @@
             </div>
         </div>
     </div>
-    <div class="bg-charcoal-light p-12 border border-white/5">
-        <form class="space-y-8">
+    <div class="bg-charcoal-light p-12 border border-white/5 relative">
+        @if (TempData["ContactSuccess"] != null)
+        {
+            <div class="absolute -top-16 left-0 right-0 bg-green-500/20 border border-green-500/50 text-green-400 p-4 text-center text-sm font-bold uppercase tracking-widest">
+                @TempData["ContactSuccess"]
+            </div>
+        }
+        @if (TempData["ContactError"] != null)
+        {
+            <div class="absolute -top-16 left-0 right-0 bg-red-500/20 border border-red-500/50 text-red-400 p-4 text-center text-sm font-bold uppercase tracking-widest">
+                @TempData["ContactError"]
+            </div>
+        }
+
+        <form asp-controller="Home" asp-action="SubmitContactForm" method="post" class="space-y-8">
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Full Name</label>
-                <input type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="Name">
+                <input name="FullName" required type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="Name">
             </div>
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email </label>
-                <input type="email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5" placeholder="email@address.com">
+                <input name="Email" required type="email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="email@address.com">
             </div>
             @* <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Inquiry Type</label>
@@ -650,9 +663,9 @@
             </div> *@
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Message</label>
-                <textarea rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none" placeholder="Your message here..."></textarea>
+                <textarea name="Message" required rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none tracking-widest-plus" placeholder="Your message here..."></textarea>
             </div>
-            <button class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
+            <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
                 Send Message
             </button>
         </form>

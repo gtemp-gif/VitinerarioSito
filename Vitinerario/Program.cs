@@ -61,6 +61,9 @@ builder.Services.AddHttpClient("VitinerarioApi", client =>
 builder.Services.AddScoped<Vitinerario.Services.IApiService, Vitinerario.Services.ApiService>();
 builder.Services.AddScoped<Vitinerario.Services.IAuthService, Vitinerario.Services.AuthService>();
 
+builder.Services.Configure<Vitinerario.Models.Settings.MailSettings>(
+    builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddScoped<Vitinerario.Services.IEmailService, Vitinerario.Services.EmailService>();
 
 var app = builder.Build();
 

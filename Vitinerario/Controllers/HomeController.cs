@@ -11,11 +11,13 @@ namespace Vitinerario.Controllers
     {
         private readonly IWebHostEnvironment _env;
         private readonly IApiService _apiService;
+        private readonly IEmailService _emailService;
 
-        public HomeController(IWebHostEnvironment env, IApiService apiService)
+        public HomeController(IWebHostEnvironment env, IApiService apiService, IEmailService emailService)
         {
             _env = env;
             _apiService = apiService;
+            _emailService = emailService;
         }
 
         public async Task<IActionResult> Index()
@@ -204,6 +206,37 @@ namespace Vitinerario.Controllers
         public IActionResult CookiePolicy()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitContactForm(ContactFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["ContactError"] = "Errore nella compilazione del modulo di contatto. Riprova.";
+                return RedirectToAction("Index", "Home", null, "contact-section");
+            }
+
+            try
+            {
+                bool isSuccess = await _emailService.SendContactEmailAsync(model);
+
+                if (isSuccess)
+                {
+                    TempData["ContactSuccess"] = "Messaggio inviato con successo! Ti contatteremo presto.";
+                }
+                else
+                {
+                    TempData["ContactError"] = "Errore durante l'invio del messaggio. Riprova più tardi.";
+                }
+            }
+            catch (Exception)
+            {
+                TempData["ContactError"] = "Si è verificato un errore imprevisto. Riprova più tardi.";
+            }
+
+            return RedirectToAction("Index", "Home", null, "contact-section");
         }
     }
 }
