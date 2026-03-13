@@ -5,7 +5,14 @@ namespace Vitinerario.Models.Dtos
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public DateTime EventDate { get; set; }
+
+        // Date e Orari
+        public DateTime EventDate { get; set; } // Mantenuto per compatibilità
+        public DateTime StartDate { get; set; }
+        public TimeSpan? StartTime { get; set; }
+        public DateTime? EndDate { get; set; }
+        public TimeSpan? EndTime { get; set; }
+
         public string? CoverImage { get; set; }
         public DateTime? BookingEndDate { get; set; }
         public string? Location { get; set; }

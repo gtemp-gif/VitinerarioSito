@@ -315,7 +315,7 @@ Every wine evolves with its place, with time, and with the people who share it.â
     <value>Privacy policy and Cookie Policy</value>
   </data>
   <data name="HeroArchive" xml:space="preserve">
-    <value>Tales of lives, lands, and passions</value>
+    <value>Stories of life, land and passions</value>
   </data>
   <data name="HeroEvents" xml:space="preserve">
     <value>Exclusive Events &amp; Experiences</value>
@@ -325,5 +325,14 @@ Every wine evolves with its place, with time, and with the people who share it.â
   </data>
   <data name="SubtitleHeroTermCondition" xml:space="preserve">
     <value> We are committed to protecting your privacy and ensuring your data is handled with care and transparency.</value>
+  </data>
+  <data name="PodcastSubtitle" xml:space="preserve">
+    <value>The leaders of the food and wine world tell their stories</value>
+  </data>
+  <data name="PodcastTagline" xml:space="preserve">
+    <value>Roots &amp; Voices</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Expert</value>
   </data>
 </root>

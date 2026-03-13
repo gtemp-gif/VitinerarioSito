@@ -5,49 +5,56 @@
 @inject IViewLocalizer Localizer
 @{
         string? urlPolicy = Url.ActionLink("CookiePolicy", "Home");
- }
+
+        // --- LOGICA PER LO STATO ATTIVO DELLA NAVBAR ---
+        var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+        var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+        bool isHomePage = (currentController == "Home" && currentAction == "Index");
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Vitinerario</title>
     <link rel="icon" type="image/png" href="~/Assets/img/favicon.png" />
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans:wght@400;500;700&family=Montserrat:wght@700;800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-    <!-- Tailwind Library (Loaded last to respect config) -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;0,900;1,400&family=Noto+Sans:wght@400;500;700&family=Montserrat:wght@400;500;600;700;800;900&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 
-    <!-- Material Icons/Symbols -->
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 
-    <!-- Custom Fonts -->
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
-    
 
-    <!-- Page Specific Config -->
     @await RenderSectionAsync("TailwindConfig", required: false)
 
-   
     @await RenderSectionAsync("Styles", required: false)
 
     <style>
-        /* 1. Evita lo scroll orizzontale che sposta i pulsanti fuori schermo */
+        /* FORZATURA FONT GLOBALE */
+        .font-display {
+            font-family: 'Lovelo', sans-serif !important;
+        }
+
+        .font-refined {
+            font-family: 'Montserrat', sans-serif !important;
+        }
+
+        /* Evita lo scroll orizzontale */
         body {
             overflow-x: hidden;
             width: 100%;
             position: relative;
         }
 
-        /* 2. Riposizionamento Floating Nav per sicurezza mobile */
         #floating-nav {
             position: fixed;
             bottom: 2rem;
-            right: 2.5rem; /* Aumentato per staccarlo dal bordo ed evitare tagli */
+            right: 2.5rem;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -62,96 +69,74 @@
                 pointer-events: auto;
             }
 
-        .scroll-btn {
-            background-color: #d31a53;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 3.5rem;
-            height: 3.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-            transition: transform 0.2s;
-        }
-
         @@media (max-width: 768px) {
             #floating-nav {
                 bottom: 2rem;
-                right: 1.5rem; /* Margine corretto per smartphone */
-            }
-
-            .scroll-btn {
-                width: 3rem;
-                height: 3rem;
+                right: 1.5rem;
             }
         }
     </style>
-
-
-
-
 </head>
 <body class="bg-[#121212] text-white antialiased">
     @{
         int currentLangId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
     }
+
     <header class="fixed top-0 w-full z-50 border-b border-white/10 bg-background-dark/80 backdrop-blur-md px-6 md:px-12 lg:px-20 py-4">
         <div class="max-w-[1440px] mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-               @*  <div class="text-primary">
-                    <svg class="size-6" fill="currentColor" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M24 0.757355L47.2426 24L24 47.2426L0.757355 24L24 0.757355ZM21 35.7574V12.2426L9.24264 24L21 35.7574Z"></path>
-                    </svg>
-                </div> *@
-                @* <h1 class="lov-heading text-xl font-black tracking-tighter text-white">Vitinerario</h1> *@
                 <a href="@Url.Action("Index", "Home")">
                     <img src="/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-8 w-auto">
                 </a>
             </div>
+
             <nav class="hidden md:flex items-center gap-12 font-refined text-xs tracking-widest uppercase text-slate-100">
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Archive")">@Localizer[SharedResource.Articles]</a>
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Events")">@Localizer[SharedResource.Events]</a>
-                @* <a class="hover:text-primary transition-colors" href="@Url.Action("Producers")">Producers</a> *@
-                <a class="hover:text-primary transition-colors" href="@Url.Action("Podcast")">@Localizer[SharedResource.Podcast]</a>
+                @if (!isHomePage)
+                {
+                    <a class="transition-colors hover:text-primary" href="@Url.Action("Index", "Home")">Home</a>
+                }
+                <a class="transition-colors @(currentAction == "Archive" || currentAction == "Article" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Archive", "Home")">@Localizer[SharedResource.Articles]</a>
+                <a class="transition-colors @(currentAction == "Events" || currentAction == "Event" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Events", "Home")">@Localizer[SharedResource.Events]</a>
+                <a class="transition-colors @(currentAction == "Podcast" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Podcast", "Home")">@Localizer[SharedResource.Podcast]</a>
+                <a class="transition-colors hover:text-primary" href="@Url.Action("Index", "Home")#app-section">App</a>
             </nav>
+
             <div class="flex items-center gap-6">
-                <!-- Language Switcher -->
                 <div class="flex items-center gap-2">
                     <a href="@Url.Action("ChangeLanguage", "Language", new { langId = 1, returnUrl = Context.Request.Path + Context.Request.QueryString })"
                        class="transition-opacity @(currentLangId == 1 ? "opacity-100 border-b-2 border-primary" : "opacity-50 hover:opacity-100")">
-                        <img src="https://flagcdn.com/w20/gb.png" srcset="https://flagcdn.com/w40/gb.png 2x" alt="English" class="h-4 w-auto">
+                        <img src="https://flagcdn.com/w20/gb.png" alt="English" class="h-4 w-auto">
                     </a>
                     <a href="@Url.Action("ChangeLanguage", "Language", new { langId = 2, returnUrl = Context.Request.Path + Context.Request.QueryString })"
                        class="transition-opacity @(currentLangId == 2 ? "opacity-100 border-b-2 border-primary" : "opacity-50 hover:opacity-100")">
-                        <img src="https://flagcdn.com/w20/it.png" srcset="https://flagcdn.com/w40/it.png 2x" alt="Italiano" class="h-4 w-auto">
+                        <img src="https://flagcdn.com/w20/it.png" alt="Italiano" class="h-4 w-auto">
                     </a>
                 </div>
-
-               @*  <a href="@Url.Action("Partecipa", "Eventi")" class="bg-primary hover:bg-primary/90 text-white px-6 py-2.5 rounded-sm font-refined text-xs font-bold uppercase tracking-widest transition-all decoration-0">
-                    Inquire Now
-                </a> *@
                 <button id="mobile-menu-btn" class="md:hidden text-white flex items-center justify-center p-2 hover:text-primary transition-colors">
                     <span class="material-icons">menu</span>
                 </button>
             </div>
         </div>
     </header>
+
     @RenderBody()
 
-    <!-- Floating Navigation -->
     <div id="floating-nav">
-        <button id="btn-up" class="scroll-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-            <span class="material-icons">arrow_upward</span>
+        <button id="btn-up" class="relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full text-primary bg-black/30 backdrop-blur-sm shadow-lg transition-all duration-300 hover:bg-primary/20 hover:-translate-y-1 group" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4" stroke-opacity="0.2" />
+                <circle id="progress-up" cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="289" stroke-dashoffset="289" stroke-linecap="round" class="transition-[stroke-dashoffset] duration-75" />
+            </svg>
+            <span class="material-icons relative z-10 group-hover:scale-110 transition-transform">arrow_upward</span>
         </button>
-        <button id="btn-down" class="scroll-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
-            <span class="material-icons">arrow_downward</span>
+        <button id="btn-down" class="relative w-12 h-12 md:w-14 md:h-14 flex items-center justify-center rounded-full text-primary bg-black/30 backdrop-blur-sm shadow-lg transition-all duration-300 hover:bg-primary/20 hover:-translate-y-1 group" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
+            <svg class="absolute inset-0 w-full h-full pointer-events-none transform -rotate-90" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4" stroke-opacity="0.2" />
+                <circle id="progress-down" cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="4" stroke-dasharray="289" stroke-dashoffset="0" stroke-linecap="round" class="transition-[stroke-dashoffset] duration-75" />
+            </svg>
+            <span class="material-icons relative z-10 group-hover:scale-110 transition-transform">arrow_downward</span>
         </button>
     </div>
-
-  
 
     <div class="cookies-banner-container" role="region" aria-label="Cookies banner">
         <div id="cookieBannerDesktop" class="cookies-banner" role="alert">
@@ -159,91 +144,120 @@
                 <img src="https://img.icons8.com/offices/100/000000/cookies.png" alt="" aria-hidden="true" style="width:45px;" />
             </div>
             <div class="cookies-banner__info-text" style="padding: 10px;margin-right: 10px;">
-
                 <div style="padding: 10px;" font face="Arial, Helvetica, sans-serif">
                     @Localizer[SharedResource.CookieBannerInfo] <a id="view-policy" href="/Home/CookiePolicy"> @Localizer[SharedResource.ClickHere]</a>
-                    <br />
-                    @Localizer[SharedResource.CookieBannerWarning]
-
+                    <br />@Localizer[SharedResource.CookieBannerWarning]
                 </div>
             </div>
-            <div class="cookies-banner__accept-btn" style="padding: 10px;">
-                <button role="button" aria-label="Accept cookies">@Localizer[SharedResource.Accept]</button>
-            </div>
+            <div class="cookies-banner__accept-btn" style="padding: 10px;"><button role="button" aria-label="Accept cookies">@Localizer[SharedResource.Accept]</button></div>
         </div>
     </div>
-   
 
+    <footer class="bg-dark-charcoal border-t border-white/5 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-20">
 
-
-    <footer class="bg-dark-charcoal border-t border-white/5 py-24">
-    <div class="max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-16 mb-24">
-            <div class="col-span-1">
-                @* <a class="nav-brand text-2xl font-black tracking-tighter text-primary block mb-8" href="/">VITINERARIO</a> *@
-                    <a class="nav-brand block mb-8" href="/">
-                        <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-10 w-auto">
+                <div class="md:col-span-6 flex flex-col items-center md:items-start text-center md:text-left">
+                    <a class="nav-brand block mb-6" href="@Url.Action("Index", "Home")">
+                        <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
                     </a>
-               @*  <p class="text-xs text-white/40 leading-relaxed uppercase tracking-widest">
-                    The definitive guide for the modern connoisseur of fine wine, culture, and slow travel.
-                </p> *@
-            </div>
-            @* <div>
-                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Discover</h6>
-                <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
-                    <li><a href="#" class="hover:text-primary transition-colors">Wine Region Guides</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">Culture & Arts</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">Luxury Lodging</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">Interviews</a></li>
-                </ul>
-            </div>
-            <div>
-                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Magazine</h6>
-                <ul class="space-y-4 text-[11px] uppercase tracking-widest text-white/50 font-bold">
-                    <li><a href="#" class="hover:text-primary transition-colors">The Latest Issue</a></li>
-                    <li><a href="@Url.Action("Archive")" class="hover:text-primary transition-colors">Archive</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">Contributors</a></li>
-                    <li><a href="#" class="hover:text-primary transition-colors">Subscriptions</a></li>
-                </ul>
-            </div>
-            <div>
-                <h6 class="text-[10px] uppercase tracking-widest-plus font-black mb-8 text-primary">Follow</h6>
-                <div class="flex space-x-8">
-                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">camera_alt</span></a>
-                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">facebook</span></a>
-                    <a href="#" class="text-white/40 hover:text-primary transition-colors"><span class="material-icons text-xl">alternate_email</span></a>
+                    <p class="text-white/60 font-refined text-sm leading-relaxed max-w-sm uppercase tracking-widest font-semibold">
+                        Lasciati ispirare dai tuoi sensi.
+                    </p>
                 </div>
-            </div> *@
-        </div>
-        <div class="flex flex-col md:flex-row items-center justify-between pt-12 border-t border-white/5 text-[9px] uppercase tracking-widest-plus font-black text-white/20">
-                <p>© @DateTime.Now.Year Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
-            <div class="flex space-x-10 mt-6 md:mt-0">
+
+                <div class="md:col-span-3 flex flex-col items-center md:items-start">
+                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">Esplora</h4>
+                    <nav class="flex flex-col gap-4 font-refined text-xs tracking-widest uppercase text-white/40 font-semibold">
+                        <a href="@Url.Action("Archive", "Home")" class="hover:text-primary transition-colors">@Localizer[SharedResource.Articles]</a>
+                        <a href="@Url.Action("Events", "Home")" class="hover:text-primary transition-colors">@Localizer[SharedResource.Events]</a>
+                        <a href="@Url.Action("Podcast", "Home")" class="hover:text-primary transition-colors">@Localizer[SharedResource.Podcast]</a>
+                        <a href="@Url.Action("Index", "Home")#app-section" class="hover:text-primary transition-colors">Vitinerario App</a>
+                    </nav>
+                </div>
+
+                <div class="md:col-span-3 flex flex-col items-center md:items-start">
+                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">Contatti</h4>
+                    <a href="mailto:info@vitinerario.it" class="font-refined text-xs tracking-widest font-semibold text-white/40 hover:text-primary transition-colors mb-6 uppercase flex items-center gap-3">
+                        <span class="material-icons text-base">mail</span>Scrivici un'email
+                    </a>
+
+                    <div class="flex items-center gap-3 flex-wrap justify-center md:justify-start">
+                        <a href="https://www.instagram.com/vitinerario/" target="_blank" aria-label="Instagram" class="w-10 h-10 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all group">
+                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://www.facebook.com/vitinerario" target="_blank" aria-label="Facebook" class="w-10 h-10 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all group">
+                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://www.youtube.com/%40vitinerario" target="_blank" aria-label="YouTube" class="w-10 h-10 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all group">
+                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" clip-rule="evenodd" /></svg>
+                        </a>
+                        <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX" target="_blank" aria-label="Spotify" class="w-10 h-10 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all group">
+                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.469-.077-.334.132-.67.47-.745 3.809-.87 7.076-.496 9.712 1.115.293.18.386.563.207.855zm1.03-3.072c-.227.367-.706.482-1.072.257-2.687-1.652-6.785-2.131-9.965-1.166-.413.127-.854-.108-.981-.52-.127-.411.108-.854.52-.981 3.636-1.106 8.183-.568 11.24 1.338.366.226.481.705.258 1.072zm.104-3.23c-3.218-1.91-8.525-2.086-11.58-.115-.494.318-1.144.175-1.462-.319-.318-.494-.175-1.144.319-1.462 3.518-2.27 9.387-2.067 13.116.148.455.27.603.861.334 1.316-.27.455-.861.603-1.316.332z" /></svg>
+                        </a>
+                        <a href="https://www.tiktok.com/@@luigi_chiera?_r=1&_t=ZN-94eZdEzWGAQ" target="_blank" aria-label="TikTok" class="w-10 h-10 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all group">
+                            <svg class="w-4 h-4 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 font-refined text-[9px] uppercase tracking-widest-plus font-bold text-white/30 gap-6 md:gap-0">
+                <p class="text-center md:text-left">© @DateTime.Now.Year Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
+                <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10 text-center md:text-right">
                     <p>P.I. 01986670766</p>
-                <a href="@Url.Action("CookiePolicy")" class="hover:text-primary">Privacy & Cookie Policy</a>
-          
+                    <a href="@Url.Action("CookiePolicy", "Home")" class="hover:text-primary transition-colors">Privacy & Cookie Policy</a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-
-    <div id="mobile-menu-overlay" class="hidden fixed inset-0 z-[2000] bg-dark-charcoal/98 backdrop-blur-2xl flex-col justify-center items-center">
-
-        @* La X ora è fixed con padding per essere sempre centrata nell'angolo *@
-        <button id="close-menu-btn" class="fixed top-8 right-8 text-white p-4 hover:text-primary transition-colors">
+    <div id="mobile-menu-overlay" class="hidden fixed inset-0 z-[2000] bg-dark-charcoal/98 backdrop-blur-2xl flex-col justify-between pt-24 pb-12 px-6">
+        <button id="close-menu-btn" class="fixed top-8 right-8 text-white p-4 hover:text-primary transition-colors z-50">
             <span class="material-icons text-4xl">close</span>
         </button>
 
-        <nav class="flex flex-col items-center gap-10 font-display text-2xl tracking-[0.2em] uppercase text-white">
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Archive")">@Localizer[SharedResource.Articles]</a>
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Events")">@Localizer[SharedResource.Events]</a>
-           @*  <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Producers")">Producers</a> *@
-            <a class="hover:text-primary transition-colors mobile-link" href="@Url.Action("Podcast")">@Localizer[SharedResource.Podcast]</a>
+        <nav class="flex flex-col items-center justify-center gap-10 font-refined text-2xl tracking-[0.2em] uppercase text-white flex-grow">
+            <a class="mobile-link transition-colors @(isHomePage ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Index", "Home")">Home</a>
+            <a class="mobile-link transition-colors @(currentAction == "Archive" || currentAction == "Article" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Archive", "Home")">@Localizer[SharedResource.Articles]</a>
+            <a class="mobile-link transition-colors @(currentAction == "Events" || currentAction == "Event" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Events", "Home")">@Localizer[SharedResource.Events]</a>
+            <a class="mobile-link transition-colors @(currentAction == "Podcast" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Podcast", "Home")">@Localizer[SharedResource.Podcast]</a>
+            <a class="mobile-link transition-colors hover:text-primary" href="@Url.Action("Index", "Home")#app-section">App</a>
         </nav>
+
+        <div class="flex flex-col items-center gap-4 font-refined text-[9px] uppercase tracking-widest text-white/50 mt-auto pt-8 border-t border-white/10 w-full text-center font-medium">
+
+            <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-6 w-auto mb-2 opacity-90">
+
+            <div class="flex items-center gap-3 mb-2">
+                <a href="https://www.instagram.com/vitinerario/" target="_blank" class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://www.facebook.com/vitinerario" target="_blank" class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://www.youtube.com/%40vitinerario" target="_blank" class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z" clip-rule="evenodd" /></svg>
+                </a>
+                <a href="https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX" target="_blank" class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.586 14.424c-.18.295-.563.387-.857.207-2.35-1.434-5.305-1.76-8.786-.963-.335.077-.67-.133-.746-.469-.077-.334.132-.67.47-.745 3.809-.87 7.076-.496 9.712 1.115.293.18.386.563.207.855zm1.03-3.072c-.227.367-.706.482-1.072.257-2.687-1.652-6.785-2.131-9.965-1.166-.413.127-.854-.108-.981-.52-.127-.411.108-.854.52-.981 3.636-1.106 8.183-.568 11.24 1.338.366.226.481.705.258 1.072zm.104-3.23c-3.218-1.91-8.525-2.086-11.58-.115-.494.318-1.144.175-1.462-.319-.318-.494-.175-1.144.319-1.462 3.518-2.27 9.387-2.067 13.116.148.455.27.603.861.334 1.316-.27.455-.861.603-1.316.332z" /></svg>
+                </a>
+                <a href="https://www.tiktok.com/@@luigi_chiera?_r=1&_t=ZN-94eZdEzWGAQ" target="_blank" class="w-8 h-8 rounded-full border border-primary text-primary flex items-center justify-center hover:bg-primary/20 transition-all">
+                    <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" /></svg>
+                </a>
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <p>P.I. 01986670766 &nbsp;|&nbsp; © @DateTime.Now.Year Graldev S.a.S.</p>
+                <a href="@Url.Action("CookiePolicy", "Home")" class="hover:text-primary transition-colors">Privacy & Cookie Policy</a>
+            </div>
+        </div>
     </div>
+
     @await RenderSectionAsync("Scripts", required: false)
+
     <script>
-              document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function() {
             const nav = document.getElementById('floating-nav');
             const btnDown = document.getElementById('btn-down');
             const footer = document.querySelector('footer');
@@ -251,7 +265,6 @@
             const closeMenuBtn = document.getElementById('close-menu-btn');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-            // [IL TUO CODICE PER IL MENU MOBILE E LO SCROLL RIMANE UGUALE...]
             if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
                 mobileMenuBtn.addEventListener('click', () => {
                     mobileMenuOverlay.classList.remove('hidden');
@@ -279,71 +292,61 @@
                 if (scrollY > 300) { nav.classList.add('visible'); }
                 else { nav.classList.remove('visible'); }
 
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = docHeight > 0 ? (scrollY / docHeight) : 0;
+                const offsetUp = 289 - (scrollPercent * 289);
+                const offsetDown = scrollPercent * 289;
+
+                if(document.getElementById('progress-up')) document.getElementById('progress-up').style.strokeDashoffset = offsetUp;
+                if(document.getElementById('progress-down')) document.getElementById('progress-down').style.strokeDashoffset = offsetDown;
+
                 if (footer) {
                     const footerRect = footer.getBoundingClientRect();
-                    if (footerRect.top < window.innerHeight) {
-                        btnDown.style.display = 'none';
-                    } else {
-                        btnDown.style.display = 'flex';
-                    }
+                    if (footerRect.top < window.innerHeight) { btnDown.style.display = 'none'; }
+                    else { btnDown.style.display = 'flex'; }
                 }
             });
 
-            // --- NUOVO CODICE COOKIE BANNER (VANILLA JS) ---
             handleCookiesBanner();
         });
 
         function handleCookiesBanner() {
             const cookiesBanner = document.querySelector(".cookies-banner-container");
             if (!cookiesBanner) return;
-
-            const acceptedCookies = getCookie("accepted_cookies");
-
-            if (!acceptedCookies) {
-                // Se non accettati, mostriamo il banner
-                cookiesBanner.style.display = "block"; // o 'flex' se usi flexbox nel CSS
-
+            if (!getCookie("accepted_cookies")) {
+                cookiesBanner.style.display = "block";
                 const acceptBtn = cookiesBanner.querySelector(".cookies-banner__accept-btn button");
                 if (acceptBtn) {
                     acceptBtn.addEventListener("click", function () {
-                        // Imposta il cookie per 365 giorni (di solito 20 giorni sono pochi per la legge europea)
                         setCookie("accepted_cookies", "true", 365);
-
-                        // Animazione di uscita
                         cookiesBanner.style.transition = "transform 0.5s ease, opacity 0.5s ease";
                         cookiesBanner.style.transform = "translateY(100%)";
                         cookiesBanner.style.opacity = "0";
-
-                        // Rimuove l'elemento dopo l'animazione
                         setTimeout(() => cookiesBanner.remove(), 500);
                     });
                 }
-            } else {
-                // Se già accettati, rimuovi subito il banner dal DOM
-                cookiesBanner.remove();
-            }
+            } else { cookiesBanner.remove(); }
+        }
 
-            // Funzioni helper interne
-            function setCookie(name, value, days) {
-                let expires = "";
-                if (days) {
-                    const date = new Date();
-                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-                    expires = "; expires=" + date.toUTCString();
-                }
-                document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        function setCookie(name, value, days) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toUTCString();
             }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
 
-            function getCookie(name) {
-                const nameEQ = name + "=";
-                const ca = document.cookie.split(';');
-                for(let i=0; i < ca.length; i++) {
-                    let c = ca[i];
-                    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-                }
-                return null;
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i=0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
             }
+            return null;
         }
     </script>
 </body>

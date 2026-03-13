@@ -207,7 +207,16 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Tales of lives, lands, and passions.
+        ///   Cerca una stringa localizzata simile a Expert.
+        /// </summary>
+        public static string Expert {
+            get {
+                return ResourceManager.GetString("Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Stories of life, land and passions.
         /// </summary>
         public static string HeroArchive {
             get {
@@ -248,6 +257,24 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string PodcastDescription {
             get {
                 return ResourceManager.GetString("PodcastDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a The leaders of the food and wine world tell their stories.
+        /// </summary>
+        public static string PodcastSubtitle {
+            get {
+                return ResourceManager.GetString("PodcastSubtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Roots &amp; Voices.
+        /// </summary>
+        public static string PodcastTagline {
+            get {
+                return ResourceManager.GetString("PodcastTagline", resourceCulture);
             }
         }
         

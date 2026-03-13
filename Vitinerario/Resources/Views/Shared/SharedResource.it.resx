@@ -303,7 +303,7 @@ con il tempo e con le persone che lo condividono.”</value>
     <value>Informativa su Privacy e Cookie</value>
   </data>
   <data name="HeroArchive" xml:space="preserve">
-    <value>Storie di vite, terre e passioni</value>
+    <value>Storie di vita, di terra e di passioni</value>
   </data>
   <data name="HeroEvents" xml:space="preserve">
     <value>Eventi ed Esperienze Esclusive</value>
@@ -313,5 +313,14 @@ con il tempo e con le persone che lo condividono.”</value>
   </data>
   <data name="SubtitleHeroTermCondition" xml:space="preserve">
     <value>Ci impegniamo a proteggere la tua privacy e a garantire che i tuoi dati siano trattati con cura e trasparenza.</value>
+  </data>
+  <data name="PodcastSubtitle" xml:space="preserve">
+    <value>I protagonisti del mondo enogastronomico si raccontano</value>
+  </data>
+  <data name="PodcastTagline" xml:space="preserve">
+    <value>Radici &amp; Voci</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Esperti</value>
   </data>
 </root>
