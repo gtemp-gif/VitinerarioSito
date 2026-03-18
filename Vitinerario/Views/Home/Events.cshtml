@@ -93,7 +93,6 @@
                 }
             </div>
         </div>
-
         @if (eventsByYear.Any())
         {
             @foreach (var yearGroup in eventsByYear)
@@ -101,76 +100,64 @@
                 <section class="event-section mb-24" data-year="@yearGroup.Key">
 
                     <div class="flex items-center gap-6 mb-12">
-
                         <h2 class="font-refined text-3xl font-black text-white uppercase tracking-tighter">@Localizer[SharedResource.Events] @yearGroup.Key</h2>
-
                         <div class="h-[1px] flex-1 bg-white/10"></div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                         @foreach (var eventItem in yearGroup)
                         {
-                            <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl">
-                                <div class="relative aspect-[16/10] overflow-hidden">
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="absolute inset-0 z-20"></a>
-                                    <img src="@eventItem.CoverImage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            
+                            <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl h-full">
 
-                                    <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10 z-10">
+                                <div class="relative aspect-square overflow-hidden bg-black shrink-0">
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="absolute inset-0 z-20"></a>
+                                    <img src="@eventItem.CoverImage" alt="@eventItem.Title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 shadow-inner">
+
+                                    <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10 z-10 shadow-lg">
                                         <p class="text-primary text-2xl font-black leading-none font-refined">@eventItem.EventDate.ToString("dd")</p>
                                         <p class="text-white text-[10px] font-bold uppercase tracking-widest font-refined mt-1">@eventItem.EventDate.ToString("MMM")</p>
                                     </div>
                                 </div>
 
-                                <div class="p-8 flex flex-col flex-grow">
+                                <div class="p-6 flex flex-col relative z-10">
                                     @{
-                                        // LOGICA DI SEPARAZIONE INTELLIGENTE
-                                        string datePart = "";
+                                        // LOGICA DI SEPARAZIONE
                                         string namePart = eventItem.Title;
 
-                                        // Controlliamo se c'è il trattino con gli spazi
                                         if (eventItem.Title.Contains(" - "))
                                         {
                                             var parts = eventItem.Title.Split(new[] { " - " }, 2, StringSplitOptions.None);
-                                            datePart = parts[0].Trim();
                                             namePart = parts[1].Trim();
                                         }
-                                        // Altrimenti controlliamo se c'è l'underscore (es. 30/08/2025_Vaglio)
                                         else if (eventItem.Title.Contains("_"))
                                         {
                                             var parts = eventItem.Title.Split(new[] { "_" }, 2, StringSplitOptions.None);
-                                            datePart = parts[0].Trim();
                                             namePart = parts[1].Trim();
                                         }
                                     }
 
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="block z-20 mb-4 group-hover:text-primary transition-colors">
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="block z-20 mb-3 group-hover:text-primary transition-colors">
 
-                                        @* Stampa la data (se è stata trovata dal taglio) *@
-                                        @if (!string.IsNullOrEmpty(datePart))
-                                        {
-                                            <span class="block text-primary text-[11px] uppercase font-black tracking-widest mb-1">
-                                                @datePart
-                                            </span>
-                                        }
+                                        <div class="flex items-center gap-2 text-white/40 text-xs mb-2 italic font-refined">
+                                            <span class="material-symbols-outlined text-[14px] shrink-0">location_on</span>
+                                            <span class="truncate">@eventItem.Location</span>
+                                        </div>
 
-                                        @* Stampa il nome dell'evento pulito *@
-                                        @* Stampa il nome dell'evento pulito in corsivo *@
-                                        <h4 class="text-xl font-bold text-white uppercase italic font-refined leading-snug">
+                                        <h4 class="text-xl font-bold text-white uppercase italic font-refined leading-snug line-clamp-2">
                                             @namePart
                                         </h4>
-
                                     </a>
 
-                                    <div class="flex items-center gap-2 text-white/40 text-xs mb-6 italic font-refined mt-auto">
-                                        <span class="material-symbols-outlined text-sm">location_on</span>
-                                        @eventItem.Location
+                                    <div class="mt-2 pt-4 border-t border-white/5">
+                                        <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-flex items-center gap-2 text-primary font-black uppercase text-[10px] tracking-widest hover:gap-4 transition-all font-refined w-fit z-20">
+                                            @(langId == 2 ? "Vedi Dettagli" : "View Details")
+                                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                        </a>
                                     </div>
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-flex items-center gap-2 text-primary font-black uppercase text-[10px] tracking-widest hover:gap-4 transition-all font-refined mt-4 w-fit">
-                                        @(langId == 2 ? "Vedi Dettagli" : "View Details")
-                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                                    </a>
                                 </div>
                             </div>
+
                         }
                     </div>
                 </section>
@@ -183,5 +170,4 @@
             </div>
         }
     </div>
-
 </main>
