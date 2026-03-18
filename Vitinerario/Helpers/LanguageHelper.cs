@@ -16,7 +16,7 @@ namespace Vitinerario.Helpers
             }
 
             // Fallback
-            return 1; // Default to EN (1)
+            return 2; // Default to IT (2)
         }
     }
 }
