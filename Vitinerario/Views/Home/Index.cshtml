@@ -134,6 +134,7 @@
     </div>
 </section>
 
+<!-- Partners  -->
 <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
         <span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
@@ -169,6 +170,44 @@
     }
 </section>
 
+<!-- Citazioni -->
+@{
+    // Lista delle 5 citazioni selezionate per Vitinerario
+    var quotes = new[]
+    {
+        new {
+            Author = "Luigi Veronelli",
+            It = "Non esiste un vino assoluto,<br class=\"hidden md:block\"> Ogni vino vive e cambia con il luogo, con il tempo e<br class=\"hidden md:block\"> con le persone che lo condividono.",
+            En = "There is no absolute wine.<br class=\"hidden md:block\"> Every wine lives and changes with the place, with time and<br class=\"hidden md:block\"> with the people who share it."
+        },
+        new {
+            Author = "Edoardo VII",
+            It = "Il vino non si beve soltanto,<br class=\"hidden md:block\"> si annusa, si osserva, si gusta, si sorseggia e...<br class=\"hidden md:block\"> se ne parla.",
+            En = "Wine is not just to be drunk,<br class=\"hidden md:block\"> it is to be smelled, observed, tasted, sipped and...<br class=\"hidden md:block\"> talked about."
+        },
+        new {
+            Author = "Gualtiero Marchesi",
+            It = "La cucina è di per sé scienza,<br class=\"hidden md:block\"> sta a noi farne arte.",
+            En = "Cooking is in itself a science,<br class=\"hidden md:block\"> it is up to us to turn it into an art."
+        },
+        new {
+            Author = "Massimo Bottura",
+            It = "La cucina non è solo mangiare, è molto di più.<br class=\"hidden md:block\"> È poesia, è cultura, è identità.",
+            En = "Cooking is not just about eating, it is much more.<br class=\"hidden md:block\"> It is poetry, it is culture, it is identity."
+        },
+        new {
+            Author = "Pierre Gagnaire",
+            It = "L'arte enogastronomica è l'unica capace di orchestrare tutti e cinque i sensi in un solo perfetto istante.",
+            En = "Enogastronomic art is the only one capable of orchestrating all five senses in a single perfect moment."
+        }
+    };
+
+    // Estrae una citazione casuale
+    var randomQuote = quotes[new Random().Next(quotes.Length)];
+
+    // Imposta la lingua in base a langId (2 = Italiano)
+    var displayQuote = (langId == 2) ? randomQuote.It : randomQuote.En;
+}
 
 <section class="w-full py-28 md:py-36 relative flex items-center justify-center border-t border-b border-white/5">
 
@@ -178,17 +217,16 @@
 
     <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
         <blockquote class="font-serif italic text-2xl md:text-4xl text-white/90 leading-relaxed mb-8">
-            "Non esiste un vino assoluto,<br class="hidden md:block">
-            Ogni vino vive e cambia con il luogo, con il tempo e<br class="hidden md:block">
-            con le persone che lo condividono."
+            "@Html.Raw(displayQuote)"
         </blockquote>
 
         <p class="font-refined uppercase tracking-[0.3em] text-xs text-primary font-semibold">
-            Luigi Veronelli
+            @randomQuote.Author
         </p>
     </div>
 </section>
 
+<!-- News -->
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
     <div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0 mb-20 border-b border-white/10 pb-8">
         <div>
@@ -274,6 +312,7 @@
     </div>
 </section>
 
+<!-- Split Producers - Community -->
 <section class="bg-black h-[auto] md:h-[80vh] overflow-hidden flex flex-col">
     <div class="flex flex-col md:flex-row h-full split-container w-full">
         <div class="split-pane flex-1 h-[50vh] md:h-auto bg-black group/pro">
@@ -562,19 +601,19 @@
 
         <form asp-controller="Home" asp-action="SubmitContactForm" method="post" class="space-y-8">
             <div class="group relative">
-                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Full Name</label>
-                <input name="FullName" required type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="Name">
+                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">@Localizer[SharedResource.LabelFullName]</label>
+                <input name="FullName" required type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="@Localizer[SharedResource.PlaceholderName]">
             </div>
             <div class="group relative">
                 <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email </label>
                 <input name="Email" required type="email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="email@address.com">
             </div>
             <div class="group relative">
-                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Message</label>
-                <textarea name="Message" required rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none tracking-widest-plus" placeholder="Your message here..."></textarea>
+                <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">@Localizer[SharedResource.Message]</label>
+                <textarea name="Message" required rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none tracking-widest-plus" placeholder="@Localizer[SharedResource.PlaceholderMessage]"></textarea>
             </div>
             <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
-                Send Message
+                @Localizer[SharedResource.BtnSendMessage]
             </button>
         </form>
     </div>

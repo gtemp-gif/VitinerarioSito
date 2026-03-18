@@ -134,11 +134,29 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Send Message.
+        /// </summary>
+        public static string BtnSendMessage {
+            get {
+                return ResourceManager.GetString("BtnSendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Click Here.
         /// </summary>
         public static string ClickHere {
             get {
                 return ResourceManager.GetString("ClickHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Contacts.
+        /// </summary>
+        public static string Contacts {
+            get {
+                return ResourceManager.GetString("Contacts", resourceCulture);
             }
         }
         
@@ -225,11 +243,20 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a Exclusive Events &amp; Experiences.
+        ///   Cerca una stringa localizzata simile a Exclusive &lt;br /&gt; Events &amp; Experiences.
         /// </summary>
         public static string HeroEvents {
             get {
                 return ResourceManager.GetString("HeroEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Full Name.
+        /// </summary>
+        public static string LabelFullName {
+            get {
+                return ResourceManager.GetString("LabelFullName", resourceCulture);
             }
         }
         
@@ -239,6 +266,33 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string ListenAllEpisodes {
             get {
                 return ResourceManager.GetString("ListenAllEpisodes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Write your message here....
+        /// </summary>
+        public static string PlaceholderMessage {
+            get {
+                return ResourceManager.GetString("PlaceholderMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Name.
+        /// </summary>
+        public static string PlaceholderName {
+            get {
+                return ResourceManager.GetString("PlaceholderName", resourceCulture);
             }
         }
         

@@ -78,7 +78,6 @@
             </div>
         </div>
     </section>
-
     <div class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-16 border-b border-white/10 pb-10">
 
@@ -121,10 +120,47 @@
                                         <p class="text-white text-[10px] font-bold uppercase tracking-widest font-refined mt-1">@eventItem.EventDate.ToString("MMM")</p>
                                     </div>
                                 </div>
+
                                 <div class="p-8 flex flex-col flex-grow">
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="block z-20">
-                                        <h4 class="text-xl font-black text-white mb-4 group-hover:text-primary transition-colors uppercase font-refined leading-snug">@eventItem.Title</h4>
+                                    @{
+                                        // LOGICA DI SEPARAZIONE INTELLIGENTE
+                                        string datePart = "";
+                                        string namePart = eventItem.Title;
+
+                                        // Controlliamo se c'è il trattino con gli spazi
+                                        if (eventItem.Title.Contains(" - "))
+                                        {
+                                            var parts = eventItem.Title.Split(new[] { " - " }, 2, StringSplitOptions.None);
+                                            datePart = parts[0].Trim();
+                                            namePart = parts[1].Trim();
+                                        }
+                                        // Altrimenti controlliamo se c'è l'underscore (es. 30/08/2025_Vaglio)
+                                        else if (eventItem.Title.Contains("_"))
+                                        {
+                                            var parts = eventItem.Title.Split(new[] { "_" }, 2, StringSplitOptions.None);
+                                            datePart = parts[0].Trim();
+                                            namePart = parts[1].Trim();
+                                        }
+                                    }
+
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="block z-20 mb-4 group-hover:text-primary transition-colors">
+
+                                        @* Stampa la data (se è stata trovata dal taglio) *@
+                                        @if (!string.IsNullOrEmpty(datePart))
+                                        {
+                                            <span class="block text-primary text-[11px] uppercase font-black tracking-widest mb-1">
+                                                @datePart
+                                            </span>
+                                        }
+
+                                        @* Stampa il nome dell'evento pulito *@
+                                        @* Stampa il nome dell'evento pulito in corsivo *@
+                                        <h4 class="text-xl font-bold text-white uppercase italic font-refined leading-snug">
+                                            @namePart
+                                        </h4>
+
                                     </a>
+
                                     <div class="flex items-center gap-2 text-white/40 text-xs mb-6 italic font-refined mt-auto">
                                         <span class="material-symbols-outlined text-sm">location_on</span>
                                         @eventItem.Location
@@ -147,4 +183,5 @@
             </div>
         }
     </div>
+
 </main>

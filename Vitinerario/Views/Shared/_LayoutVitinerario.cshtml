@@ -102,16 +102,18 @@
             </nav>
 
             <div class="flex items-center gap-6">
-                <div class="flex items-center gap-2">
-                    <a href="@Url.Action("ChangeLanguage", "Language", new { langId = 1, returnUrl = Context.Request.Path + Context.Request.QueryString })"
-                       class="transition-opacity @(currentLangId == 1 ? "opacity-100 border-b-2 border-primary" : "opacity-50 hover:opacity-100")">
-                        <img src="https://flagcdn.com/w20/gb.png" alt="English" class="h-4 w-auto">
-                    </a>
+                <div class="flex items-center gap-3 font-refined text-[11px] font-black uppercase tracking-widest">
                     <a href="@Url.Action("ChangeLanguage", "Language", new { langId = 2, returnUrl = Context.Request.Path + Context.Request.QueryString })"
-                       class="transition-opacity @(currentLangId == 2 ? "opacity-100 border-b-2 border-primary" : "opacity-50 hover:opacity-100")">
-                        <img src="https://flagcdn.com/w20/it.png" alt="Italiano" class="h-4 w-auto">
+                       class="transition-colors @(currentLangId == 2 ? "text-primary" : "text-white/40 hover:text-white")">
+                        IT
+                    </a>
+                    <span class="text-white/20 font-light">|</span>
+                    <a href="@Url.Action("ChangeLanguage", "Language", new { langId = 1, returnUrl = Context.Request.Path + Context.Request.QueryString })"
+                       class="transition-colors @(currentLangId == 1 ? "text-primary" : "text-white/40 hover:text-white")">
+                        EN
                     </a>
                 </div>
+
                 <button id="mobile-menu-btn" class="md:hidden text-white flex items-center justify-center p-2 hover:text-primary transition-colors">
                     <span class="material-icons">menu</span>
                 </button>
