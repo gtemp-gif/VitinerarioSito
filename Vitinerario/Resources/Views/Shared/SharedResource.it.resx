@@ -341,4 +341,10 @@ con il tempo e con le persone che lo condividono.”</value>
   <data name="BtnSendMessage" xml:space="preserve">
     <value>Invia il messaggio</value>
   </data>
+  <data name="BtnListenSpotify" xml:space="preserve">
+    <value>Ascolta su Spotify</value>
+  </data>
+  <data name="BtnWatchYoutube" xml:space="preserve">
+    <value>Guarda su Youtube</value>
+  </data>
 </root>

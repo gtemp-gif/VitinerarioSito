@@ -353,4 +353,10 @@ Every wine evolves with its place, with time, and with the people who share it.â
   <data name="BtnSendMessage" xml:space="preserve">
     <value>Send Message</value>
   </data>
+  <data name="BtnListenSpotify" xml:space="preserve">
+    <value>Listen on Spotify</value>
+  </data>
+  <data name="BtnWatchYoutube" xml:space="preserve">
+    <value>Watch on Youtube</value>
+  </data>
 </root>

@@ -134,11 +134,29 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a Listen on Spotify.
+        /// </summary>
+        public static string BtnListenSpotify {
+            get {
+                return ResourceManager.GetString("BtnListenSpotify", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Send Message.
         /// </summary>
         public static string BtnSendMessage {
             get {
                 return ResourceManager.GetString("BtnSendMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Watch on Youtube.
+        /// </summary>
+        public static string BtnWatchYoutube {
+            get {
+                return ResourceManager.GetString("BtnWatchYoutube", resourceCulture);
             }
         }
         
