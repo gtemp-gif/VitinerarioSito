@@ -81,6 +81,25 @@ namespace Vitinerario.Controllers
         //    return View();
         //}
 
+       // [Route("Home/EventDetails/{id}")]
+        //public async Task<IActionResult> EventDetails(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return RedirectToAction("Events");
+        //    }
+
+        //    int langId = LanguageHelper.GetCurrentLangId(HttpContext);
+        //    var eventDto = await _apiService.GetEventById(id, langId);
+
+        //    if (eventDto == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return View(eventDto);
+        //}
+
         [Route("Home/EventDetails/{id}")]
         public async Task<IActionResult> EventDetails(int id)
         {
@@ -97,9 +116,45 @@ namespace Vitinerario.Controllers
                 return NotFound();
             }
 
+            // --- LOGICA DI SMISTAMENTO VISTE ---
+            // 3 = On Tour (IT) | 4 = On Tour (EN)
+            if (eventDto.CategoryId == 3 || eventDto.CategoryId == 4)
+            {
+                var viewModel = new Vitinerario.Models.TravelEventViewModel { Event = eventDto };
+
+                try
+                {
+                    var tripDto = await _apiService.GetTripByEventIdAsync(id);
+
+                    if (tripDto != null)
+                    {
+                        viewModel.Trip = tripDto;
+                        viewModel.Musts = await _apiService.GetTripMustsAsync(tripDto.Id);
+                        viewModel.Stays = await _apiService.GetStaysAsync(tripDto.Id);
+
+                        var days = await _apiService.GetItineraryDaysAsync(tripDto.Id);
+                        foreach (var day in days.OrderBy(d => d.DayNumber))
+                        {
+                            var stops = await _apiService.GetItineraryStopsAsync(day.Id);
+                            viewModel.Itinerary.Add(new Vitinerario.Models.FullItineraryDay
+                            {
+                                Day = day,
+                                Stops = stops.OrderBy(s => s.OrderIndex).ToList()
+                            });
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Mettendo un breakpoint qui, puoi ispezionare l'errore 'ex.Message'
+                    Console.WriteLine($"ERRORE API VIAGGIO: {ex.Message}");
+                }
+
+                return View("TravelEventDetails", viewModel);
+            }
+            // Per tutti gli altri eventi (Live 1/2, Art 5/6), carichiamo la vista classica
             return View(eventDto);
         }
-
         public async Task<IActionResult> Events()
         {
             int langId = LanguageHelper.GetCurrentLangId(HttpContext);
@@ -290,5 +345,10 @@ namespace Vitinerario.Controllers
 
         }
 
+
+        public IActionResult TravelEventDetails(int id)
+        {
+           return View();
+        }
     }
 }

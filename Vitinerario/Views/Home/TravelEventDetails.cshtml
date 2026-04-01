@@ -1,0 +1,591 @@
+﻿@model Vitinerario.Models.TravelEventViewModel
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@using Vitinerario.Helpers
+@inject IViewLocalizer Localizer
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = $"{Model.Event.Title} | Vitinerario Travel Details";
+
+    int langId = LanguageHelper.GetCurrentLangId(Context);
+
+    // --- TRADUZIONI ---
+    string txtOverview = langId == 2 ? "Descrizione" : "Overview";
+    string txtItinerary = langId == 2 ? "L'Itinerario" : "The Itinerary";
+    string txtStay = langId == 2 ? "Soggiorni" : "Accommodations";
+    string txtInclusions = langId == 2 ? "Cosa è incluso" : "Inclusions";
+    string txtExclusions = langId == 2 ? "Non incluso" : "Exclusions";
+    string txtAssistance = langId == 2 ? "Serve Aiuto?" : "Need Assistance?";
+    string txtAssistanceDesc = langId == 2 ? "Contattaci per maggiori informazioni o prenotazioni." : "Contact us for more information or bookings.";
+    string txtWa = langId == 2 ? "Scrivici su WhatsApp" : "Chat on WhatsApp";
+    string txtMaxGroup = langId == 2 ? "Gruppo Max" : "Max Group";
+    string txtGuests = langId == 2 ? "Ospiti" : "Guests";
+    string txtDay = langId == 2 ? "Giorno" : "Day";
+    string txtAlertWa = langId == 2 ? "Nessun contatto disponibile al momento." : "No contact available at the moment.";
+
+    // --- LOGICA TEMPORALE ---
+    DateTime finalEndDateTime;
+    if (Model.Event.EndDate.HasValue)
+    {
+        finalEndDateTime = Model.Event.EndDate.Value.Date;
+        if (Model.Event.EndTime != null && TimeSpan.TryParse(Model.Event.EndTime.ToString(), out TimeSpan parsedEndTime))
+        {
+            finalEndDateTime = finalEndDateTime.Add(parsedEndTime);
+        }
+        else
+        {
+            finalEndDateTime = finalEndDateTime.Add(new TimeSpan(23, 59, 59));
+        }
+    }
+    else
+    {
+        DateTime baseStartDate = Model.Event.StartDate != default(DateTime) ? Model.Event.StartDate : Model.Event.EventDate;
+        finalEndDateTime = baseStartDate.Date;
+        if (Model.Event.StartTime != null && TimeSpan.TryParse(Model.Event.StartTime.ToString(), out TimeSpan parsedStartTime))
+        {
+            finalEndDateTime = finalEndDateTime.Add(parsedStartTime);
+        }
+        else
+        {
+            finalEndDateTime = finalEndDateTime.Add(new TimeSpan(23, 59, 59));
+        }
+    }
+
+    bool isEventPast = DateTime.Now > finalEndDateTime;
+
+    string dateRange = "";
+    if (Model.Event.EndDate.HasValue && Model.Event.EndDate.Value > Model.Event.StartDate)
+    {
+        dateRange = $"{Model.Event.StartDate.ToString("MMM dd")} — {Model.Event.EndDate.Value.ToString("MMM dd, yyyy")}";
+    }
+    else
+    {
+        dateRange = Model.Event.StartDate.ToString("MMM dd, yyyy");
+    }
+
+    int days = Model.Trip?.DurationDays ?? 1;
+    int nights = Model.Trip?.DurationNights ?? 0;
+    string duration = langId == 2 ? $"{days} Giorni / {nights} Notti" : $"{days} Days / {nights} Nights";
+
+    string bgImage = !string.IsNullOrEmpty(Model.Event.HeroImage) ? Model.Event.HeroImage : Model.Event.CoverImage;
+    if (string.IsNullOrEmpty(bgImage)) 
+    {
+        bgImage = "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=2000&auto=format&fit=crop";
+    }
+
+    var cultureInfo = langId == 2 ? new System.Globalization.CultureInfo("it-IT") : new System.Globalization.CultureInfo("en-US");
+    string priceDisplay = Model.Event.Price > 0 ? Model.Event.Price.ToString("N0", cultureInfo) + " €" : (langId == 2 ? "Su Richiesta" : "On Request");
+
+    // --- LOGICA WHATSAPP COME DA EVENTO NORMALE ---
+    var bookingPhoneDisplay = Model.Event.ContactInfo;
+    var bookingPhoneRaw = (bookingPhoneDisplay ?? "").Replace(" ", "").Replace("-", "").Replace("/", "").Replace("(", "").Replace(")", "");
+    var isMobileNum = bookingPhoneRaw.StartsWith("3") || bookingPhoneRaw.StartsWith("+393") || bookingPhoneRaw.StartsWith("393");
+    
+    string bookingHref = isMobileNum 
+        ? $"https://wa.me/{(bookingPhoneRaw.StartsWith("39") ? bookingPhoneRaw : "39" + bookingPhoneRaw).Replace("+", "")}" 
+        : (!string.IsNullOrEmpty(bookingPhoneRaw) ? $"tel:{(bookingPhoneRaw.StartsWith("+") ? bookingPhoneRaw : "+39" + bookingPhoneRaw)}" : "#");
+
+    var buttonStyles = isEventPast 
+        ? "border border-primary/50 text-primary/50 bg-[#121212] cursor-not-allowed" 
+        : "bg-primary hover:bg-primary/90 text-white shadow-lg hover:shadow-primary/40 transform hover:-translate-y-0.5 cursor-pointer";
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D31A53",
+                        "deep-charcoal": "#121212",
+                        "dark-card": "#1a1a1a"
+                    },
+                    fontFamily: {
+                        "display": ["Noto Serif", "serif"]
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                @@apply bg-[#121212] text-white;
+            }
+        }
+    </style>
+    <style>
+        html { scroll-behavior: smooth; }
+        .asymmetric-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr;
+            gap: 4rem;
+        }
+        @@media (max-width: 1024px) {
+            .asymmetric-grid { grid-template-columns: 1fr; }
+        }
+        details > summary::-webkit-details-marker { display: none; }
+        details summary { list-style: none; outline: none; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        
+        .itinerary-progress {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 0%;
+            background: #D31A53;
+            transition: height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 0 10px rgba(211, 26, 83, 0.4);
+        }
+    </style>
+}
+
+<div id="booking-bar" class="fixed top-0 left-0 right-0 z-[45] bg-dark-card/95 backdrop-blur-xl border-b border-stone-800 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.5)] transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div class="flex items-center gap-8 flex-1">
+            <div class="hidden lg:block max-w-sm">
+                <p class="text-[10px] text-primary uppercase font-bold tracking-widest leading-none mb-1">
+                    @(langId == 2 ? "Il tuo Itinerario" : "Current Itinerary")
+                </p>
+                <div class="text-sm font-display font-black text-white uppercase tracking-tight line-clamp-2 leading-tight" title="@Model.Event.Title">
+                    @Model.Event.Title
+                </div>
+            </div>
+            <div class="hidden md:flex items-center gap-6 border-l border-stone-800 pl-6">
+                <div>
+                    <p class="text-[9px] text-stone-500 uppercase font-bold tracking-widest leading-none mb-1">
+                        @(langId == 2 ? "Quando" : "When")
+                    </p>
+                    <p class="text-xs text-white">@dateRange</p>
+                </div>
+                <div>
+                    <p class="text-[9px] text-stone-500 uppercase font-bold tracking-widest leading-none mb-1">
+                        @(langId == 2 ? "Dove" : "Where")
+                    </p>
+                    <p class="text-xs text-white truncate max-w-[150px]" title="@(Model.Trip?.DepartureCity ?? "TBA")">
+                        @(Model.Trip?.DepartureCity ?? "TBA")
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4 md:gap-8 justify-end">
+            <div class="text-right hidden md:block">
+                <p class="text-[9px] text-stone-500 uppercase font-bold tracking-widest leading-none mb-1">
+                    @(langId == 2 ? "A partire da" : "Starting from")
+                </p>
+                <p class="text-xl font-bold text-white">@priceDisplay</p>
+            </div>
+            <button type="button" onclick="handleBookingClick()" class="@buttonStyles py-3 px-6 md:px-8 rounded-xl transition-all text-[9px] md:text-[10px] uppercase tracking-widest shrink-0">
+                @(langId == 2 ? "PRENOTA ORA" : "RESERVE NOW")
+            </button>
+        </div>
+    </div>
+</div>
+
+<header class="relative h-[85vh] overflow-hidden flex items-end pb-24 mt-[80px]">
+    <div class="absolute inset-0">
+        <img src="@bgImage" alt="@Model.Event.Title" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent"></div>
+    </div>
+
+    <div class="absolute top-24 md:top-32 left-0 w-full z-20">
+        <div class="container mx-auto px-12">
+            <a href="@Url.Action("Events", "Home")" class="group inline-flex items-center text-[10px] uppercase tracking-widest-plus font-bold text-white bg-black/40 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full hover:bg-primary hover:border-primary transition-all duration-300 w-fit">
+                <span class="material-symbols-outlined text-base mr-3 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
+                @(langId == 2 ? "Torna agli Eventi" : "Back to Events")
+            </a>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-12 relative z-10">
+        <div class="max-w-4xl">
+            
+            <div class="flex items-center gap-4 mb-6">
+                <div class="bg-primary text-white text-[10px] md:text-xs font-black uppercase tracking-[0.2em] px-3 py-1.5 rounded-sm">
+                    @dateRange
+                </div>
+                <div class="w-px h-4 bg-white/20"></div>
+                <div class="text-stone-400 text-[10px] md:text-xs font-bold uppercase tracking-[0.2em]">
+                    @duration
+                </div>
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl text-white font-black leading-[0.9] uppercase font-display tracking-tighter">
+                @Html.Raw(Model.Event.Title)
+            </h1>
+            
+        </div>
+    </div>
+</header>
+
+<section class="container mx-auto px-12 -mt-12 relative z-20">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-0 bg-dark-card shadow-2xl rounded-xl overflow-hidden border border-stone-800">
+        
+        <div class="p-8 border-b md:border-b-0 md:border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">@(langId == 2 ? "Partenza" : "Departure")</span>
+            <p class="text-xl font-bold text-white">@(Model.Trip?.DepartureCity ?? "TBA")</p>
+        </div>
+
+        <div class="p-8 border-b md:border-b-0 md:border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">@(langId == 2 ? "Arrivo" : "Arrival")</span>
+            <p class="text-xl font-bold text-white">@(Model.Trip?.ArrivalCity ?? Model.Event.Location ?? "TBA")</p>
+        </div>
+
+        <div class="p-8 border-b md:border-b-0 md:border-r border-stone-800 flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">@(langId == 2 ? "Durata" : "Duration")</span>
+            <p class="text-xl font-bold text-white">@duration</p>
+        </div>
+
+        <div class="p-8 bg-dark-card flex flex-col justify-start h-full">
+            <span class="text-primary text-xs uppercase tracking-widest mb-4 font-bold block min-h-[1rem]">
+                @(langId == 2 ? "Gruppo Max" : "Max Group")
+            </span>
+            <p class="text-xl font-bold text-white">
+                @(Model.Trip?.MaxGuests.ToString() ?? "-") @(langId == 2 ? "Partecipanti" : "Participants")
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<main class="container mx-auto px-12 py-24">
+    <div class="asymmetric-grid">
+        
+        <div class="space-y-24">
+            
+            <div>
+                <h3 class="text-2xl font-bold mb-8 text-white flex items-center uppercase tracking-widest">
+                    <span class="w-8 h-px bg-primary mr-4"></span>
+                    @txtOverview
+                </h3>
+                <div class="prose prose-invert max-w-none text-lg leading-relaxed text-stone-400 space-y-6 whitespace-pre-line">
+                    @Html.Raw(Model.Event.Description)
+                </div>
+            </div>
+
+            @if (Model.Itinerary != null && Model.Itinerary.Any())
+            {
+                <div id="itinerary" class="scroll-mt-32 relative">
+                    <h3 class="text-2xl font-bold mb-8 text-white flex items-center uppercase tracking-widest">
+                        <span class="w-8 h-px bg-primary mr-4"></span>
+                        @txtItinerary
+                    </h3>
+                    
+                    <div class="space-y-4 relative">
+                        <div class="absolute left-[31px] top-8 bottom-8 w-[2px] bg-stone-800 z-0 hidden md:block">
+                            <div class="itinerary-progress" id="itinerary-progress-fill"></div>
+                        </div>
+
+                        @{ bool isFirstDay = true; }
+                        @foreach (var itDay in Model.Itinerary)
+                        {
+                            <details class="group bg-dark-card border border-stone-800 rounded-xl overflow-hidden transition-all duration-300 relative z-10" @(isFirstDay ? "open" : "")>
+                                <summary class="flex items-center justify-between p-6 md:p-8 cursor-pointer list-none hover:bg-stone-900 outline-none">
+                                    <div class="flex items-baseline gap-6">
+                                        <span class="font-display font-black text-3xl italic tracking-tighter transition-colors @(isFirstDay ? "text-primary" : "text-stone-600 group-hover:text-primary")">
+                                            @itDay.Day.DayNumber.ToString("00")
+                                        </span>
+                                        <div class="flex flex-col">
+                                            <span class="text-[10px] font-bold uppercase tracking-widest text-stone-500 mb-1">
+                                                @txtDay @itDay.Day.DayNumber.ToString("00")
+                                            </span>
+                                            <h3 class="text-white text-xl font-bold uppercase tracking-wide group-open:text-primary">
+                                                @itDay.Day.Title
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <span class="hidden md:block text-[10px] uppercase tracking-widest font-medium text-stone-500">Details</span>
+                                        <span class="material-symbols-outlined transition-transform duration-300 @(isFirstDay ? "text-primary" : "text-stone-500 group-open:text-primary") group-open:rotate-180">expand_more</span>
+                                    </div>
+                                </summary>
+                                
+                                <div class="px-6 md:px-24 pb-12 pt-4 border-t border-stone-800">
+                                    @if (!string.IsNullOrEmpty(itDay.Day.Description))
+                                    {
+                                        <p class="text-stone-400 text-sm font-light leading-relaxed mb-10 whitespace-pre-line">
+                                            @itDay.Day.Description
+                                        </p>
+                                    }
+
+                                    @if (itDay.Stops != null && itDay.Stops.Any())
+                                    {
+                                        <div class="relative space-y-12">
+                                            <div class="absolute left-[11px] md:left-[11px] top-2 bottom-2 w-[1px] bg-stone-800"></div>
+                                            
+                                            @foreach (var stop in itDay.Stops)
+                                            {
+                                                <div class="relative pl-10">
+                                                    <div class="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-[#121212] border border-primary flex items-center justify-center z-10 shadow-[0_0_15px_rgba(211,26,83,0.4)]">
+                                                        <div class="w-2 h-2 bg-primary rounded-full"></div>
+                                                    </div>
+
+                                                    <div class="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8">
+                                                        <span class="font-bold text-sm tabular-nums uppercase text-primary shrink-0">
+                                                            @stop.Time.ToString(@"hh\:mm")
+                                                        </span>
+                                                        <div>
+                                                            <h4 class="text-white font-bold uppercase tracking-wider text-sm mb-1">
+                                                                @stop.Title
+                                                            </h4>
+                                                            @if (!string.IsNullOrEmpty(stop.Description))
+                                                            {
+                                                                <p class="text-stone-400 text-sm font-light leading-relaxed whitespace-pre-line">
+                                                                    @stop.Description
+                                                                </p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </details>
+                            isFirstDay = false;
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Stays != null && Model.Stays.Any())
+            {
+                <div id="stay" class="scroll-mt-32">
+                    <h3 class="text-2xl font-bold mb-8 text-white flex items-center uppercase tracking-widest">
+                        <span class="w-8 h-px bg-primary mr-4"></span>
+                        @txtStay
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @foreach (var stay in Model.Stays.OrderBy(s => s.OrderIndex))
+                        {
+                            <div class="bg-dark-card border border-stone-800 rounded-xl overflow-hidden group">
+                                <div class="aspect-[16/9] overflow-hidden">
+                                    <img src="@(!string.IsNullOrEmpty(stay.Image) ? stay.Image : "https://images.unsplash.com/photo-1566665797739-1674de7a421a?q=80&w=800&auto=format&fit=crop")" 
+                                         alt="@stay.Name" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div class="p-6">
+                                    <h4 class="text-white font-bold uppercase tracking-widest mb-2">@stay.Name</h4>
+                                    <p class="text-stone-400 text-sm">@(stay.Description ?? stay.Location)</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (Model.Musts != null && Model.Musts.Any())
+            {
+                <div id="experiences" class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-12 border-t border-stone-800 scroll-mt-32">
+                    @if (Model.Musts.Any(m => m.TypeId == 1))
+                    {
+                        <div class="p-8 bg-dark-card rounded-xl border border-stone-800">
+                            <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-3">
+                                <span class="material-symbols-outlined text-primary">check_circle</span>
+                                @txtInclusions
+                            </h3>
+                            <ul class="space-y-4">
+                                @foreach (var must in Model.Musts.Where(m => m.TypeId == 1))
+                                {
+                                    <li class="flex items-start gap-3 text-sm text-stone-400">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                                        @must.Text
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    
+                    @if (Model.Musts.Any(m => m.TypeId == 2))
+                    {
+                        <div class="p-8 bg-dark-card rounded-xl border border-stone-800">
+                            <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-3">
+                                <span class="material-symbols-outlined text-stone-600">cancel</span>
+                                @txtExclusions
+                            </h3>
+                            <ul class="space-y-4">
+                                @foreach (var must in Model.Musts.Where(m => m.TypeId == 2))
+                                {
+                                    <li class="flex items-start gap-3 text-sm text-stone-500">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-stone-700 mt-1.5 shrink-0"></span>
+                                        @must.Text
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+        
+        <aside>
+            <div class="sticky top-[120px] space-y-8">
+                
+                @if (Model.Event.Gallery?.Photos != null && Model.Event.Gallery.Photos.Any())
+                {
+                    <div class="p-6 md:p-8 bg-dark-card rounded-xl border border-stone-800">
+                        <h3 class="text-sm font-bold text-white uppercase tracking-widest mb-6 flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary">photo_camera</span>
+                            @(langId == 2 ? "I Luoghi" : "Gallery")
+                        </h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            @foreach (var photo in Model.Event.Gallery.Photos)
+                            {
+                                <div class="relative aspect-square overflow-hidden rounded-lg border border-stone-700/50 group">
+                                    <img src="@photo.ImageUrl" 
+                                         alt="@photo.Caption" 
+                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+
+                <div class="p-6 md:p-8 bg-[#1a1a1a] rounded-xl border border-white/5 shadow-xl">
+                    <div class="flex items-center gap-3 mb-5">
+                        <span class="material-symbols-outlined text-primary text-[28px]">support_agent</span>
+                        <h3 class="text-sm font-bold text-white uppercase tracking-[0.15em] leading-none pt-1">
+                            @txtAssistance
+                        </h3>
+                    </div>
+                    <p class="text-[15px] text-stone-400 mb-8 leading-relaxed font-light">
+                        @txtAssistanceDesc
+                    </p>
+
+                    <button type="button" onclick="handleBookingClick()" class="group inline-flex items-center gap-2 text-primary font-bold text-[11px] uppercase tracking-[0.15em] hover:brightness-125 transition-all cursor-pointer w-fit bg-transparent border-0 p-0 m-0 text-left">
+                        @txtWa
+                        <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    </button>
+                </div>
+
+                <div class="hidden lg:flex flex-col gap-6 py-4 pl-6 border-l border-stone-800 ml-2">
+                    @if (Model.Itinerary != null && Model.Itinerary.Any())
+                    {
+                        <a href="#itinerary" class="side-nav-link flex items-center gap-4 text-white transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-base">calendar_today</span>
+                            <span class="text-[10px] uppercase tracking-widest font-bold transition-all">@txtItinerary</span>
+                        </a>
+                    }
+                    @if (Model.Stays != null && Model.Stays.Any())
+                    {
+                        <a href="#stay" class="side-nav-link flex items-center gap-4 text-stone-500 hover:text-white transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-base">bed</span>
+                            <span class="text-[10px] uppercase tracking-widest font-bold transition-all">@txtStay</span>
+                        </a>
+                    }
+                    @if (Model.Musts != null && Model.Musts.Any())
+                    {
+                        <a href="#experiences" class="side-nav-link flex items-center gap-4 text-stone-500 hover:text-white transition-colors cursor-pointer">
+                            <span class="material-symbols-outlined text-base">wine_bar</span>
+                            <span class="text-[10px] uppercase tracking-widest font-bold transition-all">@(langId == 2 ? "Esperienze" : "Experiences")</span>
+                        </a>
+                    }
+                    <div class="w-full h-px bg-stone-800 my-2"></div>
+                    <button type="button" onclick="handleBookingClick()" class="flex items-center gap-4 text-stone-500 hover:text-white transition-colors cursor-pointer bg-transparent border-0 p-0 m-0 text-left w-full">
+                        <span class="material-symbols-outlined text-base">payments</span>
+                        <span class="text-[10px] uppercase tracking-widest font-bold transition-all">@(langId == 2 ? "Prenota" : "Booking")</span>
+                    </button>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+</main>
+
+@section Scripts {
+    <script>
+       console.log("Numero nel DB: '@Html.Raw(bookingPhoneRaw)'");
+        function handleBookingClick() {
+            const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            const rawPhone = "@Html.Raw(bookingPhoneRaw)";
+            
+            // Se il numero nel database è vuoto, avvisiamo l'utente
+            if (!rawPhone || rawPhone.trim() === "") {
+                alert("@Html.Raw(txtAlertWa)");
+                return;
+            }
+
+            // Logica infallibile: WhatsApp Web su Desktop, App su Mobile
+            if (isMobileUA) {
+                window.location.href = "@Html.Raw(bookingHref)";
+            } else {
+                if (rawPhone.startsWith("3")) {
+                    window.open(`https://web.whatsapp.com/send?phone=39${rawPhone}`, '_blank');
+                } else {
+                    window.location.href = `tel:+39${rawPhone}`;
+                }
+            }
+        }
+
+        function adjustBookingBar() {
+            const mainHeader = document.querySelector('header.fixed.top-0'); 
+            const bookingBar = document.getElementById('booking-bar');
+            
+            if (mainHeader && bookingBar) {
+                const headerHeight = mainHeader.offsetHeight;
+                bookingBar.style.top = headerHeight + 'px';
+            }
+        }
+        
+        window.addEventListener('load', adjustBookingBar);
+        window.addEventListener('resize', adjustBookingBar);
+
+        const detailsElements = document.querySelectorAll("#itinerary details");
+        detailsElements.forEach((targetDetail) => {
+            targetDetail.addEventListener("click", (e) => {
+                if (e.target.closest('summary')) {
+                    detailsElements.forEach((detail) => {
+                        if (detail !== targetDetail) {
+                            detail.removeAttribute("open");
+                        }
+                    });
+                }
+            });
+        });
+
+        const progressFill = document.getElementById('itinerary-progress-fill');
+        const sections = document.querySelectorAll('#itinerary details');
+        if (sections.length > 0 && progressFill) {
+            const observerOptions = { root: null, threshold: 0.2 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = Array.from(sections).indexOf(entry.target);
+                        const percentage = ((index + 1) / sections.length) * 100;
+                        progressFill.style.height = `${percentage}%`;
+                    }
+                });
+            }, observerOptions);
+            sections.forEach(section => observer.observe(section));
+        }
+
+        const sectionsSpy = document.querySelectorAll("div#itinerary, div#stay, div#experiences");
+        const navLinks = document.querySelectorAll(".side-nav-link");
+        if (sectionsSpy.length > 0 && navLinks.length > 0) {
+            const observerSpyOptions = { root: null, rootMargin: "-20% 0px -60% 0px" };
+            const observerSpy = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-white');
+                            link.classList.add('text-stone-500');
+                        });
+                        const activeHref = `#${entry.target.id}`;
+                        const activeLink = document.querySelector(`.side-nav-link[href="${activeHref}"]`);
+                        if (activeLink) {
+                            activeLink.classList.remove('text-stone-500');
+                            activeLink.classList.add('text-white');
+                        }
+                    }
+                });
+            }, observerSpyOptions);
+            sectionsSpy.forEach(section => { observerSpy.observe(section); });
+        }
+    </script>
+}

@@ -182,5 +182,55 @@ namespace Vitinerario.Services
             var response = await _httpClient.PostAsync("partecipa", content);
             return response.IsSuccessStatusCode;
         }
+
+
+        // In ApiService.cs:
+
+        public async Task<TripDto?> GetTripByEventIdAsync(int eventId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Trips?eventId={eventId}";
+            var response = await _httpClient.GetAsync($"{url}");
+            if (!response.IsSuccessStatusCode) return null;
+            var trips = await response.Content.ReadFromJsonAsync<List<TripDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            return trips?.FirstOrDefault();
+        }
+
+        public async Task<List<TripMustDto>> GetTripMustsAsync(int tripId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/TripMusts?tripId={tripId}");
+            if (!response.IsSuccessStatusCode) return new List<TripMustDto>();
+            return await response.Content.ReadFromJsonAsync<List<TripMustDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<TripMustDto>();
+        }
+
+        public async Task<List<StayDto>> GetStaysAsync(int tripId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/Stays?tripId={tripId}");
+            if (!response.IsSuccessStatusCode) return new List<StayDto>();
+            return await response.Content.ReadFromJsonAsync<List<StayDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<StayDto>();
+        }
+
+        public async Task<List<ItineraryDayDto>> GetItineraryDaysAsync(int tripId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/ItineraryDays?tripId={tripId}");
+            if (!response.IsSuccessStatusCode) return new List<ItineraryDayDto>();
+            return await response.Content.ReadFromJsonAsync<List<ItineraryDayDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<ItineraryDayDto>();
+        }
+
+        public async Task<List<ItineraryStopDto>> GetItineraryStopsAsync(int dayId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/ItineraryStops?dayId={dayId}");
+            if (!response.IsSuccessStatusCode) return new List<ItineraryStopDto>();
+            return await response.Content.ReadFromJsonAsync<List<ItineraryStopDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<ItineraryStopDto>();
+        }
+
     }
 }

@@ -30,7 +30,7 @@ namespace Vitinerario.Services
            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}/Auth/login";
             // Definisci l'oggetto anonimo con la proprietà 'token' in minuscolo
             //var requestBody = new { token = _apiSettings.Secret };
-            var requestBody = new { username = "VIT.Site2026", password = "Test1234" };
+            var requestBody = new { username = _apiSettings.Username, password = _apiSettings.Password };
                 // Invia la richiesta POST
                 var response = await _httpClient.PostAsJsonAsync(url, requestBody);
 
