@@ -59,46 +59,7 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> Archive(int page = 1)
-        //{
-        //    int pageSize = 10;
-        //    var allArticles = await _apiService.GetContentsByTypeAsync("blog", langId); // Prendi tutti
-
-        //    int totalItems = allArticles.Count;
-        //    int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-        //    // Filtra gli articoli per la pagina corrente
-        //    var pagedArticles = allArticles
-        //        .Skip((page - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToList();
-
-        //    ViewBag.Articles = pagedArticles;
-        //    ViewBag.CurrentPage = page;
-        //    ViewBag.TotalPages = totalPages;
-        //    ViewBag.TotalItems = totalItems;
-
-        //    return View();
-        //}
-
-       // [Route("Home/EventDetails/{id}")]
-        //public async Task<IActionResult> EventDetails(int id)
-        //{
-        //    if (id == 0)
-        //    {
-        //        return RedirectToAction("Events");
-        //    }
-
-        //    int langId = LanguageHelper.GetCurrentLangId(HttpContext);
-        //    var eventDto = await _apiService.GetEventById(id, langId);
-
-        //    if (eventDto == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(eventDto);
-        //}
+        
 
         [Route("Home/EventDetails/{id}")]
         public async Task<IActionResult> EventDetails(int id)

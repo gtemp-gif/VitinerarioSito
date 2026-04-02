@@ -44,6 +44,11 @@
         public int DayNumber { get; set; }
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
+
+        // Aggiungi queste 3 proprietà per mappare il DB
+        public string Image1 { get; set; } = string.Empty;
+        public string Image2 { get; set; } = string.Empty;
+        public string Image3 { get; set; } = string.Empty;
     }
 
     public class ItineraryStopDto

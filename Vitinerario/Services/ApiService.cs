@@ -184,7 +184,6 @@ namespace Vitinerario.Services
         }
 
 
-        // In ApiService.cs:
 
         public async Task<TripDto?> GetTripByEventIdAsync(int eventId)
         {
