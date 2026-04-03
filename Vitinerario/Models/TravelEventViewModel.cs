@@ -13,6 +13,8 @@ namespace Vitinerario.Models
 
         // Raggruppa i giorni con le loro rispettive tappe orarie
         public List<FullItineraryDay> Itinerary { get; set; } = new();
+        public List<VariantPriceDto> VariantPrices { get; set; } = new();
+        public List<EventNeedDto> EventNeeds { get; set; } = new();
     }
 
     public class FullItineraryDay

@@ -231,5 +231,32 @@ namespace Vitinerario.Services
             return await response.Content.ReadFromJsonAsync<List<ItineraryStopDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new List<ItineraryStopDto>();
         }
 
+
+        public async Task<List<VariantPriceDto>> GetVariantPricesAsync(int eventId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/variantprices?eventId={eventId}");
+
+            if (!response.IsSuccessStatusCode)
+                return new List<VariantPriceDto>();
+
+            return await response.Content.ReadFromJsonAsync<List<VariantPriceDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                   ?? new List<VariantPriceDto>();
+        }
+
+        public async Task<List<EventNeedDto>> GetEventNeedsAsync(int eventId)
+        {
+            await AddAuthHeaderAsync();
+            var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+            var response = await _httpClient.GetAsync($"{url}/eventneeds?eventId={eventId}");
+
+            if (!response.IsSuccessStatusCode)
+                return new List<EventNeedDto>();
+
+            return await response.Content.ReadFromJsonAsync<List<EventNeedDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                   ?? new List<EventNeedDto>();
+        }
+
     }
 }

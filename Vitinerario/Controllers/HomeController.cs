@@ -104,6 +104,17 @@ namespace Vitinerario.Controllers
                             });
                         }
                     }
+                    // 1. Carica le varianti di prezzo (se previste)
+                    if (eventDto.HasVariantPrice)
+                    {
+                        viewModel.VariantPrices = await _apiService.GetVariantPricesAsync(id);
+                    }
+
+                    // 2. Carica le "Informazioni Essenziali" (se previste)
+                    if (eventDto.HasNeeds)
+                    {
+                        viewModel.EventNeeds = await _apiService.GetEventNeedsAsync(id);
+                    }
                 }
                 catch (Exception ex)
                 {

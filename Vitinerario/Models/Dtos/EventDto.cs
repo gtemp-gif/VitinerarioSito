@@ -25,6 +25,9 @@ namespace Vitinerario.Models.Dtos
         public string? Subtitle { get; set; }
         public string? Coordinates { get; set; }
         public string? HeroImage { get; set; }
+        public string? ProgramPdf { get; set; }
+        public bool HasVariantPrice { get; set; }
+        public bool HasNeeds { get; set; }
         public List<EventLinkDto> Links { get; set; } = new();
         public GalleryDto? Gallery { get; set; }
         public List<ExpertDto> Experts { get; set; } = new();

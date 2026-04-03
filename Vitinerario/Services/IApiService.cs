@@ -21,5 +21,8 @@ namespace Vitinerario.Services
         Task<List<StayDto>> GetStaysAsync(int tripId);
         Task<List<ItineraryDayDto>> GetItineraryDaysAsync(int tripId);
         Task<List<ItineraryStopDto>> GetItineraryStopsAsync(int dayId);
+
+        Task<List<VariantPriceDto>> GetVariantPricesAsync(int eventId);
+        Task<List<EventNeedDto>> GetEventNeedsAsync(int eventId);
     }
 }
