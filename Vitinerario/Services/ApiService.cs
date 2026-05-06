@@ -94,8 +94,8 @@ namespace Vitinerario.Services
         {
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
-            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"{url}/contents/type/{type}");
+            var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
+           // var response = await _httpClient.GetAsync($"{url}/contents/type/{type}");
             if (!response.IsSuccessStatusCode)
             {
                 return new List<ContentDto>();
@@ -107,12 +107,37 @@ namespace Vitinerario.Services
             return contents ?? new List<ContentDto>();
         }
 
+        public async Task<List<PartnerDto>> GetPartnersAsync()
+        {
+            try
+            {
+                await AddAuthHeaderAsync();
+                var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+                // Chiamata GET all'endpoint dei partners
+                var response = await _httpClient.GetAsync($"{url}/Partners");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                    return JsonSerializer.Deserialize<List<PartnerDto>>(content, options) ?? new List<PartnerDto>();
+                }
+            }
+            catch (Exception ex)
+            {
+                // Qui gestisci l'errore o il log se necessario
+            }
+
+            return new List<PartnerDto>();
+        }
+
         public async Task<ContentDto> GetContentById(int id, int langId)
         {
             await AddAuthHeaderAsync();
             var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
-            // var response = await _httpClient.GetAsync($"contents/type/{type}?langId={langId}");
-            var response = await _httpClient.GetAsync($"{url}/contents/{id}");
+            var response = await _httpClient.GetAsync($"contents/{id}?langId={langId}");
+            //var response = await _httpClient.GetAsync($"{url}/contents/{id}");
             if (!response.IsSuccessStatusCode)
             {
                 return new ContentDto();

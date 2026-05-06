@@ -20,14 +20,17 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _apiService.GetEventsAsync(LanguageHelper.GetCurrentLangId());
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
+            var events = await _apiService.GetEventsAsync(langId);
             events = events?.Where(e => e.IsOnline).ToList(); // Filtra solo eventi futuri e ordina per data
-            var articles = await _apiService.GetContentsByTypeAsync("blog", LanguageHelper.GetCurrentLangId());
+            var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
             articles = articles?.Where(a => a.IsPublished).ToList();
-            var news = await _apiService.GetContentsByTypeAsync("news", LanguageHelper.GetCurrentLangId());
+            var news = await _apiService.GetContentsByTypeAsync("news", langId);
             news = news?.Where(n => n.IsPublished).ToList();
-            var podcasts = await _apiService.GetPodcastsAsync(LanguageHelper.GetCurrentLangId());
-
+            var podcasts = await _apiService.GetPodcastsAsync(langId);
+            // Recupero i partner e filtro solo quelli attivi (IsActive == true)
+            var partners = await _apiService.GetPartnersAsync();
+            ViewBag.Partners = partners?.Where(p => p.IsActive).ToList() ?? new List<PartnerDto>();
             // Taking top 3 for index display 
             ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventDto>();
             ViewBag.LatestArticles = articles?.Take(3).ToList() ?? new List<ContentDto>();
@@ -38,7 +41,7 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Archive()
         {
-            int langId = LanguageHelper.GetCurrentLangId();
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
             var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
             articles = articles?.Where(a => a.IsPublished).ToList(); // Filtra solo gli articoli pubblicati
             ViewBag.Articles = articles?.OrderByDescending(a => a.PublishDate).ToList() ?? new List<ContentDto>();
@@ -76,7 +79,7 @@ namespace Vitinerario.Controllers
                 return RedirectToAction("Events");
             }
 
-            int langId = LanguageHelper.GetCurrentLangId();
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
             var eventDto = await _apiService.GetEventById(id, langId);
 
             if (eventDto == null)
@@ -89,7 +92,8 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Events()
         {
-            var events = await _apiService.GetEventsAsync(LanguageHelper.GetCurrentLangId());
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
+            var events = await _apiService.GetEventsAsync(langId);
             events = events?.Where(e =>  e.IsOnline).ToList(); 
             return View(events ?? new List<EventDto>());
 
@@ -159,7 +163,7 @@ namespace Vitinerario.Controllers
                 return RedirectToAction("Archive");
             }
 
-            int langId = LanguageHelper.GetCurrentLangId();
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
 
             // Recuperiamo il singolo articolo tramite il suo ID
             // Nota: Assicurati che il metodo nel servizio si chiami GetContentById (singolare)
@@ -172,7 +176,7 @@ namespace Vitinerario.Controllers
 
             return View(article);
         }
-
+        [Route("privacy-policy")]
         public IActionResult Terms()
         {
             return View();
@@ -185,13 +189,19 @@ namespace Vitinerario.Controllers
 
         public async Task<IActionResult> Podcast()
         {
-            int langId = LanguageHelper.GetCurrentLangId();
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
             var podcasts = await _apiService.GetPodcastsAsync(langId);
             return View(podcasts);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
+        {
+            return View();
+        }
+
+
+        public IActionResult CookiePolicy()
         {
             return View();
         }

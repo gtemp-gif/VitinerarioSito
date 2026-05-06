@@ -1,13 +1,22 @@
+using Microsoft.AspNetCore.Http;
 using System.Threading;
 
 namespace Vitinerario.Helpers
 {
     public static class LanguageHelper
     {
-        public static int GetCurrentLangId()
+        public static int GetCurrentLangId(HttpContext context = null)
         {
-            var currentCulture = Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
-            return currentCulture.ToLower() == "it" ? 2 : 1;
+            if (context != null)
+            {
+                if (context.Request.Cookies.TryGetValue("UserLanguage", out string langValue) && int.TryParse(langValue, out int langId))
+                {
+                    return langId;
+                }
+            }
+
+            // Fallback
+            return 1; // Default to EN (1)
         }
     }
 }

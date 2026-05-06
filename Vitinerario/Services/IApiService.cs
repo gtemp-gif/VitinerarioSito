@@ -13,5 +13,6 @@ namespace Vitinerario.Services
         Task<bool> SubmitPartecipaAsync(PartecipaViewModel model);
         Task<ContentDto?> GetContentById(int id, int langId);
         Task<EventDto?> GetEventById(int id, int langId);
+        Task<List<PartnerDto>> GetPartnersAsync();
     }
 }

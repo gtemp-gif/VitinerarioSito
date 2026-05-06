@@ -3,6 +3,7 @@
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = $"Vitinerario | {Model?.Title ?? "Article"}";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 }
 
 @section TailwindConfig {
@@ -120,7 +121,7 @@
         <aside class="md:w-1/4 flex flex-col gap-12">
             @* Sezione Autore Dinamica *@
             <div class="space-y-4">
-                <h4 class="text-primary text-xs uppercase tracking-widest font-bold">Scritto da</h4>
+                <h4 class="text-primary text-xs uppercase tracking-widest font-bold">@(langId == 2 ? "Scritto da" : "Written by")</h4>
 
                 @if (Model.Authors != null && Model.Authors.Any())
                 {
@@ -159,7 +160,7 @@
 
             @* Sezione Data di Pubblicazione *@
             <div class="space-y-3">
-                <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">Published</h4>
+                <h4 class="text-white/30 text-xs uppercase tracking-widest font-bold">@(langId == 2 ? "Pubblicato" : "Published")</h4>
                 <p class="text-white/60 uppercase text-sm tracking-wide">@Model.PublishDate.ToString("MMM dd, yyyy")</p>
             </div>
 
@@ -168,14 +169,14 @@
                 <button type="button"
                         onclick="handleShare()"
                         class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-                    <span class="material-symbols-outlined text-base">share</span> Share
+                    <span class="material-symbols-outlined text-base">share</span> @(langId == 2 ? "Condividi" : "Share")
                 </button>
                 <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-                    <span class="material-symbols-outlined text-base">bookmark</span> Save
+                    <span class="material-symbols-outlined text-base">bookmark</span> @(langId == 2 ? "Salva" : "Save")
                 </button>
             </div>
         </aside>
-
+@* 
         <div class="md:w-3/4 space-y-12">
             <div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
                 @if (!string.IsNullOrEmpty(Model.Preview))
@@ -206,10 +207,76 @@
                 </div>
             }
 
+        </div> *@
+
+        <div class="md:w-3/4 space-y-12">
+
+            @* BLOCCO TESTO E LINK *@
+            <div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
+                @if (!string.IsNullOrEmpty(Model.Preview))
+                {
+                    <p class="drop-cap whitespace-pre-line">
+                        @Html.Raw(Model.Preview)
+                    </p>
+                }
+
+                @* SEZIONE LINK ESTERNO *@
+                @* Nota: Usa Model.Links se è una lista, oppure adatta a Model.Link se è un oggetto singolo *@
+                @if (Model.Links != null && Model.Links.Any())
+                {
+                    <div class="pt-4 border-t border-white/10 mt-8">
+                        @foreach (var linkItem in Model.Links)
+                        {
+                            if (!string.IsNullOrEmpty(linkItem.LinkUrl))
+                            {
+                                <a href="@linkItem.LinkUrl" target="_blank" rel="noopener noreferrer"
+                                   class="inline-flex items-center gap-3 text-primary font-bold hover:text-white transition-colors group">
+
+                                    <span class="material-symbols-outlined text-lg group-hover:scale-110 transition-transform">open_in_new</span>
+
+                                    @* Mostra la Description se presente, altrimenti mostra l'URL nudo come fallback *@
+                                    <span class="underline underline-offset-4 decoration-primary/30 group-hover:decoration-white">
+                                        @(!string.IsNullOrEmpty(linkItem.Description) ? linkItem.Description : linkItem.LinkUrl)
+                                    </span>
+
+                                </a>
+                            }
+                        }
+                    </div>
+                }
+            </div>
+
+            @* BLOCCO IMMAGINI (Invariato) *@
+            @if (Model.Images != null && Model.Images.Count > 0)
+            {
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
+                    <div class="md:col-span-8 h-[300px] md:h-full rounded-xl overflow-hidden group">
+                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                             src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
+                    </div>
+                    <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-[150px] md:h-full">
+                        @if (Model.Images.Count > 1)
+                        {
+                            <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
+                                <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                     src="@Model.Images[1].ImageUrl" alt="Gallery 2" />
+                            </div>
+                        }
+                        @if (Model.Images.Count > 2)
+                        {
+                            <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
+                                <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                     src="@Model.Images[2].ImageUrl" alt="Gallery 3" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+
         </div>
     </article>
 
-    <section class="bg-dark-charcoal border-t border-white/5 py-24 px-6 md:px-20">
+   @*  <section class="bg-dark-charcoal border-t border-white/5 py-24 px-6 md:px-20">
         <div class="mx-auto max-w-[1400px]">
             <div class="flex justify-between items-end mb-12">
                 <div>
@@ -217,11 +284,11 @@
                     <p class="text-slate-500 mt-2 italic font-body">Continua l'esplorazione</p>
                 </div>
                 <a class="text-primary font-bold flex items-center gap-2 group" href="@Url.Action("Archive")">
-                    View All <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+                    @(langId == 2 ? "Guarda Tutti" : "View All") <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </a>
             </div>
 
-            @* Qui potresti inserire una lista di "Related" passata tramite ViewBag o PartialView *@
+            <!-- Qui potresti inserire una lista di "Related" passata tramite ViewBag o PartialView -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 opacity-50 pointer-events-none">
                 <div class="group">
                     <div class="aspect-[16/10] rounded-xl overflow-hidden mb-4 border border-white/10 bg-charcoal-light"></div>
@@ -229,5 +296,5 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> *@
 </main>

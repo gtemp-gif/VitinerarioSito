@@ -20,6 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Resources\Views\Shared\Privacy.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Privacy.resx</DependentUpon>
+    </Compile>
     <Compile Update="Resources\Views\Shared\SharedResource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -28,6 +33,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Resources\Views\Shared\Privacy.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Privacy.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\Views\Shared\SharedResource.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>

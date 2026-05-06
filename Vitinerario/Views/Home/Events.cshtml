@@ -1,9 +1,15 @@
 @using Vitinerario.Models
 @model List<Vitinerario.Models.Dtos.EventDto>
 
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Events";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 
     // Raggruppamento corretto usando la proprietà 'Date' del ViewModel
     var eventsByYear = Model
@@ -66,7 +72,8 @@
         <img src="https://www.geordie.app:441/VitinerarioGateTest/Images/Events/event_hero.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
         <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex items-end pb-20">
             <div class="max-w-7xl mx-auto px-6 w-full">
-                <span class="text-primary text-xs uppercase tracking-[0.3em] font-black mb-4 block">Our Calendar</span>
+              @*   <span class="text-primary text-xs uppercase tracking-[0.3em] font-black mb-4 block">
+                    Our Calendar</span> *@
                 <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">Exclusive <br>Experiences</h1>
             </div>
         </div>
@@ -74,9 +81,11 @@
 
     <div class="max-w-7xl mx-auto px-6 py-20">
         <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-16 border-b border-white/10 pb-10">
-            <h3 class="font-display text-2xl font-bold text-white uppercase tracking-widest">Select Year</h3>
+            <h3 class="font-display text-2xl font-bold text-white uppercase tracking-widest">
+                @(langId == 2 ? "Seleziona anno" : "Select Year")
+            </h3>
             <div class="flex flex-wrap gap-3">
-                <button class="filter-btn bg-primary text-white px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full" data-filter="all">All</button>
+                <button class="filter-btn bg-primary text-white px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full" data-filter="all">@Localizer[SharedResource.All]</button>
                 @foreach (var yearGroup in eventsByYear)
                 {
                     <button class="filter-btn text-white/50 border border-white/10 px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full hover:border-primary" data-filter="@yearGroup.Key">@yearGroup.Key</button>
@@ -90,7 +99,7 @@
             {
                 <section class="event-section mb-24" data-year="@yearGroup.Key">
                     <div class="flex items-center gap-6 mb-12">
-                        <h2 class="font-display text-3xl font-black text-white uppercase tracking-tighter">Events @yearGroup.Key</h2>
+                        <h2 class="font-display text-3xl font-black text-white uppercase tracking-tighter">@Localizer[SharedResource.Events] @yearGroup.Key</h2>
                         <div class="h-[1px] flex-1 bg-white/10"></div>
                     </div>
 
@@ -112,7 +121,7 @@
                                         @eventItem.Location
                                     </div>
                                     <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-block text-primary text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
-                                        View Details
+                                        @(langId == 2 ? "Vedi Dettagli" : "View Details")
                                     </a>
                                 </div>
                             </div>

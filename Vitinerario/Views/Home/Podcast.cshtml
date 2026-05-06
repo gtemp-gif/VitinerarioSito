@@ -1,3 +1,7 @@
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Vitinerario | The Podcast Archive";
@@ -99,44 +103,47 @@
             </div>
         </div>
     </header> *@
+    @* style=" background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Podcast/p_hero2.png');" *@
+    <section class="relative w-full h-[60vh] md:h-[70vh] flex items-center justify-center overflow-hidden mb-12">
 
-    <!-- Hero Section -->
-    <section class="mb-20 text-center max-w-3xl mx-auto">
-        @* <p class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4">A Sensory Journey</p> *@
-        <div class="max-w-7xl mx-auto px-6 w-full">
+        @* 1. Immagine di Sfondo (Ricordati di cambiare l'URL con l'immagine dedicata al podcast) *@
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Podcast/p_hero1.png');"></div>
+
+        @* 2. Gradiente Scuro *@
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        @* 3. Contenuto Centrato sopra lo sfondo *@
+        <div class="relative z-10 max-w-4xl mx-auto px-6 w-full text-center text-white mt-12">
+
             <p class="text-primary font-bold tracking-[0.2em] uppercase text-xs mb-4">A Sensory Journey</p>
-            <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">The Voice of Wine</h1>
-        </div>
-        @* <h1 class="text-5xl md:text-8xl font-black mb-6 leading-tight text-white">The Archive</h1> *@
-        <p class="text-lg text-stone-grey leading-relaxed max-w-2xl mx-auto">
-            An curated collection of architectural dialogues, sensory storytelling, and the exploration of form and function.
-        </p>
-        <div class="flex flex-wrap items-center justify-center gap-4 mt-10">
-            <!-- YouTube -->
-            <button type="button"
-                    onclick="window.open('https://www.youtube.com/%40vitinerario', '_blank')"
-                    class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3">
+            <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none mb-6">The Voice of Wine</h1>
 
-                <span class="material-symbols-outlined text-sm">play_circle</span>
-                Watch on YouTube
+            @* Ho cambiato 'text-stone-grey' in 'text-white/80' per garantire la leggibilità sull'immagine scura *@
+            <p class="text-lg text-white/80 leading-relaxed max-w-2xl mx-auto mb-10">
+                @Localizer[SharedResource.PodcastDescription]
+            </p>
 
-            </button>
+            <div class="flex flex-wrap items-center justify-center gap-4">
+                <button type="button"
+                        onclick="window.open('https://www.youtube.com/%40vitinerario', '_blank')"
+                        class="burgundy-button px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-transform hover:-translate-y-1">
+                    <span class="material-symbols-outlined text-sm">play_circle</span>
+                    Watch on YouTube
+                </button>
 
-            <!-- Spotify -->
-            <button type="button"
-                    onclick="window.open('https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX', '_blank')"
-                    class="border border-primary text-primary hover:bg-primary/10 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-colors">
-
-                <span class="material-symbols-outlined text-sm">headset</span>
-                Listen on Spotify
-
-            </button>
+                <button type="button"
+                        onclick="window.open('https://open.spotify.com/show/5LP8P9O8idGLi4e1oBwpbX', '_blank')"
+                        class="border border-primary text-primary hover:bg-primary/20 px-8 py-4 text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-3 transition-all hover:-translate-y-1 bg-black/30 backdrop-blur-sm">
+                    <span class="material-symbols-outlined text-sm">headset</span>
+                    Listen on Spotify
+                </button>
+            </div>
 
         </div>
     </section>
 
     <!-- Filter Bar -->
-    <div class="flex items-center justify-between border-b border-[#e6d0d7] dark:border-[#3d242b] mb-12">
+   @*  <div class="flex items-center justify-between border-b border-[#e6d0d7] dark:border-[#3d242b] mb-12">
         <div class="flex gap-10">
             <button class="border-b-2 border-primary pb-4 text-[10px] font-black uppercase tracking-widest text-white">All Episodes</button>
             <button class="text-[#964f65] hover:text-primary pb-4 text-sm font-bold transition-colors">Season 01</button>
@@ -147,9 +154,9 @@
             Showing 12 Episodes
         </div>
     </div>
-
+ *@
     <!-- Episode Row 01 -->
-    <section class="mb-24 group">
+  @*   <section class="mb-24 group">
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center gap-3">
                 <span class="text-primary font-bold text-sm tracking-widest">EPISODE 08</span>
@@ -231,9 +238,9 @@
             </div>
         </div>
     </section>
-
+ *@
     <!-- Episode Row 02 -->
-    <section class="mb-24 group">
+   @*  <section class="mb-24 group">
         <div class="flex flex-col gap-4 mb-6">
             <div class="flex items-center gap-3">
                 <span class="text-primary font-bold text-sm tracking-widest">EPISODE 07</span>
@@ -309,9 +316,9 @@
             </div>
         </div>
     </section>
-
+ *@
     <!-- Newsletter Footer Component -->
-    <footer class="mt-32 pt-20 border-t border-[#e6d0d7] dark:border-[#3d242b]">
+  @*   <footer class="mt-32 pt-20 border-t border-[#e6d0d7] dark:border-[#3d242b]">
         <div class="grid md:grid-cols-2 gap-16 items-center bg-[#1E1E1E] p-12 lg:p-20">
             <div>
                 <h2 class="text-4xl font-bold mb-6 text-white">Stay within the narrative.</h2>
@@ -329,7 +336,7 @@
                 <p class="mt-4 text-[10px] text-[#964f65] uppercase tracking-[0.2em] font-bold">Privacy ensured. Quarterly releases.</p>
             </div>
         </div>
-    @*     <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
+      <div class="mt-32 pb-12 flex flex-col md:flex-row justify-between items-center gap-8 border-t border-[#e6d0d7] dark:border-[#3d242b] pt-12">
             <div class="flex items-center gap-3">
                 <div class="text-primary size-6">
                     <svg fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
@@ -344,6 +351,6 @@
                 <a href="#" class="hover:text-primary transition-colors">Spotify</a>
             </div>
             <p class="text-xs text-[#964f65]">© 2024 Vitinerario Studio. All rights reserved.</p>
-        </div> *@
-    </footer>
+        </div> 
+    </footer> *@
 </main>

@@ -1,7 +1,176 @@
 @using Vitinerario.Models.Dtos
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
 @{
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = "Archive";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
+
+    var articles = ViewBag.Articles as List<ContentDto> ?? new List<ContentDto>();
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d11a51",
+                        "dark-charcoal": "#121212",
+                        "charcoal-light": "#1e1e1e",
+                    },
+                    fontFamily: {
+                        "body": ["Roboto", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "lovelo": ["Montserrat", "sans-serif"]
+                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
+                    }
+                },
+            },
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        @@layer base {
+            body {
+                @@apply font-body bg-dark-charcoal text-white/90 antialiased overflow-x-hidden;
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6, .nav-brand {
+            @@apply font-display tracking-architectural uppercase;
+        }
+
+        .text-balance {
+            text-wrap: balance;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(to top, #121212 5%, rgba(18, 18, 18, 0.4) 40%, rgba(18, 18, 18, 0.1) 100%);
+        }
+    </style>
+}
+
+<main class="w-full">
+    <section class="relative w-full h-[60vh] md:h-[70vh] flex items-end overflow-hidden">
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://www.geordie.app:441/VitinerarioGateTest/Images/Articles/hero.png');"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+
+        <div class="relative max-w-7xl mx-auto px-6 md:px-12 pb-16 w-full text-white">
+            <div class="max-w-3xl space-y-6">
+                <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">@Localizer[SharedResource.HeroArchive]</h1>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 md:px-12 py-12">
+        <div class="h-px w-full bg-white/10"></div>
+    </section>
+
+    <section class="max-w-7xl mx-auto px-6 md:px-12 space-y-24 pb-32">
+        @if (articles != null && articles.Any())
+        {
+            int articleCounter = articles.Count();
+
+            @foreach (var item in articles)
+            {
+                var previewText = !string.IsNullOrEmpty(item.Text) && item.Text.Length > 150
+                ? item.Text.Substring(0, 150) + "..."
+                : item.Text;
+
+                <article class="flex flex-col md:flex-row gap-12 group">
+                    <div class="w-full md:w-1/2 overflow-hidden rounded-xl aspect-[16/10] bg-charcoal-light">
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })">
+                            <img src="@item.CoverImage" alt="@item.Title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        </a>
+                    </div>
+
+                    <div class="w-full md:w-1/2 flex flex-col justify-center space-y-6">
+                        <div class="flex items-center gap-4 text-primary text-xs font-bold tracking-[0.2em] uppercase">
+                            <span>@Localizer[SharedResource.Article] #@articleCounter.ToString("D2")</span>
+                            <span class="w-8 h-[1px] bg-primary/30"></span>
+                            <span class="text-white/40">@item.PublishDate.ToString("MMM dd, yyyy")</span>
+                        </div>
+
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })">
+                            <h3 class="text-3xl md:text-5xl font-black leading-tight group-hover:text-primary transition-colors uppercase">
+                                @item.Title
+                            </h3>
+                        </a>
+
+                        <p class="text-white/60 leading-relaxed text-lg line-clamp-3">
+                            @Html.Raw(previewText)
+                        </p>
+
+                        <a href="@Url.Action("Article", "Home", new { id = item.Id })"
+                           class="inline-flex items-center gap-2 text-primary font-black uppercase text-xs tracking-widest hover:gap-4 transition-all">
+                            @(langId == 2 ? "Leggi di più" : "Read More")
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                        </a>
+                    </div>
+                </article>
+
+                articleCounter--;
+            }
+        }
+        else
+        {
+            <div class="py-20 text-center">
+                <h3 class="text-3xl font-black uppercase text-white/20">@(langId == 2 ? "Nessun articolo disponibile" : "No articles available")</h3>
+            </div>
+        }
+    </section>
+
+    @if (totalPages > 1)
+    {
+        <section class="max-w-7xl mx-auto px-6 md:px-12 pb-32">
+            <div class="flex items-center justify-center gap-12 border-t border-white/10 pt-16">
+
+                <a href="@(currentPage > 1 ? Url.Action("Archive", new { page = currentPage - 1 }) : "#")"
+                   class="flex items-center gap-3 transition-colors uppercase text-[10px] font-black tracking-widest @(currentPage == 1 ? "text-white/10 pointer-events-none" : "text-white/40 hover:text-primary")">
+                    <span class="material-symbols-outlined text-sm">west</span> Prev
+                </a>
+
+                <div class="flex items-center gap-8">
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        if (i == currentPage)
+                        {
+                            <span class="text-primary font-black text-lg border-b-2 border-primary pb-1">@i.ToString("D2")</span>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Archive", new { page = i })"
+                               class="text-white/30 hover:text-white transition-colors font-bold">
+                                @i.ToString("D2")
+                            </a>
+                        }
+                    }
+                </div>
+
+                <a href="@(currentPage<totalPages? Url.Action("Archive", new { page = currentPage + 1 }) : "#")"
+                   class="flex items-center gap-3 transition-colors uppercase text-[10px] font-black tracking-widest @(currentPage >= totalPages ? "text-white/10 pointer-events-none" : "text-white hover:text-primary")">
+                    Next <span class="material-symbols-outlined text-sm">east</span>
+                </a>
+            </div>
+        </section>
+    }
+</main>
+@* @using Vitinerario.Models.Dtos
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "Archive";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 
     // Recupero dati e logica paginazione
     var articles = ViewBag.Articles as List<ContentDto> ?? new List<ContentDto>();
@@ -113,7 +282,7 @@
 
                         <a href="@Url.Action("Article", "Home", new { id = item.Id })"
                            class="inline-flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest hover:gap-4 transition-all">
-                            Read More
+                            @(langId == 2 ? "Leggi di più" : "Read More")
                             <span class="material-symbols-outlined text-sm">arrow_forward</span>
                         </a>
                     </div>
@@ -125,7 +294,7 @@
         else
         {
             <div class="py-20 text-center">
-                <h3 class="text-3xl font-black uppercase text-white/20">Nessun Articolo Disponibile</h3>
+                <h3 class="text-3xl font-black uppercase text-white/20">@(langId == 2 ? "Nessun articolo disponibile" : "No articles available")</h3>
             </div>
         }
     </section>
@@ -164,4 +333,4 @@
             </div>
         </section>
     }
-</main>
+</main> *@
