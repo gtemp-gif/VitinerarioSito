@@ -119,21 +119,32 @@
 		.hover\:bg-amber-gold:hover {
 			background-color: #FFBF00;
 		}
+
+		/* FIX PER CHROME AUTOFILL: Evita lo sfondo bianco brutto quando si autocompila il form */
+		input:-webkit-autofill,
+		input:-webkit-autofill:hover,
+		input:-webkit-autofill:focus,
+		input:-webkit-autofill:active {
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: #ffffff;
+			transition: background-color 5000s ease-in-out 0s;
+			box-shadow: inset 0 0 20px 20px transparent;
+		}
 	</style>
 }
 
 <section class="relative h-[92vh] w-full overflow-hidden">
-	
+
 	<img src="~/Assets/img/hero_home.webp" alt="Vineyard at Sunset" fetchpriority="high" class="absolute inset-0 w-full h-full object-cover">
-	
-		<div class="absolute inset-0 hero-overlay flex items-end pb-32">
-			<div class="max-w-7xl mx-auto px-6 md:px-12 w-full text-white">
-				<div class="max-w-4xl">
-					<h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">@Localizer[SharedResource.TitleHeroHome] </h1>
-				</div>
+
+	<div class="absolute inset-0 hero-overlay flex items-end pb-32">
+		<div class="max-w-7xl mx-auto px-6 md:px-12 w-full text-white">
+			<div class="max-w-4xl">
+				<h1 class="text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance">@Localizer[SharedResource.TitleHeroHome] </h1>
 			</div>
 		</div>
-	
+	</div>
+
 </section>
 <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
 	<div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
@@ -273,7 +284,7 @@
 					<div class="flex flex-col flex-grow">
 						<a href="@finalUrl" target="@linkTarget" class="z-20">
 							<h4 class="font-display text-xl font-black mb-3 leading-tight group-hover:text-primary transition-colors uppercase tracking-tight">
-									@Html.Raw(newsItem.Title)
+								@Html.Raw(newsItem.Title)
 							</h4>
 						</a>
 						<p class="font-refined text-sm text-white/50 leading-relaxed mb-4 line-clamp-3">
@@ -454,68 +465,6 @@
 		</a>
 	</div>
 
-   @*  <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-		@if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents).Any())
-		{
-			@foreach (var evt in (List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents)
-			{
-				<div class="group relative aspect-square overflow-hidden bg-dark-charcoal rounded-xl">
-					<img src="@evt.CoverImage" alt="@evt.Title" class="w-full h-full object-cover opacity-90 group-hover:opacity-50 group-hover:scale-105 transition-all duration-1000">
-
-					<div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none"></div>
-
-					<div class="absolute inset-0 flex flex-col justify-end p-8 z-10">
-
-						@{
-							// LOGICA DI SEPARAZIONE (Data e Nome)
-							string datePart = "";
-							string namePart = evt.Title;
-
-							if (evt.Title.Contains(" - "))
-							{
-								var parts = evt.Title.Split(new[] { " - " }, 2, StringSplitOptions.None);
-								datePart = parts[0].Trim();
-								namePart = parts[1].Trim();
-							}
-							else if (evt.Title.Contains("_"))
-							{
-								var parts = evt.Title.Split(new[] { "_" }, 2, StringSplitOptions.None);
-								datePart = parts[0].Trim();
-								namePart = parts[1].Trim();
-							}
-						}
-
-						<span class="text-white/60 text-[9px] uppercase font-bold mb-3 tracking-[0.2em] line-clamp-1 flex items-center">
-							<span class="material-symbols-outlined text-[12px] mr-1">location_on</span>
-							@evt.Location
-						</span>
-
-						@if (!string.IsNullOrEmpty(datePart))
-						{
-							<span class="block text-primary text-[10px] uppercase font-black tracking-widest mb-1">
-								@datePart
-							</span>
-						}
-
-						<h5 class="text-white text-2xl font-bold italic mb-6 leading-tight uppercase drop-shadow-md line-clamp-2">
-							@namePart
-						</h5>
-
-						<a href="@Url.Action("EventDetails", "Home", new { id = evt.Id })"
-						   class="text-white text-[10px] uppercase font-black border-b-2 border-primary/40 pb-2 w-fit hover:border-primary hover:text-primary transition-all">
-							@Localizer[SharedResource.BtnDiscoverMore]
-						</a>
-					</div>
-				</div>
-			}
-		}
-		else
-		{
-			<div class="col-span-full py-10">
-				<p class="text-white/30 italic text-center font-body">Nessun evento disponibile in questo momento.</p>
-			</div>
-		}
-	</div> *@
 	<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
 		@if (ViewBag.LatestEvents != null && ((List<Vitinerario.Models.Dtos.EventDto>)ViewBag.LatestEvents).Any())
 		{
@@ -565,7 +514,7 @@
 						}
 
 						<h5 class="text-white text-2xl md:text-3xl font-bold italic mb-6 leading-tight uppercase drop-shadow-xl line-clamp-2">
-								@Html.Raw(namePart)
+							@Html.Raw(namePart)
 						</h5>
 
 						<div class="flex items-center gap-2 text-white font-black uppercase text-[10px] tracking-widest border-b-2 border-primary/40 pb-2 w-fit group-hover:border-primary group-hover:text-primary transition-all">
@@ -635,7 +584,7 @@
 				</a>
 				<a href="https://www.youtube.com/%40vitinerario" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-3 bg-transparent border-2 border-primary hover:bg-primary text-white px-8 py-4 rounded-full text-xs uppercase tracking-widest font-bold transition-all transform hover:-translate-y-1">
 					<span class="material-icons text-xl">play_circle_filled</span>
-				   @Localizer[SharedResource.BtnWatchYoutube]
+					@Localizer[SharedResource.BtnWatchYoutube]
 				</a>
 			</div>
 		</div>
@@ -656,20 +605,11 @@
 		</div>
 	</div>
 	<div class="bg-charcoal-light p-12 border border-white/5 relative">
-		@if (TempData["ContactSuccess"] != null)
-		{
-			<div class="absolute -top-16 left-0 right-0 bg-green-500/20 border border-green-500/50 text-green-400 p-4 text-center text-sm font-bold uppercase tracking-widest">
-				@TempData["ContactSuccess"]
-			</div>
-		}
-		@if (TempData["ContactError"] != null)
-		{
-			<div class="absolute -top-16 left-0 right-0 bg-red-500/20 border border-red-500/50 text-red-400 p-4 text-center text-sm font-bold uppercase tracking-widest">
-				@TempData["ContactError"]
-			</div>
-		}
 
 		<form asp-controller="Home" asp-action="SubmitContactForm" method="post" class="space-y-8">
+			<!-- CAMPO NASCOSTO PER IL REDIRECT -->
+			<input type="hidden" name="returnUrl" value="/Home/Index" />
+
 			<div class="group relative">
 				<label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">@Localizer[SharedResource.LabelFullName]</label>
 				<input name="FullName" required type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="@Localizer[SharedResource.PlaceholderName]">
@@ -685,17 +625,20 @@
 			<button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
 				@Localizer[SharedResource.BtnSendMessage]
 			</button>
+
+			<!-- FEEDBACK MESSAGGI -->
+			@if (TempData["ContactSuccess"] != null)
+			{
+				<div class="mt-6 bg-primary/20 border border-primary/50 text-white p-4 text-center text-xs font-bold uppercase tracking-widest">
+					@TempData["ContactSuccess"]
+				</div>
+			}
+			@if (TempData["ContactError"] != null)
+			{
+				<div class="mt-6 bg-red-600/20 border border-red-600/50 text-white p-4 text-center text-xs font-bold uppercase tracking-widest">
+					@TempData["ContactError"]
+				</div>
+			}
 		</form>
 	</div>
 </section>
-@* <section class="bg-charcoal-light py-32 border-t border-white/5">
-	<div class="max-w-4xl mx-auto px-6 text-center">
-		<h2 class="text-4xl font-black mb-6 uppercase tracking-tight">Join the Vitinerario Circle</h2>
-		<p class="text-white/50 mb-12 text-lg font-light max-w-2xl mx-auto">Receive our weekly curated digest of wine culture, travel itineraries, and exclusive vintage releases.</p>
-		<form class="flex flex-col md:flex-row gap-0 max-w-2xl mx-auto border border-white/10 p-2 bg-dark-charcoal">
-			<input type="email" class="flex-1 bg-transparent border-none focus:ring-0 py-4 px-6 text-sm placeholder:text-white/20" placeholder="EMAIL ADDRESS">
-			<button class="bg-primary text-white px-10 py-4 text-[11px] uppercase tracking-widest-plus font-black hover:bg-opacity-90 transition-all">Join Now</button>
-		</form>
-		<p class="text-[9px] text-white/30 mt-8 uppercase tracking-widest-plus">Premium Editorial. No Spam. Unsubscribe at any time.</p>
-	</div>
-</section> *@

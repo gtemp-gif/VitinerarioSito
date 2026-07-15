@@ -1,0 +1,312 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Vitinerario.Models.Dtos
+@using Vitinerario.Resources.Views.Shared
+@inject IViewLocalizer Localizer
+
+@{
+    Layout = "_LayoutVitinerario";
+    ViewData["Title"] = "I Nostri Partner | Vitinerario";
+    int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
+
+    // Recupera la lista partner da ViewBag e assicurati che non sia null
+    var partners = ViewBag.Partners as List<PartnerDto> ?? new List<PartnerDto>();
+
+    // Estrae dinamicamente le categorie UNIVOCHE dai partner presenti nel DB per creare i filtri
+    var categories = partners
+        .Where(p => !string.IsNullOrWhiteSpace(p.Category))
+        .Select(p => p.Category.Trim())
+        .Distinct()
+        .OrderBy(c => c)
+        .ToList();
+}
+
+@section TailwindConfig {
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-background": "#A8A29E",
+                        "surface-container": "#1e1e1e",
+                        "on-surface-variant": "#8a8481",
+                        "primary": "#d31a53",
+                        "background": "#121212",
+                        "surface-container-low": "#181818"
+                    },
+                    fontFamily: {
+                        "headline": ["Montserrat", "sans-serif"],
+                        "display": ["Montserrat", "sans-serif"],
+                        "body": ["Roboto", "sans-serif"]
+                    },
+                    letterSpacing: {
+                        "widest-plus": "0.3em"
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+@section Styles {
+    <style type="text/tailwindcss">
+        /* Transizione base card per JS */
+        .partner-card-base {
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .filter-btn.active {
+            color: #d31a53;
+            border-bottom: 2px solid #d31a53;
+        }
+
+        /*
+                   FIX PER CHROME AUTOFILL - TRUCCO DEL RITARDO DELLA TRANSIZIONE E COLORE TESTO
+                   Questo evita che Chrome metta lo sfondo bianco o azzurro e forza il testo al bianco.
+                */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: #ffffff;
+            transition: background-color 5000s ease-in-out 0s;
+            box-shadow: inset 0 0 20px 20px transparent;
+        }
+    </style>
+}
+
+<main class="pt-20">
+    <!-- Hero Section -->
+    <section class="relative h-[614px] flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-b from-[#121212]/40 via-[#121212]/80 to-[#121212] z-10"></div>
+            <div class="w-full h-full bg-cover bg-fixed bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDAmnFFjg_mEvcA3fQHhdmZkbXuC0kWvYS1f36-z217l9uLGGdOx7EnfxzkdqCKcMYQTRqNqj8Q3CNk3JFkfFqhEKggJQl66p2SSfBl0vouWncSKXhM5ry5m1mU5rxZb_IUE16F1F5mBlXVqVG_8LVyn4QukwjCFN7hUaOtsAiUT7nXPI2LeXWQxImuas07hRJZ_J3MtDOU8ucKlHfHHylL2KYernpxpPJPCzix5dDoTJ59WGOeeYvac8ueXWwF6EoOc6ZBhgYt1KgL')"></div>
+        </div>
+        <div class="relative z-20 text-center px-6 lg:px-20">
+            <h1 class="text-6xl md:text-8xl lg:text-[6rem] font-black font-headline uppercase tracking-tighter text-white mb-6 leading-none">
+                @(langId == 2 ? "I Nostri" : "Our") <span class="text-primary">Partner</span>
+            </h1>
+            <p class="max-w-2xl mx-auto font-body text-lg md:text-xl text-on-background/80 font-light italic leading-relaxed">
+                @(langId == 2
+                    ? "Un network di eccellenze. Collaboriamo con le migliori realtà del territorio italiano per offrire esperienze enogastronomiche inimitabili."
+                    : "A network of excellence. We collaborate with the best entities across the Italian territory to offer inimitable food and wine experiences.")
+            </p>
+        </div>
+    </section>
+
+    <!-- Filter Bar -->
+    <section class="px-6 lg:px-20 py-12">
+        <div class="flex flex-wrap justify-center gap-8 md:gap-16 border-b border-white/5 pb-6">
+            <button class="filter-btn active font-headline uppercase tracking-[0.2em] text-[12px] font-bold text-on-background transition-colors hover:text-primary" data-category="TUTTI" onclick="filterPartners('TUTTI')">
+                @(langId == 2 ? "Tutti" : "All")
+            </button>
+
+            <!-- Generazione dinamica categorie -->
+            @foreach (var cat in categories)
+            {
+                <button class="filter-btn font-headline uppercase tracking-[0.2em] text-[12px] font-bold text-on-background transition-colors hover:text-primary" data-category="@cat.ToUpper()" onclick="filterPartners('@cat.ToUpper()')">
+                    @cat
+                </button>
+            }
+        </div>
+    </section>
+
+    <!-- Partner Grid -->
+    <section class="px-6 lg:px-20 pb-24 min-h-[40vh]">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="partnerGrid">
+
+            @if (partners.Any())
+            {
+                @foreach (var partner in partners)
+                {
+                    string pCategory = !string.IsNullOrWhiteSpace(partner.Category) ? partner.Category.ToUpper() : "ALTRO";
+                    bool hasLink = !string.IsNullOrEmpty(partner.LinkUrl);
+                    string linkTarget = hasLink ? "_blank" : "_self";
+
+                    string cardClasses = hasLink
+                        ? "partner-card-base group border border-white/5 bg-surface-container p-8 relative overflow-hidden flex flex-col hover:border-primary hover:bg-[#242424] hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                        : "partner-card-base border border-white/5 bg-surface-container p-8 relative overflow-hidden flex flex-col cursor-default";
+
+                    string baseTitleClass = "font-headline font-black text-white block leading-tight ";
+                    if (hasLink) { baseTitleClass += "group-hover:text-primary transition-colors "; }
+
+                    string titleSizeClass = "text-2xl";
+                    if (!string.IsNullOrEmpty(partner.Description))
+                    {
+                        if (partner.Description.Length > 35)
+                        {
+                            titleSizeClass = "text-base";
+                        }
+                        else if (partner.Description.Length > 20)
+                        {
+                            titleSizeClass = "text-lg";
+                        }
+                    }
+                    string titleClasses = baseTitleClass + titleSizeClass;
+
+                    @if (hasLink)
+                    {
+                        <a href="@partner.LinkUrl" target="@linkTarget" class="@cardClasses js-card-target" data-category="@pCategory">
+                            <div class="h-24 w-full flex items-center justify-center mb-8">
+                                @if (!string.IsNullOrEmpty(partner.ImageUrl))
+                                {
+                                    <img src="@partner.ImageUrl" alt="@partner.Description" class="max-h-full max-w-full object-contain drop-shadow-md">
+                                }
+                                else
+                                {
+                                    <span class="material-symbols-outlined text-5xl text-white/20">storefront</span>
+                                }
+                            </div>
+                            <div class="border-t border-white/10 pt-6 mt-auto">
+                                <span class="font-headline uppercase tracking-[0.1em] text-[10px] text-primary mb-2 block">
+                                    @(string.IsNullOrWhiteSpace(partner.Category) ? "Partner" : partner.Category)
+                                </span>
+                                <h3 class="@titleClasses" title="@partner.Description">
+                                    @partner.Description
+                                </h3>
+                                @if (!string.IsNullOrWhiteSpace(partner.Area))
+                                {
+                                    <p class="text-on-surface-variant text-sm mt-2 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        @partner.Area
+                                    </p>
+                                }
+                            </div>
+                        </a>
+                    }
+                    else
+                    {
+                        <div class="@cardClasses js-card-target" data-category="@pCategory">
+                            <div class="h-24 w-full flex items-center justify-center mb-8">
+                                @if (!string.IsNullOrEmpty(partner.ImageUrl))
+                                {
+                                    <img src="@partner.ImageUrl" alt="@partner.Description" class="max-h-full max-w-full object-contain drop-shadow-md">
+                                }
+                                else
+                                {
+                                    <span class="material-symbols-outlined text-5xl text-white/20">storefront</span>
+                                }
+                            </div>
+                            <div class="border-t border-white/10 pt-6 mt-auto">
+                                <span class="font-headline uppercase tracking-[0.1em] text-[10px] text-primary mb-2 block">
+                                    @(string.IsNullOrWhiteSpace(partner.Category) ? "Partner" : partner.Category)
+                                </span>
+                                <h3 class="@titleClasses" title="@partner.Description">
+                                    @partner.Description
+                                </h3>
+                                @if (!string.IsNullOrWhiteSpace(partner.Area))
+                                {
+                                    <p class="text-on-surface-variant text-sm mt-2 flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px]">location_on</span>
+                                        @partner.Area
+                                    </p>
+                                }
+                            </div>
+                        </div>
+                    }
+                }
+            }
+            else
+            {
+                <div class="col-span-full py-10 text-center">
+                    <p class="text-white/40 italic font-light">
+                        @(langId == 2 ? "Nessun partner caricato al momento." : "No partners uploaded at the moment.")
+                    </p>
+                </div>
+            }
+
+        </div>
+    </section>
+
+    <!-- Final CTA Section con Form di Contatto -->
+    <section id="contact-section" class="relative max-w-7xl mx-auto px-6 md:px-12 py-24 grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-24 border-t border-white/5">
+
+        <div class="flex flex-col justify-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-black font-headline uppercase tracking-tighter text-white mb-6 leading-[1.1]">
+                @(langId == 2 ? "Vuoi diventare nostro" : "Want to become our") <span class="text-primary">Partner?</span>
+            </h2>
+            <p class="text-on-background text-lg md:text-xl font-light leading-relaxed max-w-md">
+                @(langId == 2
+                    ? "Siamo sempre alla ricerca di nuove eccellenze per ampliare la nostra rete e creare valore nel territorio. Se la tua realtà condivide la nostra visione di qualità e autenticità, scrivici oggi stesso."
+                    : "We are always looking for new excellence to expand our network and create value in the territory. If your reality shares our vision of quality and authenticity, write to us today.")
+            </p>
+            <div class="mt-12 space-y-4">
+                <div class="flex items-center space-x-4 text-white/60">
+                    <span class="material-symbols-outlined text-primary">mail</span>
+                    <span class="text-xs uppercase tracking-widest font-bold">info@vitinerario.it</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-surface-container p-8 md:p-12 border border-white/5 relative z-10">
+            <form asp-controller="Home" asp-action="SubmitContactForm" method="post" class="space-y-8">
+                <!-- CAMPO NASCOSTO PER IL REDIRECT -->
+                <input type="hidden" name="returnUrl" value="/Home/Partners" />
+
+                <div class="group relative">
+                    <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">@Localizer[SharedResource.LabelFullName]</label>
+                    <input name="FullName" required type="text" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="@Localizer[SharedResource.PlaceholderName]">
+                </div>
+                <div class="group relative">
+                    <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">Email</label>
+                    <input name="Email" required type="email" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 tracking-widest-plus" placeholder="mariorossi@azienda.com">
+                </div>
+                <div class="group relative">
+                    <label class="text-[9px] uppercase tracking-widest-plus font-black text-white/40 block mb-2 transition-colors group-focus-within:text-primary">@Localizer[SharedResource.Message]</label>
+                    <textarea name="Message" required rows="4" class="w-full bg-transparent border-0 border-b border-white/10 px-0 py-3 text-sm focus:ring-0 focus:border-primary transition-all placeholder:text-white/5 resize-none tracking-widest-plus" placeholder="@Localizer[SharedResource.PlaceholderMessage]"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-5 text-[10px] uppercase tracking-widest-plus font-black transition-all">
+                    @Localizer[SharedResource.BtnSendMessage]
+                </button>
+
+                <!-- FEEDBACK MESSAGGI (Stile vetro, colore brand, testo bianco) -->
+                @if (TempData["ContactSuccess"] != null)
+                {
+                    <div class="mt-6 bg-primary/20 border border-primary/50 text-white p-4 text-center text-xs font-bold uppercase tracking-widest">
+                        @TempData["ContactSuccess"]
+                    </div>
+                }
+                @if (TempData["ContactError"] != null)
+                {
+                    <div class="mt-6 bg-red-600/20 border border-red-600/50 text-white p-4 text-center text-xs font-bold uppercase tracking-widest">
+                        @TempData["ContactError"]
+                    </div>
+                }
+            </form>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        function filterPartners(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.js-card-target');
+
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            cards.forEach(card => {
+                if (category === 'TUTTI' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                    setTimeout(() => {
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 10);
+                } else {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        card.style.display = 'none';
+                    }, 500);
+                }
+            });
+        }
+    </script>
+}

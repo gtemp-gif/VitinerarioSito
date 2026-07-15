@@ -4,12 +4,12 @@
 @using Vitinerario.Resources.Views.Shared
 @inject IViewLocalizer Localizer
 @{
-        string? urlPolicy = Url.ActionLink("CookiePolicy", "Home");
+    string? urlPolicy = Url.ActionLink("CookiePolicy", "Home");
 
-        // --- LOGICA PER LO STATO ATTIVO DELLA NAVBAR ---
-        var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
-        var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
-        bool isHomePage = (currentController == "Home" && currentAction == "Index");
+    // --- LOGICA PER LO STATO ATTIVO DELLA NAVBAR ---
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString() ?? "";
+    bool isHomePage = (currentController == "Home" && currentAction == "Index");
 }
 <head>
     <meta charset="utf-8" />
@@ -30,15 +30,15 @@
 
     <link href="https://fonts.cdnfonts.com/css/lovelo" rel="stylesheet">
     <link href="~/css/site.css" rel="stylesheet">
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1WVDPPBXD"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-T1WVDPPBXD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
 
-            gtag('config', 'G-T1WVDPPBXD');
-        </script>
+        gtag('config', 'G-T1WVDPPBXD');
+    </script>
     @await RenderSectionAsync("TailwindConfig", required: false)
 
     @await RenderSectionAsync("Styles", required: false)
@@ -46,43 +46,43 @@
     <style>
         /* FORZATURA FONT GLOBALE */
         .font-display {
-            font-family: 'Lovelo', sans-serif !important;
+        font-family: 'Lovelo', sans-serif !important;
         }
 
         .font-refined {
-            font-family: 'Montserrat', sans-serif !important;
+        font-family: 'Montserrat', sans-serif !important;
         }
 
         /* Evita lo scroll orizzontale */
         body {
-            overflow-x: hidden;
-            width: 100%;
-            position: relative;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
         }
 
         #floating-nav {
-            position: fixed;
-            bottom: 2rem;
-            right: 2.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            z-index: 1040;
-            transition: opacity 0.3s ease;
-            opacity: 0;
-            pointer-events: none;
+        position: fixed;
+        bottom: 2rem;
+        right: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        z-index: 1040;
+        transition: opacity 0.3s ease;
+        opacity: 0;
+        pointer-events: none;
         }
 
-            #floating-nav.visible {
-                opacity: 1;
-                pointer-events: auto;
-            }
+        #floating-nav.visible {
+        opacity: 1;
+        pointer-events: auto;
+        }
 
         @@media (max-width: 768px) {
-            #floating-nav {
-                bottom: 2rem;
-                right: 1.5rem;
-            }
+        #floating-nav {
+        bottom: 2rem;
+        right: 1.5rem;
+        }
         }
     </style>
 </head>
@@ -106,6 +106,10 @@
                 }
                 <a class="transition-colors @(currentAction == "Archive" || currentAction == "Article" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Archive", "Home")">@Localizer[SharedResource.Articles]</a>
                 <a class="transition-colors @(currentAction == "Events" || currentAction == "Event" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Events", "Home")">@Localizer[SharedResource.Events]</a>
+                <!-- Link ai Partner (Desktop) -->
+                <a class="transition-colors @(currentAction == "Partners" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Partners", "Home")">
+                    @(currentLangId == 2 ? "Partner" : "Partners")
+                </a>
                 <a class="transition-colors @(currentAction == "Podcast" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Podcast", "Home")">@Localizer[SharedResource.Podcast]</a>
                 <a class="transition-colors hover:text-primary" href="@Url.Action("Index", "Home")#app-section">App</a>
             </nav>
@@ -232,6 +236,10 @@
             <a class="mobile-link transition-colors @(isHomePage ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Index", "Home")">Home</a>
             <a class="mobile-link transition-colors @(currentAction == "Archive" || currentAction == "Article" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Archive", "Home")">@Localizer[SharedResource.Articles]</a>
             <a class="mobile-link transition-colors @(currentAction == "Events" || currentAction == "Event" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Events", "Home")">@Localizer[SharedResource.Events]</a>
+            <!-- Link ai Partner (Mobile) -->
+            <a class="mobile-link transition-colors @(currentAction == "Partners" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Partners", "Home")">
+                @(currentLangId == 2 ? "Partner" : "Partners")
+            </a>
             <a class="mobile-link transition-colors @(currentAction == "Podcast" ? "text-primary font-bold" : "hover:text-primary")" href="@Url.Action("Podcast", "Home")">@Localizer[SharedResource.Podcast]</a>
             <a class="mobile-link transition-colors hover:text-primary" href="@Url.Action("Index", "Home")#app-section">App</a>
         </nav>
@@ -269,95 +277,95 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const nav = document.getElementById('floating-nav');
-            const btnDown = document.getElementById('btn-down');
-            const footer = document.querySelector('footer');
-            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            const closeMenuBtn = document.getElementById('close-menu-btn');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const nav = document.getElementById('floating-nav');
+        const btnDown = document.getElementById('btn-down');
+        const footer = document.querySelector('footer');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
 
-            if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
-                mobileMenuBtn.addEventListener('click', () => {
-                    mobileMenuOverlay.classList.remove('hidden');
-                    mobileMenuOverlay.classList.add('flex');
-                    document.body.style.overflow = 'hidden';
-                });
+        if(mobileMenuBtn && closeMenuBtn && mobileMenuOverlay) {
+        mobileMenuBtn.addEventListener('click', () => {
+        mobileMenuOverlay.classList.remove('hidden');
+        mobileMenuOverlay.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        });
 
-                closeMenuBtn.addEventListener('click', () => {
-                    mobileMenuOverlay.classList.add('hidden');
-                    mobileMenuOverlay.classList.remove('flex');
-                    document.body.style.overflow = '';
-                });
+        closeMenuBtn.addEventListener('click', () => {
+        mobileMenuOverlay.classList.add('hidden');
+        mobileMenuOverlay.classList.remove('flex');
+        document.body.style.overflow = '';
+        });
 
-                document.querySelectorAll('.mobile-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        mobileMenuOverlay.classList.add('hidden');
-                        mobileMenuOverlay.classList.remove('flex');
-                        document.body.style.overflow = '';
-                    });
-                });
-            }
+        document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+        mobileMenuOverlay.classList.add('hidden');
+        mobileMenuOverlay.classList.remove('flex');
+        document.body.style.overflow = '';
+        });
+        });
+        }
 
-            document.addEventListener('scroll', function() {
-                const scrollY = window.scrollY;
-                if (scrollY > 300) { nav.classList.add('visible'); }
-                else { nav.classList.remove('visible'); }
+        document.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        if (scrollY > 300) { nav.classList.add('visible'); }
+        else { nav.classList.remove('visible'); }
 
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollPercent = docHeight > 0 ? (scrollY / docHeight) : 0;
-                const offsetUp = 289 - (scrollPercent * 289);
-                const offsetDown = scrollPercent * 289;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? (scrollY / docHeight) : 0;
+        const offsetUp = 289 - (scrollPercent * 289);
+        const offsetDown = scrollPercent * 289;
 
-                if(document.getElementById('progress-up')) document.getElementById('progress-up').style.strokeDashoffset = offsetUp;
-                if(document.getElementById('progress-down')) document.getElementById('progress-down').style.strokeDashoffset = offsetDown;
+        if(document.getElementById('progress-up')) document.getElementById('progress-up').style.strokeDashoffset = offsetUp;
+        if(document.getElementById('progress-down')) document.getElementById('progress-down').style.strokeDashoffset = offsetDown;
 
-                if (footer) {
-                    const footerRect = footer.getBoundingClientRect();
-                    if (footerRect.top < window.innerHeight) { btnDown.style.display = 'none'; }
-                    else { btnDown.style.display = 'flex'; }
-                }
-            });
+        if (footer) {
+        const footerRect = footer.getBoundingClientRect();
+        if (footerRect.top < window.innerHeight) { btnDown.style.display = 'none'; }
+        else { btnDown.style.display = 'flex'; }
+        }
+        });
 
-            handleCookiesBanner();
+        handleCookiesBanner();
         });
 
         function handleCookiesBanner() {
-            const cookiesBanner = document.querySelector(".cookies-banner-container");
-            if (!cookiesBanner) return;
-            if (!getCookie("accepted_cookies")) {
-                cookiesBanner.style.display = "block";
-                const acceptBtn = cookiesBanner.querySelector(".cookies-banner__accept-btn button");
-                if (acceptBtn) {
-                    acceptBtn.addEventListener("click", function () {
-                        setCookie("accepted_cookies", "true", 365);
-                        cookiesBanner.style.transition = "transform 0.5s ease, opacity 0.5s ease";
-                        cookiesBanner.style.transform = "translateY(100%)";
-                        cookiesBanner.style.opacity = "0";
-                        setTimeout(() => cookiesBanner.remove(), 500);
-                    });
-                }
-            } else { cookiesBanner.remove(); }
+        const cookiesBanner = document.querySelector(".cookies-banner-container");
+        if (!cookiesBanner) return;
+        if (!getCookie("accepted_cookies")) {
+        cookiesBanner.style.display = "block";
+        const acceptBtn = cookiesBanner.querySelector(".cookies-banner__accept-btn button");
+        if (acceptBtn) {
+        acceptBtn.addEventListener("click", function () {
+        setCookie("accepted_cookies", "true", 365);
+        cookiesBanner.style.transition = "transform 0.5s ease, opacity 0.5s ease";
+        cookiesBanner.style.transform = "translateY(100%)";
+        cookiesBanner.style.opacity = "0";
+        setTimeout(() => cookiesBanner.remove(), 500);
+        });
+        }
+        } else { cookiesBanner.remove(); }
         }
 
         function setCookie(name, value, days) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        let expires = "";
+        if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
         }
 
         function getCookie(name) {
-            const nameEQ = name + "=";
-            const ca = document.cookie.split(';');
-            for(let i=0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
+        const nameEQ = name + "=";
+        const ca = document.cookie.split(';');
+        for(let i=0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
         }
     </script>
 </body>

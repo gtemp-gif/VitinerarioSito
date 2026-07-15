@@ -38,10 +38,8 @@ namespace Vitinerario.Controllers
             var news = await _apiService.GetContentsByTypeAsync("news", langId);
             news = news?.Where(n => n.IsPublished).ToList();
             var podcasts = await _apiService.GetPodcastsAsync(langId);
-            // Recupero i partner e filtro solo quelli attivi (IsActive == true)
             var partners = await _apiService.GetPartnersAsync();
-            ViewBag.Partners = partners?.Where(p => p.IsActive).ToList() ?? new List<PartnerDto>();
-            // Taking top 3 for index display 
+            ViewBag.Partners = partners?.Where(p => p.IsActive).OrderBy(p => p.Description).ToList() ?? new List<PartnerDto>();
             ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventDto>();
             ViewBag.LatestArticles = articles?.Take(3).ToList() ?? new List<ContentDto>();
             ViewBag.LatestNews = news?.Take(4).ToList() ?? new List<ContentDto>();
@@ -245,17 +243,19 @@ namespace Vitinerario.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SubmitContactForm(ContactFormViewModel model)
+        public async Task<IActionResult> SubmitContactForm(ContactFormViewModel model, string returnUrl = null)
         {
             if (!ModelState.IsValid)
             {
                 TempData["ContactError"] = "Errore nella compilazione del modulo di contatto. Riprova.";
+                // Se c'è un returnUrl usiamo quello, altrimenti torniamo alla Home
+                if (!string.IsNullOrEmpty(returnUrl)) return LocalRedirect($"{returnUrl}#contact-section");
                 return RedirectToAction("Index", "Home", null, "contact-section");
             }
 
             try
             {
-                bool isSuccess =  await _emailService.SendContactEmailAsync(model); //SendEmail(model.Email ,model.Message );
+                bool isSuccess = await _emailService.SendContactEmailAsync(model);
 
                 if (isSuccess)
                 {
@@ -271,9 +271,11 @@ namespace Vitinerario.Controllers
                 TempData["ContactError"] = "Si è verificato un errore imprevisto. Riprova più tardi.";
             }
 
+            // Se c'è un returnUrl usiamo quello, altrimenti torniamo alla Home
+            if (!string.IsNullOrEmpty(returnUrl)) return LocalRedirect($"{returnUrl}#contact-section");
+
             return RedirectToAction("Index", "Home", null, "contact-section");
         }
-
         [HttpPost]
 
         public bool SendEmail(string email, string request)
@@ -321,6 +323,26 @@ namespace Vitinerario.Controllers
         public IActionResult TravelEventDetails(int id)
         {
            return View();
+        }
+        [Route("Home/Partners")]
+        public async Task<IActionResult> Partners()
+        {
+            // Ottengo la lingua corrente (es. per future traduzioni)
+            int langId = LanguageHelper.GetCurrentLangId(HttpContext);
+
+            // Uso il tuo servizio API per ottenere tutti i partner
+            var partners = await _apiService.GetPartnersAsync();
+
+            // Filtriamo solo quelli attivi e LI ORDINIAMO ALFABETICAMENTE per il Nome (Description)
+            var activePartners = partners?
+                .Where(p => p.IsActive)
+                .OrderBy(p => p.Description) // <-- QUESTA E' LA RIGA AGGIUNTA
+                .ToList() ?? new List<PartnerDto>();
+
+            // Passiamo la lista alla view tramite ViewBag
+            ViewBag.Partners = activePartners;
+
+            return View();
         }
     }
 }
