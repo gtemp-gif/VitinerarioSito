@@ -5,7 +5,14 @@ namespace Vitinerario.Models.Dtos
         public int Id { get; set; }
         public string Title { get; set; } = null!;
         public string Description { get; set; } = null!;
-        public DateTime EventDate { get; set; }
+
+        // Date e Orari
+        public DateTime EventDate { get; set; } // Mantenuto per compatibilità
+        public DateTime StartDate { get; set; }
+        public TimeSpan? StartTime { get; set; }
+        public DateTime? EndDate { get; set; }
+        public TimeSpan? EndTime { get; set; }
+
         public string? CoverImage { get; set; }
         public DateTime? BookingEndDate { get; set; }
         public string? Location { get; set; }
@@ -14,9 +21,13 @@ namespace Vitinerario.Models.Dtos
         public decimal Price { get; set; }
         public bool IsOnline { get; set; }
         public int LangID { get; set; }
+        public int CategoryId { get; set; }
         public string? Subtitle { get; set; }
         public string? Coordinates { get; set; }
         public string? HeroImage { get; set; }
+        public string? ProgramPdf { get; set; }
+        public bool HasVariantPrice { get; set; }
+        public bool HasNeeds { get; set; }
         public List<EventLinkDto> Links { get; set; } = new();
         public GalleryDto? Gallery { get; set; }
         public List<ExpertDto> Experts { get; set; } = new();

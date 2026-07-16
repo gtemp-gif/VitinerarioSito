@@ -303,15 +303,48 @@ con il tempo e con le persone che lo condividono.”</value>
     <value>Informativa su Privacy e Cookie</value>
   </data>
   <data name="HeroArchive" xml:space="preserve">
-    <value>Storie di vite, terre e passioni</value>
+    <value>Storie di vita, di terra e di passioni</value>
   </data>
   <data name="HeroEvents" xml:space="preserve">
-    <value>Eventi ed Esperienze Esclusive</value>
+    <value>Eventi ed &lt;br /&gt; Esperienze Esclusive</value>
   </data>
   <data name="TermsAndCondition" xml:space="preserve">
     <value>Termini e Condizioni</value>
   </data>
   <data name="SubtitleHeroTermCondition" xml:space="preserve">
     <value>Ci impegniamo a proteggere la tua privacy e a garantire che i tuoi dati siano trattati con cura e trasparenza.</value>
+  </data>
+  <data name="PodcastSubtitle" xml:space="preserve">
+    <value>I protagonisti del mondo enogastronomico si raccontano</value>
+  </data>
+  <data name="PodcastTagline" xml:space="preserve">
+    <value>Radici &amp; Voci</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Esperti</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contatti</value>
+  </data>
+  <data name="LabelFullName" xml:space="preserve">
+    <value>Nome e Cognome</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Messaggio</value>
+  </data>
+  <data name="PlaceholderName" xml:space="preserve">
+    <value>Nome </value>
+  </data>
+  <data name="PlaceholderMessage" xml:space="preserve">
+    <value>Scrivi il tuo messaggio qui...</value>
+  </data>
+  <data name="BtnSendMessage" xml:space="preserve">
+    <value>Invia il messaggio</value>
+  </data>
+  <data name="BtnListenSpotify" xml:space="preserve">
+    <value>Ascolta su Spotify</value>
+  </data>
+  <data name="BtnWatchYoutube" xml:space="preserve">
+    <value>Guarda su Youtube</value>
   </data>
 </root>

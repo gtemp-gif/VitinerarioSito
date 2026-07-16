@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
-using Vitinerario.Models;
-using Vitinerario.Services;
-using Vitinerario.Helpers;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System.IO;
+using Vitinerario.Helpers;
+using Vitinerario.Models;
 using Vitinerario.Models.Dtos;
+using Vitinerario.Models.Settings;
+using Vitinerario.Services;
 
 namespace Vitinerario.Controllers
 {
@@ -11,11 +13,19 @@ namespace Vitinerario.Controllers
     {
         private readonly IWebHostEnvironment _env;
         private readonly IApiService _apiService;
-
-        public HomeController(IWebHostEnvironment env, IApiService apiService)
+        private readonly IEmailService _emailService;
+        private readonly MailSettings _mailsettings;
+        private readonly IConfiguration _configuration;
+        public MailHelper.MailHelper _mailHelper { get; set; }
+        public HomeController(IWebHostEnvironment env, IApiService apiService, IEmailService emailService, IConfiguration configuration)
         {
             _env = env;
             _apiService = apiService;
+            _emailService = emailService;
+            _configuration = configuration;
+            _mailsettings = configuration.GetSection("MailSettings").Get<MailSettings>();
+
+          
         }
 
         public async Task<IActionResult> Index()
@@ -49,27 +59,7 @@ namespace Vitinerario.Controllers
             return View();
         }
 
-        //public async Task<IActionResult> Archive(int page = 1)
-        //{
-        //    int pageSize = 10;
-        //    var allArticles = await _apiService.GetContentsByTypeAsync("blog", langId); // Prendi tutti
-
-        //    int totalItems = allArticles.Count;
-        //    int totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
-
-        //    // Filtra gli articoli per la pagina corrente
-        //    var pagedArticles = allArticles
-        //        .Skip((page - 1) * pageSize)
-        //        .Take(pageSize)
-        //        .ToList();
-
-        //    ViewBag.Articles = pagedArticles;
-        //    ViewBag.CurrentPage = page;
-        //    ViewBag.TotalPages = totalPages;
-        //    ViewBag.TotalItems = totalItems;
-
-        //    return View();
-        //}
+        
 
         [Route("Home/EventDetails/{id}")]
         public async Task<IActionResult> EventDetails(int id)
@@ -87,9 +77,56 @@ namespace Vitinerario.Controllers
                 return NotFound();
             }
 
+            // --- LOGICA DI SMISTAMENTO VISTE ---
+            // 3 = On Tour (IT) | 4 = On Tour (EN)
+            if (eventDto.CategoryId == 3 || eventDto.CategoryId == 4)
+            {
+                var viewModel = new Vitinerario.Models.TravelEventViewModel { Event = eventDto };
+
+                try
+                {
+                    var tripDto = await _apiService.GetTripByEventIdAsync(id);
+
+                    if (tripDto != null)
+                    {
+                        viewModel.Trip = tripDto;
+                        viewModel.Musts = await _apiService.GetTripMustsAsync(tripDto.Id);
+                        viewModel.Stays = await _apiService.GetStaysAsync(tripDto.Id);
+
+                        var days = await _apiService.GetItineraryDaysAsync(tripDto.Id);
+                        foreach (var day in days.OrderBy(d => d.DayNumber))
+                        {
+                            var stops = await _apiService.GetItineraryStopsAsync(day.Id);
+                            viewModel.Itinerary.Add(new Vitinerario.Models.FullItineraryDay
+                            {
+                                Day = day,
+                                Stops = stops.OrderBy(s => s.OrderIndex).ToList()
+                            });
+                        }
+                    }
+                    // 1. Carica le varianti di prezzo (se previste)
+                    if (eventDto.HasVariantPrice)
+                    {
+                        viewModel.VariantPrices = await _apiService.GetVariantPricesAsync(id);
+                    }
+
+                    // 2. Carica le "Informazioni Essenziali" (se previste)
+                    if (eventDto.HasNeeds)
+                    {
+                        viewModel.EventNeeds = await _apiService.GetEventNeedsAsync(id);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Mettendo un breakpoint qui, puoi ispezionare l'errore 'ex.Message'
+                    Console.WriteLine($"ERRORE API VIAGGIO: {ex.Message}");
+                }
+
+                return View("TravelEventDetails", viewModel);
+            }
+            // Per tutti gli altri eventi (Live 1/2, Art 5/6), carichiamo la vista classica
             return View(eventDto);
         }
-
         public async Task<IActionResult> Events()
         {
             int langId = LanguageHelper.GetCurrentLangId(HttpContext);
@@ -204,6 +241,86 @@ namespace Vitinerario.Controllers
         public IActionResult CookiePolicy()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> SubmitContactForm(ContactFormViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                TempData["ContactError"] = "Errore nella compilazione del modulo di contatto. Riprova.";
+                return RedirectToAction("Index", "Home", null, "contact-section");
+            }
+
+            try
+            {
+                bool isSuccess =  await _emailService.SendContactEmailAsync(model); //SendEmail(model.Email ,model.Message );
+
+                if (isSuccess)
+                {
+                    TempData["ContactSuccess"] = "Messaggio inviato con successo! Ti contatteremo presto.";
+                }
+                else
+                {
+                    TempData["ContactError"] = "Errore durante l'invio del messaggio. Riprova più tardi.";
+                }
+            }
+            catch (Exception)
+            {
+                TempData["ContactError"] = "Si è verificato un errore imprevisto. Riprova più tardi.";
+            }
+
+            return RedirectToAction("Index", "Home", null, "contact-section");
+        }
+
+        [HttpPost]
+
+        public bool SendEmail(string email, string request)
+
+        {
+
+            if (string.IsNullOrEmpty(email))
+
+            {
+                return false;//Json(new { success = false, message = "Email is required." });
+
+            }
+
+            try
+            {
+                MailSettings mail = _mailsettings;
+                _mailHelper = new MailHelper.MailHelper
+                {
+                    FromEmail = mail.Mail,
+                    FromEmailPwd = mail.Password,
+                    Host = mail.Host,
+                    Port = mail.Port,
+                    EnableSSL = false,
+                    SenderName = mail.SenderName
+                };
+
+                request = "Nuova richiesta utente da " + email + "  <br> <br> " + request;
+
+                _mailHelper.SendEmail(mail.Mail, "Nuova richiesta utente", request);
+
+                return true; //Json(new { success = true, message = "Email sent successfully." });
+
+            }
+            catch (Exception ex)
+
+            {
+
+                return false;//Json(new { success = false, message = $"Error: {ex.Message}" });
+
+            }
+
+        }
+
+
+        public IActionResult TravelEventDetails(int id)
+        {
+           return View();
         }
     }
 }

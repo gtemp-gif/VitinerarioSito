@@ -29,9 +29,9 @@
                         "dark-charcoal": "#121212",
                         "charcoal-light": "#1e1e1e"
                     },
-                    fontFamily: {
-                        "body": ["Roboto", "sans-serif"],
-                        "display": ["Montserrat", "sans-serif"]
+                    letterSpacing: {
+                        "widest-plus": "0.3em",
+                        "architectural": "0.05em"
                     }
                 },
             },
@@ -72,59 +72,92 @@
         <img src="https://www.geordie.app:441/VitinerarioGateTest/Images/Events/event_hero.png" class="absolute inset-0 w-full h-full object-cover opacity-60">
         <div class="absolute inset-0 bg-gradient-to-t from-dark-charcoal via-transparent to-transparent flex items-end pb-20">
             <div class="max-w-7xl mx-auto px-6 w-full">
-              @*   <span class="text-primary text-xs uppercase tracking-[0.3em] font-black mb-4 block">
-                    Our Calendar</span> *@
-                <h1 class="text-5xl md:text-8xl font-black text-white uppercase font-display leading-none">Exclusive <br>Experiences</h1>
+                <h1 class="font-refined text-6xl md:text-8xl font-black leading-[0.95] mb-8 text-balance uppercase text-white">
+                    @Localizer[SharedResource.HeroEvents]
+                </h1>
             </div>
         </div>
     </section>
-
     <div class="max-w-7xl mx-auto px-6 py-20">
-        <div class="flex flex-col md:flex-row items-center justify-between gap-8 mb-16 border-b border-white/10 pb-10">
-            <h3 class="font-display text-2xl font-bold text-white uppercase tracking-widest">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 mb-16 border-b border-white/10 pb-10">
+
+            <h3 class="font-refined text-2xl font-bold text-white uppercase tracking-widest">
                 @(langId == 2 ? "Seleziona anno" : "Select Year")
             </h3>
+
             <div class="flex flex-wrap gap-3">
-                <button class="filter-btn bg-primary text-white px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full" data-filter="all">@Localizer[SharedResource.All]</button>
+                <button class="filter-btn bg-primary text-white px-6 py-2 text-[10px] font-refined font-bold uppercase tracking-widest transition-all rounded-full" data-filter="all">@Localizer[SharedResource.All]</button>
                 @foreach (var yearGroup in eventsByYear)
                 {
-                    <button class="filter-btn text-white/50 border border-white/10 px-6 py-2 text-[10px] font-bold uppercase tracking-widest transition-all rounded-full hover:border-primary" data-filter="@yearGroup.Key">@yearGroup.Key</button>
+                    <button class="filter-btn text-white/50 border border-white/10 px-6 py-2 text-[10px] font-refined font-bold uppercase tracking-widest transition-all rounded-full hover:border-primary hover:text-white" data-filter="@yearGroup.Key">@yearGroup.Key</button>
                 }
             </div>
         </div>
-
         @if (eventsByYear.Any())
         {
             @foreach (var yearGroup in eventsByYear)
             {
                 <section class="event-section mb-24" data-year="@yearGroup.Key">
+
                     <div class="flex items-center gap-6 mb-12">
-                        <h2 class="font-display text-3xl font-black text-white uppercase tracking-tighter">@Localizer[SharedResource.Events] @yearGroup.Key</h2>
+                        <h2 class="font-refined text-3xl font-black text-white uppercase tracking-tighter">@Localizer[SharedResource.Events] @yearGroup.Key</h2>
                         <div class="h-[1px] flex-1 bg-white/10"></div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                         @foreach (var eventItem in yearGroup)
                         {
-                            <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl">
-                                <div class="relative aspect-[16/10] overflow-hidden">
-                                    <img src="@eventItem.CoverImage" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
-                                    <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10">
-                                        <p class="text-primary text-2xl font-black leading-none">@eventItem.EventDate.ToString("dd")</p>
-                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest">@eventItem.EventDate.ToString("MMM")</p>
+                            
+                            <div class="group flex flex-col bg-charcoal-light rounded-xl overflow-hidden border border-white/5 hover:border-primary/30 transition-all shadow-2xl h-full">
+
+                                <div class="relative aspect-square overflow-hidden bg-black shrink-0">
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="absolute inset-0 z-20"></a>
+                                    <img src="@eventItem.CoverImage" alt="@eventItem.Title" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 shadow-inner">
+
+                                    <div class="absolute top-4 left-4 bg-dark-charcoal/80 backdrop-blur-md px-4 py-2 rounded text-center border border-white/10 z-10 shadow-lg">
+                                        <p class="text-primary text-2xl font-black leading-none font-refined">@eventItem.EventDate.ToString("dd")</p>
+                                        <p class="text-white text-[10px] font-bold uppercase tracking-widest font-refined mt-1">@eventItem.EventDate.ToString("MMM")</p>
                                     </div>
                                 </div>
-                                <div class="p-8">
-                                    <h4 class="text-xl font-bold text-white mb-3 group-hover:text-primary transition-colors uppercase">@eventItem.Title</h4>
-                                    <div class="flex items-center gap-2 text-white/40 text-xs mb-6 italic">
-                                        <span class="material-symbols-outlined text-sm">location_on</span>
-                                        @eventItem.Location
-                                    </div>
-                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-block text-primary text-[10px] font-black uppercase tracking-[0.2em] border-b-2 border-primary/20 hover:border-primary pb-1 transition-all">
-                                        @(langId == 2 ? "Vedi Dettagli" : "View Details")
+
+                                <div class="p-6 flex flex-col relative z-10">
+                                    @{
+                                        // LOGICA DI SEPARAZIONE
+                                        string namePart = eventItem.Title;
+
+                                        if (eventItem.Title.Contains(" - "))
+                                        {
+                                            var parts = eventItem.Title.Split(new[] { " - " }, 2, StringSplitOptions.None);
+                                            namePart = parts[1].Trim();
+                                        }
+                                        else if (eventItem.Title.Contains("_"))
+                                        {
+                                            var parts = eventItem.Title.Split(new[] { "_" }, 2, StringSplitOptions.None);
+                                            namePart = parts[1].Trim();
+                                        }
+                                    }
+
+                                    <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="block z-20 mb-3 group-hover:text-primary transition-colors">
+
+                                        <div class="flex items-center gap-2 text-white/40 text-xs mb-2 italic font-refined">
+                                            <span class="material-symbols-outlined text-[14px] shrink-0">location_on</span>
+                                            <span class="truncate">@eventItem.Location</span>
+                                        </div>
+
+                                        <h4 class="text-xl font-bold text-white uppercase italic font-refined leading-snug line-clamp-2">
+                                            @Html.Raw(namePart)
+                                        </h4>
                                     </a>
+
+                                    <div class="mt-2 pt-4 border-t border-white/5">
+                                        <a href="@Url.Action("EventDetails", "Home", new { id = eventItem.Id })" class="inline-flex items-center gap-2 text-primary font-black uppercase text-[10px] tracking-widest hover:gap-4 transition-all font-refined w-fit z-20">
+                                            @(langId == 2 ? "Vedi Dettagli" : "View Details")
+                                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
+
                         }
                     </div>
                 </section>
@@ -133,7 +166,7 @@
         else
         {
             <div class="py-20 text-center">
-                <p class="text-white/30 font-display text-xl uppercase tracking-widest">Nessun evento disponibile al momento.</p>
+                <p class="text-white/30 font-refined text-xl uppercase tracking-widest">Nessun evento disponibile al momento.</p>
             </div>
         }
     </div>

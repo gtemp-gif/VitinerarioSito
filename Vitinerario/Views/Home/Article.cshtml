@@ -72,16 +72,32 @@
 }
 
 <main class="flex-1">
-    <section class="relative h-[90vh] w-full overflow-hidden">
-        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105"
+    @* Hero Articolo - Versione 100% Responsive con Flexbox *@
+    <section class="relative min-h-[85vh] md:min-h-[90vh] w-full overflow-hidden flex flex-col justify-between pt-24 md:pt-32 pb-8 md:pb-20 px-8 md:px-20">
+
+        @* 1. Sfondo Immagine (Dietro a tutto - z-0) *@
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 scale-105 z-0"
              style="background-image: url('@(string.IsNullOrEmpty(Model.HeroImage) ? "https://lh3.googleusercontent.com/aida-public/AB6AXuC9CibRg0FEJMIx_IF0wDafKtBz9Of6mJSJzt8FNPkwn68AXlU0wSzMVySgbxpkhNipWuxCx1EgfhgeL-q0HKM6YetYzVk5hvh2U4Ourjc8u9aryFv0HcnBTnDtpLq0FGBkk4sM8f5B_NisBBGCQV5XggSKUXXBvQTERI5MSk-4ClAHHSADTPyq9TI3tT5ONKkQ5xNyK_6MKs4A2azaXY6QVy7wTNtTM39-horsNDrtxez270omuM4p5LLYSLgZPvNk5jkRMkyYK00" : Model.HeroImage)');">
         </div>
-        <div class="absolute inset-0 premium-gradient"></div>
-        <div class="absolute bottom-0 left-0 w-full p-8 md:p-20 flex flex-col items-start gap-6">
+
+        @* 2. Gradiente (Dietro a tutto - z-0) *@
+        <div class="absolute inset-0 premium-gradient z-0"></div>
+
+        @* 3. CONTENUTO ALTO: Pulsante (In primo piano - z-10) *@
+        <div class="relative z-10 w-full">
+            <a href="@Url.Action("Archive", "Home")" class="group inline-flex items-center text-[10px] uppercase tracking-widest-plus font-bold text-white bg-black/40 backdrop-blur-md border border-white/10 px-5 py-2.5 rounded-full hover:bg-primary hover:border-primary transition-all duration-300 w-fit">
+                <span class="material-symbols-outlined text-base mr-3 group-hover:-translate-x-1 transition-transform duration-300">arrow_back</span>
+                Torna agli Articoli
+            </a>
+        </div>
+
+        @* 4. CONTENUTO BASSO: Titolo (In primo piano - z-10, mt-auto lo spinge verso il fondo) *@
+        <div class="relative z-10 w-full flex flex-col items-start gap-6 mt-auto">
             <div class="flex items-center gap-3">
                 <span class="text-slate-400 text-sm">@Model.PublishDate.ToString("MMMM yyyy")</span>
             </div>
-            <h1 class="text-5xl md:text-8xl font-black max-w-4xl leading-[0.9] text-white tracking-tighter">
+            @* text-balance aiuta a mandare a capo i titoli lunghi in modo più elegante sui cellulari *@
+            <h1 class="text-5xl md:text-8xl font-black max-w-4xl leading-[0.9] text-white tracking-tighter text-balance">
                 @Model.Title
             </h1>
         </div>
@@ -166,48 +182,24 @@
 
             @* Sezione Azioni (Share & Save) *@
             <div class="space-y-6 pt-2">
+                @* CONDIVIDI - Usiamo data-title in modo sicuro *@
                 <button type="button"
-                        onclick="handleShare()"
+                        id="btn-share"
+                        data-title="@Model.Title"
                         class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
                     <span class="material-symbols-outlined text-base">share</span> @(langId == 2 ? "Condividi" : "Share")
                 </button>
-                <button type="button" class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
-                    <span class="material-symbols-outlined text-base">bookmark</span> @(langId == 2 ? "Salva" : "Save")
-                </button>
+
+                @* SALVA - Usiamo data-id *@
+                @* <button type="button"
+                        id="btn-save"
+                        data-id="@Model.Id"
+                        class="flex items-center gap-3 text-white/40 hover:text-primary transition-colors uppercase tracking-widest text-xs font-bold">
+                    <span id="icon-save" class="material-symbols-outlined text-base transition-colors">bookmark</span>
+                    <span id="text-save" class="transition-colors">@(langId == 2 ? "Salva" : "Save")</span>
+                </button> *@
             </div>
         </aside>
-@* 
-        <div class="md:w-3/4 space-y-12">
-            <div class="space-y-6 text-slate-300 leading-relaxed text-lg font-light">
-                @if (!string.IsNullOrEmpty(Model.Preview))
-                {
-                    <p class="drop-cap whitespace-pre-line">
-                        @Html.Raw(Model.Preview)
-                    </p>
-                }
-            </div>
-            @if (Model.Images != null && Model.Images.Count > 0)
-            {
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
-                    <div class="md:col-span-8 h-[300px] md:h-full rounded-xl overflow-hidden group">
-
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
-                             src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
-                    </div>
-                    <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-[150px] md:h-full">
-                        <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                            <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
-                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
-                        </div>
-                        <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                            <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
-                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
-                        </div>
-                    </div>
-                </div>
-            }
-
-        </div> *@
 
         <div class="md:w-3/4 space-y-12">
 
@@ -246,31 +238,53 @@
                 }
             </div>
 
-            @* BLOCCO IMMAGINI (Invariato) *@
+          
+            @* BLOCCO IMMAGINI (Layout Dinamico a prova di errore) *@
             @if (Model.Images != null && Model.Images.Count > 0)
             {
-                <div class="grid grid-cols-1 md:grid-cols-12 gap-4 h-auto md:h-[600px]">
-                    <div class="md:col-span-8 h-[300px] md:h-full rounded-xl overflow-hidden group">
-                        <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
-                             src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
-                    </div>
-                    <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-[150px] md:h-full">
-                        @if (Model.Images.Count > 1)
-                        {
-                            <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                                <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                @if (Model.Images.Count >= 3)
+                {
+                    @* PIANO A: Ci sono 3 (o più) foto. (Invariato: La foto sinistra comanda) *@
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-4">
+                        <div class="md:col-span-8 rounded-xl overflow-hidden group border border-white/5">
+                            <img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
+                        </div>
+
+                        <div class="md:col-span-4 flex flex-row md:flex-col gap-4 h-64 md:h-auto">
+                            <div class="flex-1 relative rounded-xl overflow-hidden group border border-white/5">
+                                <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
                                      src="@Model.Images[1].ImageUrl" alt="Gallery 2" />
                             </div>
-                        }
-                        @if (Model.Images.Count > 2)
-                        {
-                            <div class="h-full md:h-1/2 w-1/2 md:w-full rounded-xl overflow-hidden group border border-white/5">
-                                <img class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                            <div class="flex-1 relative rounded-xl overflow-hidden group border border-white/5">
+                                <img class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
                                      src="@Model.Images[2].ImageUrl" alt="Gallery 3" />
                             </div>
-                        }
+                        </div>
                     </div>
-                </div>
+                }
+                else if (Model.Images.Count == 2)
+                {
+                    @* PIANO B: 2 foto. Aggiunto aspect-[4/3] e w-full h-full per farle essere due cornici identiche! *@
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="aspect-square md:aspect-[4/3] rounded-xl overflow-hidden group border border-white/5">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                 src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
+                        </div>
+                        <div class="aspect-square md:aspect-[4/3] rounded-xl overflow-hidden group border border-white/5">
+                            <img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                                 src="@Model.Images[1].ImageUrl" alt="Gallery 2" />
+                        </div>
+                    </div>
+                }
+                else if (Model.Images.Count == 1)
+                {
+                    @* PIANO C: 1 foto. Aggiunto max-w-2xl e mx-auto per evitare l'effetto "cartellone gigante" *@
+                    <div class="w-full max-w-2xl mx-auto rounded-xl overflow-hidden group border border-white/5">
+                        <img class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105 moody-image"
+                             src="@Model.Images[0].ImageUrl" alt="Gallery 1" />
+                    </div>
+                }
             }
 
         </div>
@@ -298,3 +312,101 @@
         </div>
     </section> *@
 </main>
+
+
+            <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Passiamo la lingua dal Razor al JS una volta sola
+        const langId = @langId; 
+
+        // --- 1. GESTIONE CONDIVIDI ---
+        const btnShare = document.getElementById('btn-share');
+        if (btnShare) {
+            btnShare.addEventListener('click', async function () {
+                // Leggiamo il titolo dall'attributo, così apostrofi e virgolette non spaccano nulla
+                const title = this.getAttribute('data-title');
+                const url = window.location.href;
+
+                // Funzione di emergenza (Copia negli appunti)
+                const fallbackCopy = () => {
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(url).then(() => {
+                            alert(langId == 2 ? "Link copiato negli appunti!" : "Link copied to clipboard!");
+                        }).catch(err => {
+                            alert("Impossibile copiare il link automaticamente.");
+                        });
+                    } else {
+                        prompt("Copia questo link:", url);
+                    }
+                };
+
+                // Tentativo condivisione nativa
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: title,
+                            url: url
+                        });
+                    } catch (err) {
+                        if (err.name !== 'AbortError') {
+                            fallbackCopy();
+                        }
+                    }
+                } else {
+                    fallbackCopy();
+                }
+            });
+        }
+
+        // --- 2. GESTIONE SALVA ---
+        const btnSave = document.getElementById('btn-save');
+        if (btnSave) {
+            const currentArticleId = btnSave.getAttribute('data-id');
+            let savedArticles = JSON.parse(localStorage.getItem('vitinerario_saved')) || [];
+            
+            // Imposta lo stato iniziale al caricamento
+            if (savedArticles.includes(currentArticleId)) {
+                toggleSaveUI(true, langId);
+            }
+
+            // Al click sul bottone
+            btnSave.addEventListener('click', function () {
+                // Rilegge sempre lo stato più fresco dal localStorage
+                savedArticles = JSON.parse(localStorage.getItem('vitinerario_saved')) || [];
+                const isSaved = savedArticles.includes(currentArticleId);
+
+                if (isSaved) {
+                    savedArticles = savedArticles.filter(id => id !== currentArticleId);
+                    toggleSaveUI(false, langId);
+                } else {
+                    savedArticles.push(currentArticleId);
+                    toggleSaveUI(true, langId);
+                }
+                
+                localStorage.setItem('vitinerario_saved', JSON.stringify(savedArticles));
+            });
+        }
+    });
+
+    // --- FUNZIONE GRAFICA PER IL PULSANTE SALVA ---
+    function toggleSaveUI(isSaved, langId) {
+        const icon = document.getElementById('icon-save');
+        const text = document.getElementById('text-save');
+
+        if (isSaved) {
+            icon.classList.add('text-primary');
+            icon.classList.remove('text-white/40');
+            text.classList.add('text-primary');
+            text.classList.remove('text-white/40');
+            icon.style.fontVariationSettings = "'FILL' 1"; 
+            text.innerText = langId == 2 ? "Salvato" : "Saved";
+        } else {
+            icon.classList.remove('text-primary');
+            icon.classList.add('text-white/40');
+            text.classList.remove('text-primary');
+            text.classList.add('text-white/40');
+            icon.style.fontVariationSettings = "'FILL' 0";
+            text.innerText = langId == 2 ? "Salva" : "Save";
+        }
+    }
+</script>

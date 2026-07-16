@@ -7,8 +7,45 @@
     Layout = "_LayoutVitinerario";
     ViewData["Title"] = $"{Model.Title} | Vitinerario Event Details";
 
-    // 1. LOGICA TEMPORALE
-    bool isEventPast = DateTime.Now.Date > Model.EventDate.Date;
+    // 1. LOGICA TEMPORALE INTELLIGENTE
+    DateTime finalEndDateTime;
+
+    if (Model.EndDate.HasValue)
+    {
+        // CASO A: Evento di più giorni (EndDate NON è null)
+        finalEndDateTime = Model.EndDate.Value.Date;
+
+        // Aggiungiamo l'orario di fine se esiste, altrimenti diamo tempo fino a fine giornata (23:59:59)
+        if (Model.EndTime != null && TimeSpan.TryParse(Model.EndTime.ToString(), out TimeSpan parsedEndTime))
+        {
+            finalEndDateTime = finalEndDateTime.Add(parsedEndTime);
+        }
+        else
+        {
+            finalEndDateTime = finalEndDateTime.Add(new TimeSpan(23, 59, 59));
+        }
+    }
+    else
+    {
+        // CASO B: Evento "One-Shot" (EndDate è null, come nel tuo JSON)
+        // Usiamo StartDate (o EventDate come fallback)
+        DateTime baseStartDate = Model.StartDate != default(DateTime) ? Model.StartDate : Model.EventDate;
+        finalEndDateTime = baseStartDate.Date;
+
+        // Se c'è un orario di inizio, chiudiamo le prenotazioni a quell'ora esatta,
+        // altrimenti lasciamo aperto fino a fine giornata.
+        if (Model.StartTime != null && TimeSpan.TryParse(Model.StartTime.ToString(), out TimeSpan parsedStartTime))
+        {
+            finalEndDateTime = finalEndDateTime.Add(parsedStartTime);
+        }
+        else
+        {
+            finalEndDateTime = finalEndDateTime.Add(new TimeSpan(23, 59, 59));
+        }
+    }
+
+    // Controllo effettivo: se 'Oggi' è maggiore della scadenza calcolata, l'evento è concluso
+    bool isEventPast = DateTime.Now > finalEndDateTime;
 
     // 2. LOGICA PRENOTAZIONE DINAMICA (Basata solo su API)
     // Prendiamo il numero direttamente dal campo contactInfo del JSON
@@ -81,7 +118,7 @@
     </div>
 
     @* Contenitore dei testi (resta in basso) *@
-    <div class="container mx-auto px-12 relative z-10">
+   @*  <div class="container mx-auto px-12 relative z-10">
         <div class="max-w-4xl">
             @if (!string.IsNullOrEmpty(Model.Subtitle))
             {
@@ -104,7 +141,32 @@
                 @headerName
             </h1>
         </div>
+    </div> *@
+    <div class="container mx-auto px-12 relative z-10">
+        <div class="max-w-4xl">
+            @if (!string.IsNullOrEmpty(Model.Subtitle))
+            {
+                <span class="inline-block px-4 py-1 mb-6 border border-primary text-primary rounded-full text-sm uppercase tracking-[0.2em] font-bold">@Model.Subtitle</span>
+            }
+
+            @{
+                // Split del titolo: data sopra, nome sotto
+                var headerTitleParts = Model.Title.Split(new[] { " - " }, StringSplitOptions.None);
+                var headerDate = headerTitleParts.Length >= 2 ? headerTitleParts[0] : "";
+                var headerName = headerTitleParts.Length >= 2 ? headerTitleParts[1] : Model.Title;
+            }
+
+            @if (!string.IsNullOrEmpty(headerDate))
+            {
+                <p class="text-primary text-xl md:text-2xl font-bold uppercase tracking-[0.2em] mb-4">@headerDate</p>
+            }
+
+            <h1 class="text-6xl md:text-8xl text-white font-black leading-[0.9] uppercase font-display">
+                @headerName
+            </h1>
+        </div>
     </div>
+
 </header>
 
 <section class="container mx-auto px-12 -mt-12 relative z-20">
@@ -129,7 +191,6 @@
                 <p class="text-xl font-bold text-white leading-tight">@(Model.Location ?? "Location da definire")</p>
                 @if (!string.IsNullOrEmpty(Model.Coordinates))
                 {
-                    @* Sostituito l'URL statico con la variabile Model.Coordinates *@
                     <a href="@Model.Coordinates" target="_blank" class="text-stone-400 text-sm underline cursor-pointer hover:text-white transition-colors block">
                         View on map
                     </a>
@@ -158,7 +219,6 @@
     </div>
 </section>
 
-<!-- Gallery -->
 <main class="container mx-auto px-12 py-24">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-24">
 
@@ -179,7 +239,7 @@
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
                         @foreach (var photo in Model.Gallery.Photos)
                         {
-                            <div class="relative aspect-square group cursor-zoom-in">
+                            <div class="relative aspect-square group">
                                 <img src="@photo.ImageUrl"
                                      alt="@photo.Caption"
                                      class="relative z-10 w-full h-full object-cover rounded-xl border border-stone-800 transition-all duration-500 origin-center group-hover:scale-[1.5] group-hover:z-50 group-hover:shadow-[0_0_50px_rgba(0,0,0,0.9)]" />
@@ -192,14 +252,15 @@
             @if (Model.Authors != null && Model.Authors.Any())
             {
                 <div class="space-y-4">
-                    <h3 class="text-xl font-bold text-white uppercase tracking-widest mb-6">Expert</h3>
+                    <h3 class="text-xl font-bold text-white uppercase tracking-widest mb-6">@Localizer[SharedResource.Expert]</h3>
                     @foreach (var expert in Model.Authors)
                     {
                         <div class="flex items-center p-6 bg-dark-card rounded-xl border border-stone-800">
                             <img src="@expert.PhotoUrl" alt="@expert.Name" class="w-20 h-20 rounded-full object-cover grayscale">
                             <div class="ml-6">
-                                <span class="text-[10px] uppercase tracking-widest text-primary font-bold">Expert</span>
-                                <h4 class="text-lg font-bold text-white leading-tight">@expert.Name</h4>
+                                <h4 class="text-sm uppercase tracking-widest text-primary font-bold mb-1">@expert.Name</h4>
+                                @* <span class="text-[10px] uppercase tracking-widest text-primary font-bold">@expert.Name</span> *@
+                                @* <h4 class="text-lg font-bold text-white leading-tight">@expert.Name</h4> *@
                                 <p class="text-sm text-stone-500 italic">@expert.Bio</p>
                             </div>
                         </div>
@@ -210,35 +271,40 @@
     </div>
 </main>
 
-<div class="fixed bottom-0 left-0 right-0 z-50 p-6 flex justify-center pointer-events-none">
-    <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-8 py-4 flex items-center space-x-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+
+
+<div class="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none">
+    <div class="pointer-events-auto bg-[#1a1a1a]/95 backdrop-blur-xl border border-white/10 rounded-2xl px-5 md:px-8 py-4 flex items-center gap-4 md:gap-12 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+
         <div class="hidden md:block">
-            @*  <p class="text-white/60 text-xs uppercase tracking-widest font-bold">Inclusioni Evento</p> *@
             <p class="text-white text-sm italic">@(string.IsNullOrEmpty(Model.Subtitle) ? "Exclusive Wine Experience" : Model.Subtitle)</p>
         </div>
+
         <div class="h-10 w-px bg-white/10 hidden md:block"></div>
-        <div class="flex items-center space-x-8">
-            <div class="text-center md:text-left">
-                <p class="text-primary font-bold text-xl leading-none">@Model.Price.ToString("N2") €</p>
+
+        <div class="flex items-center gap-4 md:gap-8">
+
+            <div class="text-center md:text-left shrink-0">
+                <p class="text-primary font-bold text-xl leading-none font-refined whitespace-nowrap">
+                    @Model.Price.ToString("N2") &euro;
+                </p>
             </div>
 
             @if (isEventPast)
             {
-                <button type="button" disabled class="@buttonStyles py-3 px-10 rounded-xl uppercase tracking-widest text-xs font-bold">
+                <button type="button" disabled class="@buttonStyles py-3 px-6 md:px-10 rounded-xl uppercase architectural tracking text-[10px] md:text-xs font-bold font-refined w-full md:w-auto text-center">
                     @Localizer[SharedResource.EventFinished]
                 </button>
             }
             else
             {
-                <button type="button" onclick="handleBookingClick()" class="@buttonStyles py-3 px-10 rounded-xl transition-all uppercase tracking-widest text-xs font-bold">
+                <button type="button" onclick="handleBookingClick()" class="@buttonStyles py-3 px-6 md:px-10 rounded-xl transition-all uppercase architectural tracking text-[10px] md:text-xs font-bold font-refined w-full md:w-auto text-center">
                     @Localizer[SharedResource.ReserveYourSeat]
                 </button>
             }
         </div>
     </div>
 </div>
-
-
 @section Scripts {
     <script>
         function handleBookingClick() {

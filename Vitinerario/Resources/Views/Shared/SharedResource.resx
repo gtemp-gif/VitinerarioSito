@@ -315,15 +315,48 @@ Every wine evolves with its place, with time, and with the people who share it.â
     <value>Privacy policy and Cookie Policy</value>
   </data>
   <data name="HeroArchive" xml:space="preserve">
-    <value>Tales of lives, lands, and passions</value>
+    <value>Stories of life, land and passions</value>
   </data>
   <data name="HeroEvents" xml:space="preserve">
-    <value>Exclusive Events &amp; Experiences</value>
+    <value>Exclusive &lt;br /&gt; Events &amp; Experiences</value>
   </data>
   <data name="TermsAndCondition" xml:space="preserve">
     <value>Terms and Conditions</value>
   </data>
   <data name="SubtitleHeroTermCondition" xml:space="preserve">
     <value> We are committed to protecting your privacy and ensuring your data is handled with care and transparency.</value>
+  </data>
+  <data name="PodcastSubtitle" xml:space="preserve">
+    <value>The leaders of the food and wine world tell their stories</value>
+  </data>
+  <data name="PodcastTagline" xml:space="preserve">
+    <value>Roots &amp; Voices</value>
+  </data>
+  <data name="Expert" xml:space="preserve">
+    <value>Expert</value>
+  </data>
+  <data name="Contacts" xml:space="preserve">
+    <value>Contacts</value>
+  </data>
+  <data name="LabelFullName" xml:space="preserve">
+    <value>Full Name</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="PlaceholderName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PlaceholderMessage" xml:space="preserve">
+    <value>Write your message here...</value>
+  </data>
+  <data name="BtnSendMessage" xml:space="preserve">
+    <value>Send Message</value>
+  </data>
+  <data name="BtnListenSpotify" xml:space="preserve">
+    <value>Listen on Spotify</value>
+  </data>
+  <data name="BtnWatchYoutube" xml:space="preserve">
+    <value>Watch on Youtube</value>
   </data>
 </root>
