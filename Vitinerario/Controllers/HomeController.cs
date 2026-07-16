@@ -334,9 +334,10 @@ namespace Vitinerario.Controllers
             var partners = await _apiService.GetPartnersAsync();
 
             // Filtriamo solo quelli attivi e LI ORDINIAMO ALFABETICAMENTE per il Nome (Description)
+            // Aggiungiamo Trim() per prevenire spazi nascosti che sfalsano l'alfabeto
             var activePartners = partners?
                 .Where(p => p.IsActive)
-                .OrderBy(p => p.Description) // <-- QUESTA E' LA RIGA AGGIUNTA
+                .OrderBy(p => (p.Description ?? "").Trim())
                 .ToList() ?? new List<PartnerDto>();
 
             // Passiamo la lista alla view tramite ViewBag
