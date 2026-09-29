@@ -15,7 +15,7 @@ namespace Vitinerario.Services
         Task<EventDto?> GetEventById(int id, int langId);
         Task<List<PartnerDto>> GetPartnersAsync();
 
-
+        Task<RandomVideoDto?> GetRandomVideoAsync();
         Task<TripDto?> GetTripByEventIdAsync(int eventId);
         Task<List<TripMustDto>> GetTripMustsAsync(int tripId);
         Task<List<StayDto>> GetStaysAsync(int tripId);

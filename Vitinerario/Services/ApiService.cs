@@ -73,6 +73,40 @@ namespace Vitinerario.Services
             return events ?? new List<EventDto>();
         }
 
+        public async Task<RandomVideoDto?> GetRandomVideoAsync()
+        {
+            try
+            {
+                await AddAuthHeaderAsync();
+
+                var url = $"{_apiSettings.BaseUrl.TrimEnd('/')}";
+                var response = await _httpClient.GetAsync(
+                    $"{url}/random-video-links/random"
+                );
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return null;
+                }
+
+                var content = await response.Content.ReadAsStringAsync();
+
+                var video = JsonSerializer.Deserialize<RandomVideoDto>(
+                    content,
+                    new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }
+                );
+
+                return video;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
         public async Task<EventDto?> GetEventById(int id, int langId)
         {
             await AddAuthHeaderAsync();
@@ -257,6 +291,7 @@ namespace Vitinerario.Services
             return await response.Content.ReadFromJsonAsync<List<EventNeedDto>>(new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
                    ?? new List<EventNeedDto>();
         }
+
 
     }
 }

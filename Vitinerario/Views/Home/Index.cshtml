@@ -8,6 +8,9 @@
 	ViewData["Title"] = "Vitinerario";
 	int langId = Vitinerario.Helpers.LanguageHelper.GetCurrentLangId(Context);
 	var partners = ViewBag.Partners as List<PartnerDto> ?? new List<PartnerDto>();
+	var randomVideo = ViewBag.RandomVideo as RandomVideoDto;
+
+	
 }
 @section HeroPreload {
 	<link rel="preload" as="image" href="/Assets/img/hero_home.webp" fetchpriority="high">
@@ -39,8 +42,10 @@
 	</script>
 }
 
+
 @section Styles {
 	<style type="text/tailwindcss">
+
 		body {
 			@@apply font-body bg-dark-charcoal text-white/90 antialiased;
 		}
@@ -50,7 +55,7 @@
 		}
 
 		.hero-overlay {
-			background: linear-gradient(to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.8) 100%);
+			background: linear-gradient( to bottom, rgba(18,18,18,0.2) 0%, rgba(18,18,18,0.8) 100% );
 		}
 
 		.text-balance {
@@ -76,7 +81,7 @@
 		}
 
 		.app-mockup-shadow {
-			box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5), 0 30px 60px -30px rgba(211, 26, 83, 0.1);
+			box-shadow: 0 50px 100px -20px rgba(0,0,0,0.5), 0 30px 60px -30px rgba(211,26,83,0.1);
 		}
 
 		.event-card {
@@ -84,7 +89,7 @@
 		}
 
 		.podcast-gradient {
-			background: linear-gradient(90deg, rgba(18,18,18,1) 0%, rgba(18,18,18,0.7) 50%, rgba(18,18,18,0) 100%);
+			background: linear-gradient( 90deg, rgba(18,18,18,1) 0%, rgba(18,18,18,0.7) 50%, rgba(18,18,18,0) 100% );
 		}
 
 		.split-pane {
@@ -120,7 +125,6 @@
 			background-color: #FFBF00;
 		}
 
-		/* FIX PER CHROME AUTOFILL: Evita lo sfondo bianco brutto quando si autocompila il form */
 		input:-webkit-autofill,
 		input:-webkit-autofill:hover,
 		input:-webkit-autofill:focus,
@@ -129,6 +133,305 @@
 			-webkit-text-fill-color: #ffffff;
 			transition: background-color 5000s ease-in-out 0s;
 			box-shadow: inset 0 0 20px 20px transparent;
+		}
+
+
+		/* =========================================================
+				   VCODE TEASER
+				========================================================= */
+
+		.vcode-teaser {
+			position: relative;
+			width: 100%;
+			overflow: hidden;
+			background-color: #121212;
+			background-image: url('/Assets/img/sfondo_vcode_section.png');
+			background-size: cover;
+			background-position: center calc(50% + 30px);
+			background-repeat: no-repeat;
+			border-top: 0;
+			border-bottom: 0;
+		}
+
+			/* Dissolvenza verticale per fondere la sezione con quelle adiacenti */
+			.vcode-teaser::before {
+				content: "";
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				pointer-events: none;
+				background: linear-gradient( to bottom, rgba(18,18,18,1) 0%, rgba(18,18,18,.86) 5%, rgba(18,18,18,.36) 14%, rgba(18,18,18,.08) 23%, rgba(18,18,18,0) 31%, rgba(18,18,18,0) 69%, rgba(18,18,18,.10) 79%, rgba(18,18,18,.42) 88%, rgba(18,18,18,.90) 96%, rgba(18,18,18,1) 100% );
+			}
+
+			/* Overlay leggero sul lato destro: le foglie restano visibili ma non competono col video */
+			.vcode-teaser::after {
+				content: "";
+				position: absolute;
+				inset: 0;
+				z-index: 1;
+				pointer-events: none;
+				background: radial-gradient( circle at 88% 20%, rgba(0,0,0,.46) 0%, rgba(0,0,0,.34) 26%, rgba(0,0,0,.18) 44%, rgba(0,0,0,0) 66% ), linear-gradient( 90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 44%, rgba(0,0,0,.08) 56%, rgba(0,0,0,.18) 68%, rgba(0,0,0,.30) 80%, rgba(0,0,0,.44) 90%, rgba(0,0,0,.56) 100% );
+			}
+
+		.vcode-teaser__inner {
+			position: relative;
+			z-index: 2;
+			width: 100%;
+			max-width: 1280px;
+			min-height: 590px;
+			margin: 0 auto;
+			padding: 58px 52px;
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			align-items: center;
+			gap: 44px;
+		}
+
+		.vcode-teaser__content {
+			position: relative;
+			z-index: 3;
+			width: 100%;
+			max-width: 560px;
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			justify-content: center;
+		}
+
+		.vcode-teaser__logo {
+			display: block;
+			width: 136px;
+			height: auto;
+			margin-bottom: 16px;
+		}
+
+		.vcode-teaser__accent {
+			width: 44px;
+			height: 2px;
+			margin-bottom: 22px;
+			background: #cf1e51;
+		}
+
+		.vcode-teaser__title {
+			margin: 0 0 20px 0 !important;
+			font-family: "Noto Serif", Georgia, serif !important;
+			font-size: 56px !important;
+			font-weight: 800 !important;
+			line-height: 1.03 !important;
+			letter-spacing: -0.045em !important;
+			text-transform: none !important;
+			color: #f1eee6;
+			text-shadow: 0 2px 18px rgba(0,0,0,.30);
+		}
+
+			.vcode-teaser__title span {
+				color: #cf1e51;
+			}
+
+		.vcode-teaser__text {
+			margin: 0 0 26px 0;
+			font-family: Roboto, sans-serif;
+			font-size: 17px;
+			line-height: 1.55;
+			color: rgba(241,238,230,.88);
+			text-shadow: 0 1px 10px rgba(0,0,0,.28);
+		}
+
+		.vcode-teaser__cta {
+			height: 48px;
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			padding: 0 21px;
+			border: 0 !important;
+			outline: 0 !important;
+			border-radius: 999px;
+			background: #cf1e51 !important;
+			color: #fff !important;
+			font-family: Roboto, sans-serif;
+			font-size: 12px;
+			font-weight: 700;
+			text-decoration: none !important;
+			box-shadow: 0 10px 28px rgba(207,30,81,.22);
+			transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+		}
+
+			.vcode-teaser__cta:hover {
+				background: #dc2058 !important;
+				transform: translateY(-2px);
+				box-shadow: 0 14px 34px rgba(207,30,81,.30);
+			}
+
+		.vcode-teaser__whatsapp {
+			width: 18px;
+			height: 18px;
+			flex: 0 0 18px;
+			display: block;
+			color: #ffffff;
+		}
+
+		.vcode-teaser__arrow {
+			margin-left: 3px;
+			font-size: 16px !important;
+		}
+
+		/* =========================================================
+				   VCODE VIDEO
+				========================================================= */
+
+		.vcode-teaser__visual {
+			position: relative;
+			z-index: 3;
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.vcode-teaser__video-wrapper {
+			position: relative;
+			z-index: 4;
+			width: min(100%, 470px);
+			aspect-ratio: 1 / 1;
+			flex: 0 0 auto;
+			overflow: hidden;
+			border: 1px solid rgba(207, 30, 81, .58);
+			border-radius: 9px;
+			background: #000;
+			box-shadow: 0 18px 50px rgba(0,0,0,.42), 0 0 0 1px rgba(207,30,81,.05), 0 0 22px rgba(207,30,81,.08);
+		}
+
+		.vcode-teaser__video {
+			display: block;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			background: #000;
+		}
+
+		.vcode-teaser__play {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			width: 52px;
+			height: 52px;
+			transform: translate(-50%, -50%);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 0;
+			border: 1px solid rgba(255,255,255,.70);
+			border-radius: 50%;
+			background: rgba(0,0,0,.40);
+			color: #fff;
+			cursor: pointer;
+			backdrop-filter: blur(3px);
+			transition: opacity .2s ease, visibility .2s ease, background-color .2s ease;
+		}
+
+			.vcode-teaser__play:hover {
+				background: rgba(0,0,0,.58);
+			}
+
+			.vcode-teaser__play .material-icons {
+				font-size: 27px;
+				transform: translateX(1px);
+			}
+
+			.vcode-teaser__play.is-hidden {
+				opacity: 0;
+				visibility: hidden;
+				pointer-events: none;
+			}
+
+		.vcode-teaser__video-empty {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background: #050505;
+			color: #f1eee6;
+		}
+
+			.vcode-teaser__video-empty .material-icons {
+				width: 52px;
+				height: 52px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				border: 1px solid rgba(255,255,255,.60);
+				border-radius: 50%;
+				font-size: 27px;
+			}
+
+		@@media (max-width: 1100px) {
+			.vcode-teaser__inner {
+				max-width: 1000px;
+				min-height: 520px;
+				padding: 50px 34px;
+				gap: 30px;
+			}
+
+			.vcode-teaser__title {
+				font-size: 48px !important;
+			}
+
+			.vcode-teaser__text {
+				font-size: 15px;
+			}
+
+			.vcode-teaser__video-wrapper {
+				width: min(100%, 390px);
+			}
+		}
+
+		@@media (max-width: 767px) {
+			.vcode-teaser {
+				background-position: 58% center;
+			}
+
+				.vcode-teaser::before {
+					background: linear-gradient( to bottom, rgba(18,18,18,1) 0%, rgba(18,18,18,.72) 7%, rgba(18,18,18,.18) 18%, rgba(18,18,18,0) 28%, rgba(18,18,18,0) 72%, rgba(18,18,18,.22) 84%, rgba(18,18,18,.78) 94%, rgba(18,18,18,1) 100% );
+				}
+
+				.vcode-teaser::after {
+					background: linear-gradient( 90deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,.04) 52%, rgba(0,0,0,.28) 100% );
+				}
+
+			.vcode-teaser__inner {
+				min-height: auto;
+				padding: 50px 22px 58px;
+				display: flex;
+				flex-direction: column;
+				align-items: stretch;
+				gap: 38px;
+			}
+
+			.vcode-teaser__content {
+				width: 100%;
+				max-width: none;
+			}
+
+			.vcode-teaser__logo {
+				width: 112px;
+			}
+
+			.vcode-teaser__title {
+				font-size: 40px !important;
+			}
+
+			.vcode-teaser__text {
+				font-size: 14px;
+			}
+
+			.vcode-teaser__visual {
+				justify-content: center;
+			}
+
+			.vcode-teaser__video-wrapper {
+				width: min(86vw, 330px);
+			}
 		}
 	</style>
 }
@@ -146,6 +449,7 @@
 	</div>
 
 </section>
+@* Partner section *@
 <section class="bg-dark-charcoal border-b border-white/5 py-12 overflow-hidden">
 	<div class="max-w-7xl mx-auto px-6 md:px-12 mb-8">
 		<span class="text-primary text-xs uppercase tracking-widest-plus font-bold block mb-2">Official Partners</span>
@@ -180,6 +484,127 @@
 		</div>
 	}
 </section>
+
+<!-- =========================
+     VCODE TEASER
+========================= -->
+<section class="vcode-teaser">
+
+
+	<div class="vcode-teaser__inner">
+
+		<!-- COLONNA TESTO -->
+		<div class="vcode-teaser__content">
+
+			<img src="/Assets/img/VCODE_logo_negativo.png"
+				 alt="VCode Vitinerario"
+				 class="vcode-teaser__logo" />
+
+			<div class="vcode-teaser__accent"></div>
+
+			@if (langId == 2)
+			{
+				<h2 class="vcode-teaser__title">
+					Qualcosa<br>
+					di nuovo<br>
+					sta arrivando<span>.</span>
+				</h2>
+
+				<p class="vcode-teaser__text">
+					Vuoi scoprire VCode in anteprima<br>
+					e conoscere i suoi vantaggi?
+				</p>
+			}
+			else
+			{
+				<h2 class="vcode-teaser__title">
+					Something<br>
+					new is<br>
+					coming<span>.</span>
+				</h2>
+
+				<p class="vcode-teaser__text">
+					Want to discover VCode in preview <br>
+					and learn about its benefits?
+				</p>
+			}
+
+			<a href="https://wa.me/393783050350"
+			   target="_blank"
+			   rel="noopener noreferrer"
+			   class="vcode-teaser__cta">
+
+				<svg class="vcode-teaser__whatsapp"
+					 viewBox="0 0 24 24"
+					 aria-hidden="true">
+					<path fill="currentColor"
+						  d="M12.04 2C6.58 2 2.15 6.43 2.15 11.89c0 1.74.45 3.44 1.3 4.94L2 22l5.3-1.39a9.85 9.85 0 0 0 4.73 1.2h.01c5.46 0 9.89-4.43 9.89-9.89C21.93 6.43 17.5 2 12.04 2Zm0 17.99h-.01a8.16 8.16 0 0 1-4.16-1.14l-.3-.18-3.15.83.84-3.07-.2-.32a8.14 8.14 0 1 1 6.98 3.88Zm4.47-6.1c-.24-.12-1.45-.72-1.68-.8-.22-.08-.38-.12-.55.12-.16.24-.63.8-.77.96-.14.16-.28.18-.53.06-.24-.12-1.03-.38-1.96-1.21-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.41.08-.16.04-.31-.02-.43-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.43.06-.65.31-.22.24-.85.83-.85 2.03s.87 2.36.99 2.52c.12.16 1.72 2.63 4.17 3.69.58.25 1.04.4 1.39.51.58.18 1.11.16 1.53.1.47-.07 1.45-.59 1.65-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.47-.28Z" />
+				</svg>
+
+				<span>
+					@if (langId == 2)
+					{
+						@:Scrivici su WhatsApp
+					}
+					else
+					{
+						@:Message us on WhatsApp
+					}
+				</span>
+
+				<span class="material-icons vcode-teaser__arrow">
+					arrow_forward
+				</span>
+
+			</a>
+
+		</div>
+
+		<!-- COLONNA VIDEO -->
+		<div class="vcode-teaser__visual">
+
+			<div class="vcode-teaser__video-wrapper">
+
+				@if (randomVideo != null &&
+					 randomVideo.Success &&
+					 !string.IsNullOrWhiteSpace(randomVideo.VideoUrl))
+				{
+					<video id="vcodeVideo"
+						   class="vcode-teaser__video"
+						   autoplay
+						   muted
+						   loop
+						   playsinline
+						   preload="metadata">
+
+						<source src="@randomVideo.VideoUrl" type="video/mp4" />
+
+					</video>
+
+					<button id="vcodePlay"
+							class="vcode-teaser__play"
+							type="button"
+							aria-label="Riproduci video">
+
+						<span class="material-icons">play_arrow</span>
+
+					</button>
+				}
+				else
+				{
+					<div class="vcode-teaser__video-empty">
+						<span class="material-icons">play_arrow</span>
+					</div>
+				}
+
+			</div>
+
+		</div>
+
+	</div>
+
+</section>
+
 @{
 	var quotes = new[]
 	{
@@ -307,7 +732,7 @@
 	</div>
 </section>
 
-<section class="bg-black h-[auto] md:h-[80vh] overflow-hidden flex flex-col">
+@* <section class="bg-black h-[auto] md:h-[80vh] overflow-hidden flex flex-col">
 	<div class="flex flex-col md:flex-row h-full split-container w-full">
 		<div class="split-pane flex-1 h-[50vh] md:h-auto bg-black group/pro">
 			<div class="absolute inset-0 opacity-40 group-hover/pro:opacity-60 transition-opacity duration-700">
@@ -331,7 +756,7 @@
 		</div>
 	</div>
 </section>
-
+ *@
 <main class="max-w-7xl mx-auto px-6 md:px-12 py-32">
 	<div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0 mb-20 border-b border-white/10 pb-8">
 		<div>
@@ -397,7 +822,7 @@
 	</div>
 </main>
 
-<section id="app-section" class="bg-charcoal-light py-32 overflow-hidden">
+@* <section id="app-section" class="bg-charcoal-light py-32 overflow-hidden">
 	<div class="max-w-7xl mx-auto px-6">
 		<div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-center">
 			<div class="order-2 md:order-1 relative">
@@ -453,7 +878,7 @@
 		</div>
 	</div>
 </section>
-
+ *@
 <section class="max-w-7xl mx-auto px-6 md:px-12 py-32 border-b border-white/5">
 	<div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-4 md:gap-0 mb-20 border-b border-white/10 pb-8">
 		<div>
@@ -642,3 +1067,59 @@
 		</form>
 	</div>
 </section>
+
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+
+		const video = document.getElementById("vcodeVideo");
+		const playButton = document.getElementById("vcodePlay");
+
+		if (!video || !playButton) {
+			return;
+		}
+
+		// prova autoplay
+		video.play().catch(function() {
+			playButton.style.opacity = "1";
+			playButton.style.visibility = "visible";
+			playButton.style.pointerEvents = "auto";
+		});
+
+
+		video.addEventListener("playing", function() {
+			playButton.style.opacity = "0";
+			playButton.style.visibility = "hidden";
+			playButton.style.pointerEvents = "none";
+		});
+
+
+		video.addEventListener("pause", function() {
+			playButton.style.opacity = "1";
+			playButton.style.visibility = "visible";
+			playButton.style.pointerEvents = "auto";
+		});
+
+
+		playButton.addEventListener("click", async function() {
+			try {
+				await video.play();
+			}
+			catch (error) {
+				console.error("Errore riproduzione VCode:", error);
+			}
+		});
+
+
+		video.addEventListener("click", function() {
+
+			if (video.paused) {
+				video.play();
+			}
+			else {
+				video.pause();
+			}
+
+		});
+
+	});
+</script>

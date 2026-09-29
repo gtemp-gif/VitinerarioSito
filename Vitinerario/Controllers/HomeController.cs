@@ -31,19 +31,48 @@ namespace Vitinerario.Controllers
         public async Task<IActionResult> Index()
         {
             int langId = LanguageHelper.GetCurrentLangId(HttpContext);
+
             var events = await _apiService.GetEventsAsync(langId);
-            events = events?.Where(e => e.IsOnline).ToList(); // Filtra solo eventi futuri e ordina per data
+            events = events?.Where(e => e.IsOnline).ToList();
+
             var articles = await _apiService.GetContentsByTypeAsync("blog", langId);
             articles = articles?.Where(a => a.IsPublished).ToList();
+
             var news = await _apiService.GetContentsByTypeAsync("news", langId);
             news = news?.Where(n => n.IsPublished).ToList();
+
             var podcasts = await _apiService.GetPodcastsAsync(langId);
+
             var partners = await _apiService.GetPartnersAsync();
-            ViewBag.Partners = partners?.Where(p => p.IsActive).OrderBy(p => p.Description).ToList() ?? new List<PartnerDto>();
-            ViewBag.LatestEvents = events?.Take(3).ToList() ?? new List<EventDto>();
-            ViewBag.LatestArticles = articles?.Take(3).ToList() ?? new List<ContentDto>();
-            ViewBag.LatestNews = news?.Take(4).ToList() ?? new List<ContentDto>();
-            ViewBag.LatestPodcasts = podcasts?.Take(3).ToList() ?? new List<ContentDto>();
+
+            var randomVideo = await _apiService.GetRandomVideoAsync();
+
+
+            ViewBag.Partners =
+                partners?.Where(p => p.IsActive)
+                         .OrderBy(p => p.Description)
+                         .ToList()
+                ?? new List<PartnerDto>();
+
+            ViewBag.LatestEvents =
+                events?.Take(3).ToList()
+                ?? new List<EventDto>();
+
+            ViewBag.LatestArticles =
+                articles?.Take(3).ToList()
+                ?? new List<ContentDto>();
+
+            ViewBag.LatestNews =
+                news?.Take(4).ToList()
+                ?? new List<ContentDto>();
+
+            ViewBag.LatestPodcasts =
+                podcasts?.Take(3).ToList()
+                ?? new List<ContentDto>();
+
+            ViewBag.RandomVideo = randomVideo;
+
+
             return View();
         }
 
