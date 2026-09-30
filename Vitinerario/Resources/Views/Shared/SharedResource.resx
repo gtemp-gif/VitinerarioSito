@@ -170,7 +170,7 @@
 Every wine evolves with its place, with time, and with the people who share it.‚Äù</value>
   </data>
   <data name="ContactUs" xml:space="preserve">
-    <value>ContactUs</value>
+    <value>Contact Us</value>
   </data>
   <data name="SubtitleContactUs" xml:space="preserve">
     <value>For editorial inquiries, partnership opportunities, or event requests, our team is at your service.</value>
@@ -359,4 +359,27 @@ Every wine evolves with its place, with time, and with the people who share it.‚
   <data name="BtnWatchYoutube" xml:space="preserve">
     <value>Watch on Youtube</value>
   </data>
+	<data name="Explore" xml:space="preserve">
+  <value>Explore</value>
+</data>
+
+	<data name="WriteEmail" xml:space="preserve">
+  <value>Write us an email</value>
+</data>
+
+	<data name="FooterPayoff" xml:space="preserve">
+  <value>Let your senses inspire you.</value>
+</data>
+
+	<data name="BackToArticles" xml:space="preserve">
+  <value>Back to articles</value>
+</data>
+
+	<data name="BackToEvents" xml:space="preserve">
+  <value>Back to events</value>
+</data>
+
+	<data name="AllRightsReserved" xml:space="preserve">
+  <value>All rights reserved.</value>
+</data>
 </root>

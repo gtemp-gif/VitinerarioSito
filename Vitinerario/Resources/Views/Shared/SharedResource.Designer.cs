@@ -79,6 +79,15 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
+        ///   Cerca una stringa localizzata simile a All rights reserved..
+        /// </summary>
+        public static string AllRightsReserved {
+            get {
+                return ResourceManager.GetString("AllRightsReserved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Cerca una stringa localizzata simile a Article.
         /// </summary>
         public static string Article {
@@ -93,6 +102,24 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string Articles {
             get {
                 return ResourceManager.GetString("Articles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Back to articles.
+        /// </summary>
+        public static string BackToArticles {
+            get {
+                return ResourceManager.GetString("BackToArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Back to events.
+        /// </summary>
+        public static string BackToEvents {
+            get {
+                return ResourceManager.GetString("BackToEvents", resourceCulture);
             }
         }
         
@@ -179,7 +206,7 @@ namespace Vitinerario.Resources.Views.Shared {
         }
         
         /// <summary>
-        ///   Cerca una stringa localizzata simile a ContactUs.
+        ///   Cerca una stringa localizzata simile a Contact Us.
         /// </summary>
         public static string ContactUs {
             get {
@@ -248,6 +275,24 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string Expert {
             get {
                 return ResourceManager.GetString("Expert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Explore.
+        /// </summary>
+        public static string Explore {
+            get {
+                return ResourceManager.GetString("Explore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Let your senses inspire you..
+        /// </summary>
+        public static string FooterPayoff {
+            get {
+                return ResourceManager.GetString("FooterPayoff", resourceCulture);
             }
         }
         
@@ -548,6 +593,15 @@ namespace Vitinerario.Resources.Views.Shared {
         public static string ViewAllEvents {
             get {
                 return ResourceManager.GetString("ViewAllEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cerca una stringa localizzata simile a Write us an email.
+        /// </summary>
+        public static string WriteEmail {
+            get {
+                return ResourceManager.GetString("WriteEmail", resourceCulture);
             }
         }
     }

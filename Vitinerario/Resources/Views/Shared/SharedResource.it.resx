@@ -347,4 +347,29 @@ con il tempo e con le persone che lo condividono.”</value>
   <data name="BtnWatchYoutube" xml:space="preserve">
     <value>Guarda su Youtube</value>
   </data>
+
+	<data name="Explore" xml:space="preserve">
+  <value>Esplora</value>
+</data>
+
+	<data name="WriteEmail" xml:space="preserve">
+  <value>Scrivici un'email</value>
+</data>
+
+	<data name="FooterPayoff" xml:space="preserve">
+  <value>Lasciati ispirare dai tuoi sensi.</value>
+</data>
+
+	<data name="BackToArticles" xml:space="preserve">
+  <value>Torna agli articoli</value>
+</data>
+
+	<data name="BackToEvents" xml:space="preserve">
+  <value>Torna agli eventi</value>
+</data>
+
+	<data name="AllRightsReserved" xml:space="preserve">
+  <value>Tutti i diritti riservati.</value>
+</data>
+
 </root>

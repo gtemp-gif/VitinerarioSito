@@ -179,12 +179,12 @@
                         <img src="~/Assets/img/Logo Vitinerario bianco.svg" alt="Vitinerario" class="h-10 w-auto opacity-90 hover:opacity-100 transition-opacity">
                     </a>
                     <p class="text-white/60 font-refined text-sm leading-relaxed max-w-sm uppercase tracking-widest font-semibold">
-                        Lasciati ispirare dai tuoi sensi.
+                        @Localizer[SharedResource.FooterPayoff]
                     </p>
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center md:items-start">
-                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">Esplora</h4>
+                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">@Localizer[SharedResource.Explore]</h4>
                     <nav class="flex flex-col gap-4 font-refined text-xs tracking-widest uppercase text-white/40 font-semibold">
                         <a href="@Url.Action("Archive", "Home")" class="hover:text-primary transition-colors">@Localizer[SharedResource.Articles]</a>
                         <a href="@Url.Action("Events", "Home")" class="hover:text-primary transition-colors">@Localizer[SharedResource.Events]</a>
@@ -196,9 +196,9 @@
                 </div>
 
                 <div class="md:col-span-3 flex flex-col items-center md:items-start">
-                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">Contatti</h4>
+                    <h4 class="text-white font-refined font-black uppercase tracking-[0.2em] text-sm mb-6">@Localizer[SharedResource.Contacts]</h4>
                     <a href="mailto:info@vitinerario.it" class="font-refined text-xs tracking-widest font-semibold text-white/40 hover:text-primary transition-colors mb-6 uppercase flex items-center gap-3">
-                        <span class="material-icons text-base">mail</span>Scrivici un'email
+                        <span class="material-icons text-base">mail</span>@Localizer[SharedResource.WriteEmail]
                     </a>
 
                     <div class="flex items-center gap-3 flex-wrap justify-center md:justify-start">
@@ -222,7 +222,7 @@
             </div>
 
             <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10 font-refined text-[9px] uppercase tracking-widest-plus font-bold text-white/30 gap-6 md:gap-0">
-                <p class="text-center md:text-left">© @DateTime.Now.Year Graldev S.a.S. di Chiera Luigi. Tutti i diritti riservati.</p>
+                <p class="text-center md:text-left">© @DateTime.Now.Year Graldev S.a.S. di Chiera Luigi. @Localizer[SharedResource.AllRightsReserved]</p>
                 <div class="flex flex-col md:flex-row items-center gap-4 md:gap-10 text-center md:text-right">
                     <p>P.I. 01986670766</p>
                     <a href="@Url.Action("CookiePolicy", "Home")" class="hover:text-primary transition-colors">Privacy & Cookie Policy</a>
